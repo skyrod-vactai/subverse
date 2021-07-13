@@ -1,0 +1,1682 @@
+#+TODO: TODO(t) INPROGRESS(i@/!) | DONE(d!) CANCELED(c@)
+* Goals and Rationale
+** Empower the individual
+*** Elevator pitch
+Two major goals:
+
+Agency:  Give the individual control over his identities and how he
+manages his relationships with other identities. Make identification
+programmable, reliable, and seamless.
+
+Give the user control over who can put content into his mind. No one
+can do that without permission. No russian bots, shills, or spammers. 
+
+Bypass censorship. Allow the user to send messages to anyone who wants
+to receive them.
+
+Customizability. Allow the user to alter the software that acts on his
+behalf, as he sees fit. Provide a simple and appealing programming
+interface, and allow customizations to be shared the same way as any
+other content.
+
+True privacy as with Telepathy: Treat information as the valuable
+commodity that it is. Leak nothing whatsoever - no third party can
+tell whether you're communicating with anyone at all, much less who
+you're communicating with or what you're saying.
+
+*** Properties
+**** Unidentified parties are filtered out
+On the internet, stories cost nothing to make up and disseminate, but
+they can be highly influential. Powerful hidden interests create
+stories specially crafted to manipulate your emotions and lead you to
+take actions that benefit them. It's a sort of brain parasite. By
+closing the door to anyone hidden, you lock out these influences,
+leaving you with just those who deserve your attention - friends,
+family, people you admire.
+
+There is no legitimate scenario where you want to see a message from
+an unidentified party. Anyone who wants to communicate with you will
+need to be introduced first.
+
+Messaging software will not only know who a message is from, but also
+who introduced that party to you in the first place, and can
+prioritize messages accordingly.
+
+***** A perhaps contrived example
+What about ads for products you hadn't heard of but might actually
+want? You can still see advertisements, if you want to. But there
+needs to be an introduction first. We already do this, informally -
+you search google for "shoes" and google introduces you to shoe
+producers that it already has a relationship with.
+
+Under a codified identity system, what happens is:
+
++ You indicate to your address book that it's ok for Google to
+  introduce other parties to you without you having to manually
+  approve each one.
+
++ You search google for "shoes".
+
++ Google sends your address book a list of shoe providers, and your
+  address book notes that each one was introduced to you by Google as
+  a result of your shoe search, as you gave it permission to do. The
+  address book might, by default, put an expiration time on those
+  contacts of perhaps a few days, after which they are removed.
+
++ Google introduces you to the shoe providers also. Google's address
+  book entry for you may contain extra details about what you were
+  searching for, or other details Google might know about you.
+
++ Those providers are now allowed to contact you directly for some
+  period of time. While this might seem to open the door to spam, keep
+  in mind that your address book already knows exactly who these
+  senders are: shoe salesmen, and the messages can be filed
+  accordingly (by default, filed under "shoes", deleted after a
+  relatively short period).
+
++ Let's say a party who google says is a shoe seller, actually sends
+  you a message about penis enlargement pills (which you didn't
+  want). You can react in one of two ways: 1) Flag the message as
+  inappropriate, which triggers some automatic actions -
+  "de-friending" the advertiser and providing proof to google of the
+  violation of your trust, which hopefully they will act on 2) Assume
+  malice on google's part, distrust them to introduce advertisers to
+  you (and optionally remove all existing introductions from google
+  from your address book). After that your messaging system will not
+  accept any more ads.
+
+
+***
+
+**** By default, you control the experience
+***** You can delegate the experience to be controlled by someone else
+If you can't be bothered to curate your own address book, you can
+accept entries from someone else without having to review them.
+***** You can override the delegate's choices anywhere
+The choices you make yourself override the choices made by others (if
+there is a conflict).
+***** You can completely revoke trust in a delegate
+If you later decide it was a bad idea to let someone else control the
+experience, when you revoke that trust, it eliminates everything
+except the choices you made yourself.
+***** You can delegate to anyone
+There is no barrier to entry - it's not just for corporations or
+government. You can delegate to your technophile cousin or your wife.
+***** You can have multiple delegates
+You decide which ones have priority (generally, you'd probably
+prioritize individuals you know personally over large corporations)
+***** Why is this important?
+Imagine just picking a few people you admire, and getting their
+perspective on the world almost instantly. You see only what the best
+people are looking at (for however you define "best"). You might pick
+several subject matter experts, and whatever other parties they see
+are labeled for you. You might choose an economics expert Charles, and
+later when you read an article about a new cancer treatment, it's
+labeled as recommended by Charles - you might not normally associate
+the two.
+
+****** Isn't that a 'filter bubble'?
+Yes it is. The modern internet is without question an adversarial
+environment. Filters are required. Without them, we are flooded with
+garbage - advertisements, propaganda, trolling, etc. It would be
+impossible to wade past it, because this garbage costs nothing to
+produce. We can see the need for filters with email - without them
+email is basically unusable due to the sheer volume of spam.
+
+The rest of the internet is no different. Facebook is overrun with
+spam. Nearly everyone who uses facebook regularly, has many facebook
+friends who post almost no content of their own, and merely re-share
+low value memes.
+
+The question of filter bubbles is perhaps best put another way: "Who
+should get to decide what content is put in front of you?"
+
+I don't know how anyone can seriously suggest any answer to this
+question, except "YOU". Of course you might choose to delegate that
+power, but ultimately that power must be yours.
+
+
+
+**** Telepathy is better than a whisper 
+Both obscure the message, but telepathy also obscures the metadata
+(who you communicated with). Observers can see who you whispered to,
+but they cannot see who you communicated with telepathically - in fact
+they don't know that you communicated anything at all. Telepathy
+doesn't exist of course, but we can do the next best thing using mix
+networks like i2p or Tor.
+
+*** Ideal user experience
+Someone tells you about the most secure chat app, Telepathy. You
+decide to try. They send you a link and you click it. An app is
+installed, you open it. "Joining the Weltgeist (world spirit)"
+**** Key gen
+"Telepathy uses a portable internet identity - no more creating
+separate accounts for everything! Create it once and you're done." 
+
+"Create your identity. To protect your new identity, you must keep a
+secret safe. We'll show you how, it will take 10 minutes. You can skip
+this part if you're not at home, but it's crucial you do it soon."
+
+Do it now / Remind me [later / at a specific time]
+Now: 
+
+"Do you have access to physically secure places, like a safe deposit
+box, or a strong and fireproof home safe?"
+
+"Do you have at least two friends or relatives, that you'd trust not
+to ever plot against you?"
+
+***** Yes/Yes: 2/3 multisig
+
+"Great. You'll need 3 sheets of paper and pen/pencil. Write down these
+12 words ... then these ... then these. Keep sheet1 in your physically
+secure place, and give one each to a trusted friend to store for
+you. If you ever lose your phone, you can restore your identity with
+your sheet1. If you lose sheet1, you can restore your identity with
+sheet2 and sheet3. If you lose those, your identity is lost. You can
+create a new one, but like getting a new phone number, no one will
+know it's you and it's a pain. So best not to lose all your
+sheets. We'll remind you to get those sheets where they need to go."
+
+**** Startup - integrate
+Was it really Bob that sent you this app? Yes: Open messenger with
+message "I'm here!" ready to send. Add Bob's key to existing contact.
+
+***** Introductions
+Bob knows identities for these people in your contacts list: [Charlie,
+Dave] - Uncheck any you're not sure
+** Desirable properties
++ Confidential (only recipient can read messages)
++ Authenticated (can be sure message was sent by sender)
++ Authentication and Confidentiality protected against theft and loss
++ Location confidentiality (ip address not revealed)
++ Data replication - recover everything from peers after wiping device
++ No reliance on central authorities for naming or reputation
++ No reliance on central authorities for routing
++ Forward secrecy (compromise of SK doesn't help attacker decrypt
+  previously sent msgs)
++ Programmable
+
+** Services enabled by authenticated messages
+*** Certificate Authority
+Let's say Alice is a web user and Bob is tech-savvy friend. Alice
+decides to trust Bob as a naming authority. She would sign a message
+(of type 2) above saying she trusts Bob to name public keys, then
+imports that message into her browser.
+
+Later, Alice wants to do some shopping. She types "amazon" in the
+location bar. The browser either connects to a server containing Bob's
+signed messages (by a mechanism not described here) or has already
+imported a set of signed messages from Bob. The browser retrieves any
+messages of type 1, where the target name is "amazon". If one is
+found, then IP address lookup is done on the PK_{amazon} (see other
+section). The public key at that address is compared to PK_{amazon}
+and if there's a match then the connection proceeds.
+
+Practically, most people would probably not delegate their name:PK
+lookup to friends but rather large organizations, like Google or
+the university they attend.
+*** Introductions
+Alice wants to introduce two of her contacts (Bob and Charlie) to each
+other.
+
+She already has type 3 and 1 messages for each of them, she passes Bob's to
+Charlie and Charlie's to Bob.
+
+*** Messaging (email replacement)
+Messages are passed via a relay network (not described here).
+
+Let's say Alice wants to message Bob. She has already met Bob in
+person and Bob has given her (say, via a mobile app) a WOT message
+type 1: PK_{Bob} : "I name PK_{Bob} as Bob". She has compared the
+public keys to make sure Bob really owns that PK. Then she also
+receives a message type 4: PK_{Bob}: "I can decrypt messages to
+PK{BobSecret}".
+
+By default the key manager will accept PK's own names for themselves,
+giving the importing user a chance to change it if they want (perhaps
+Alice would rather call Bob "Robert Smith" in her own address book).
+
+Alice opens the messaging app and selects "Robert Smith" as the
+recipient. The address book looks up the key as PK_{Bob} and also the
+encryption key PK_{BobSecret}. It encrypts the message and sends using
+the PK_{Bob} key which the relay network uses to route the message.
+
+Bob receives the message from the relay network and decrypts it with
+his private key.
+
+**** Messages from less-trusted senders
+Email currently allows people to receive messages from anyone, not
+just those in their address book. To support this use case, Alice
+needs to publish her public key and encryption key so that it's
+retrievable by anyone. Note that even if she doesn't publish her key,
+someone else might, so it cannot be assumed that public keys will
+remain secret to spammers.
+
+***** Spam
+Alice's messaging client needs a way to deal with spam. The following
+rules are suggested but will be configurable:
+
+1. The messaging client allows messages signed by anyone in alice's
+   addressbook (not flagged as a spammer)
+
+2. If the message is not signed by anyone in the address book, Proof
+   of Work is required. The amount of work required by default is
+   configurable.
+
+*** Social networking, publishing
+This can be built on top of the messaging protocol, for special
+handling of social networking specific content. It would properly
+display images, comments, videos, "likes" etc.
+
+For the use case of sharing with a group, Alice can construct a group
+called "Jones Family" in the following manner:
+
+1. Create a random keypair for encryption, PK/SK_{JonesFamilySecret}.
+2. Send this key to each of the family members using the above
+   messaging protocol. Optionally, wait for a response message of type
+   4 from each member, referring to PK_{JonesFamilySecret}.
+3. Create a local addressbook group, as a list of family members'
+   PK's: [ PK_{Charlie}, PK_{Dave}, PK_{Eve} ]
+4. Share the local group by signing message type 6 and sending via
+   messaging protocol.
+5. To share a photo, encrypt it to PK_{JonesFamilySecret}, send it via
+   the messaging protocol to each member of the group. Or perhaps
+   relay it just to a few members, and let their client software
+   automatically relay to the rest of the group.
+
+Caveat: Once alice releases SK_{JonesFamilySecret}, she cannot know
+who else it will be shared with. Other group members may secretly add
+new group members without Alice's knowledge. However this trust
+relationship already implicitly exists with Facebook too, any group
+member can copy/paste content and forward it without the knowledge of
+the original sender.
+
+Of course Alice can construct any size group - including one for all
+her 'friends'.
+
+**** Comments, Likes
+Comments would be sent as any other social networking message
+(broadcast to other group members), just needs a timestamp and a
+reference to the original post. Commenters could lie about the
+timestamp to change the order that comments would appear, but clients
+are free to ignore timestamps and just order comments by arrival time.
+
+"Likes" would work similarly.
+* Background
+** About Identity
+*** A story
+You're walking down the street, and a stranger passing by calls your
+name and stops you. "Hey! It's been a long time, how are you?"
+
+You stare blankly at him for a second, since you have no idea who this
+man is. "It's me, Stan! Sorry, I forget that people don't recognize
+me. I was in an auto accident last year, and I had to have facial
+reconstruction. I've also lost about 50kg since the last time you saw
+me!"
+
+You remember Stan, of course, your good friend you haven't heard from
+in a while. But you really cannot tell if this man is him or not.
+
+He says, "Listen, I'm in kind of a jam here, I lost my wallet and ..."
+and goes on about his misfortune. Finally he says, "so would you mind
+lending me fifty pounds?"
+
+"Well, ok," you say. "Hey, do you remember that time we went to your
+cousin's beach house? That was a fun time."
+
+"Yeah it was!" the man says, "My cousin Earl's house in Dune
+Beach. That had to be what, four years ago?"
+
+"Sounds about right," you say as you hand him the 50 pounds. "You're a
+lifesaver! I've got your email, I'll be in touch to return the
+money. Let's grab dinner next week!"
+
+"Nice to see you Stan!"
+*** Epilogue
+What just happened was a case of a failed identification, and then
+using a second method, which worked.
+
+Normally we identify people in person by their physical
+characterisitics - their face, voice, etc. This is a fairly reliable
+method, because a physical body with certain characteristics is
+difficult to copy. However this method can fail - if the original
+characteristics are lost (as in an auto accident), that identification
+method doesn't work anymore.
+
+So we have other methods of being sure of a person's identity. In this
+case, we asked some personal details that an impostor would be very
+unlikely to know. We used a shared "secret".
+
+This is something we do without even thinking about it - identify
+people by their physical appearance, and if that fails, fall back to
+shared secrets. This is, in a sense, a small program, a script.
+
+We actually have these scripts in our heads for lots of other things.
+
+*** First cut About Identity
+
+Identity is the continuity of a person or thing over time. Even though
+he/she/it changes, we know it's still the same person or thing.
+
+Let's do some examples (starting with everyday identifications and
+then get more abstract).
+
+1. A family member, say a brother. You know your brother when you see
+   him, even though he might have different clothes or hair than the
+   last time. Even though he looks nothing like he did as a small
+   child, you can easily distinguish him from anyone else.
+
+2. A set of identical twins. The normal cues you use for identity tend
+   not to work. Their face, voice, etc are the same. You may have to
+   rely on shorter term phenomena like hairstyle. It gets especially
+   difficult if the twins set out to deliberately trick you.
+
+3. A company. How do you know you're talking to say, your cable
+   company (or a person authorized to represent the company?) What
+   happens after a merger? Still the same company? What if it gets new
+   management? Is the identity the brand name or the people behind the
+   company? Or something else?
+
+5. An online username. If you chat with "Gandalf", is he the same
+   real life person you chatted with last time under that name? How do
+   you know? If the account is the administrator of a forum, does it
+   matter if the real person behind the account changes over time?
+
+4. A computer file. If you write up your resume, is the updated
+   version the same file as the previous version? Is it the same just
+   like your brother is the same person even though he has a new
+   haircut? What if you rewrote your resume completely, so that it has
+   nothing in common with the old version?
+
+The point here is that there are no universal answers to these
+questions. Identity is not inherent in the person or thing, it's a
+tool for people who interact with them. And that tool can be
+legitimately used in many different ways.
+
+Identity is a set of instructions for determining "is this the same
+person/thing", resulting a yes/no answer. In computer science, this is
+called a "predicate". You automatically choose these instructions for
+everything you interact with. Of course there are some common methods,
+you don't normally just make up arbitrary requirements.
+
+For people, we generally start with appearance and other physical
+attributes. We recognize faces and voices. But let's say your old
+friend lost a lot of weight or had to have facial reconstruction, and
+you don't recognize him physically. How can you be sure it's really
+him in this new-looking physical form? You can ask questions only he
+would know the answer to.
+
+Quite often, identity involves memory. What makes a person or thing
+unique is that they know things that others don't.
+
+Imagine if your friend who suddenly looked different claimed to have
+forgotten your entire friendship - your shared history. He would be
+indistinguishable from an impostor, wouldn't he? If he took a DNA test
+to prove physical continuity, would that even matter given he had no
+memory of your friendship? Would you want to continue to be friends?
+
+So in this sense identity and unique knowledge are closely related. We
+can perhaps refer to this unique knowledge as "secrets". You might not
+think of your high school spring break trip with your friend as a
+"secret", but it is something anyone else is very unlikely to know
+about, and so you and your friend can use it to identify each other
+(either in person or online).
+
+**** Secrets
+What makes a strong secret?
+** Today's internet
+What's happening on the internet today is absolutely insidious, and
+few recognize the issue. We encounter repeated messages, and our
+instinct is to assume that those messages reached us independently. If
+you keep hearing the same thing from different people, you might
+assume it must be true - after all, how else did all those people
+arrive at that conclusion?
+
+Well, of course the answer is that they are just repeating what some
+manipulator wanted them to repeat. The manipulator packages up lies
+into a nice meme, and puts it in front of the right people, and they
+will claim it as their own idea with no independent verification of
+any facts. You might hear something 20 times just because one person
+wanted it to be repeated to you many times. And you start to believe
+it.
+
+Some examples of this phenomenon: "Vaccines cause autism", "flat
+earthers", etc.
+
+** Blog posts
+*** A name by any other name 
+What's in an internet name?
+
+What does it mean to us when we see "bbc.co.uk" or "amazon.com" in a
+browser address bar? Or when we see a social media post under the
+name "shadowDuck1234"? Why are they there?
+
+Before we answer that, let's talk about what a name is in the first
+place. We use names primarily as shorthand to express continuity. It's
+a lot easier to say "Roger Federer" than "The Swiss tennis player
+who's won a bunch of tournaments". 
+
+Names are not always universally agreed upon. While nearly everyone
+thinks of the tennis player and not some other "Roger Federer", each
+person has "Mom" in their address book, and it's millions of different
+"Mom"s.
+
+Computers don't really care about names. In order to tell people
+apart, they could just as easily assign them ID numbers, it works just
+as well. In fact, this is what computers do - you might log into an
+account with your username, but that's just because it's easier for
+*you* to remember. To the computer managing your account, you are a
+number in a database.
+
+So this brings us to an important insight: Names are for brains, not
+machines. Humans need to use names to refer to people and things,
+machines don't. Machines are taught how to deal with names because the
+machines need to communicate with humans.
+
+How do computers deal with names today? Well, it's a bit of a mixed
+bag. The name "amazon.com" in your browser is meant to be universal,
+but a website username "shadowDuck1234" is not - each website has a
+different set of users, and "shadowDuck1234" on one site might not be
+the same person as that username on another site.
+
+Let's talk about the universal names first - those come from the
+[[https://en.wikipedia.org/wiki/Domain_Name_System][Domain Name System]] or DNS. This system was conceived fairly early on
+in internet history, in the 1980's. This was long before the internet
+became popular and began to operate high-value systems. 
+
+The idea is you claim a name, and you get exclusive rights to
+it. Anytime someone sends messages to that name, you receive
+them. That was all well and good when the internet was largely an
+academic project, and there was very little to be gained from
+attacking it. Today, however, there are severe flaws in this system
+that are regularly exploited by scammers. Those exploits are called
+"Phishing".
+
+Phishing is taking advantage of naming confusion. The victim receives
+an email that looks like it's from his bank, but it's not. It includes
+a link that looks like it's for the bank website, but it's not. It is
+just a similar looking name. Some people don't notice the difference -
+the attacker deliberately set up his website to look the same as the
+bank's. Then the victim gives away his secrets to the attacker because
+he thinks he's talking to the bank. Then the attacker uses those
+secrets to steal money from the victim.
+
+The solution to phishing is not some technical detail or hurdle. The
+problem is inherent to universal names. Remember, "names are for
+brains". Brains just aren't good at telling similar names
+apart. Was it "jillfashionphoto.com" or "jillfashionfoto.com" or
+"jill-fashion-foto.com" or "jillfashionphoto.org"? Most people won't
+remember the distinction. Attackers can simply occupy common
+variations and masquerade as someone else. 
+
+The most common recommendation to avoid phishing is "use a bookmark" -
+in other words, remove the universality! Your bookmarks listing is a
+listing of page titles, which are not unique. However among the sites
+you personally visit, they might be. So you can bookmark
+"jillfashionfoto.com" as "Jill's Fashion Photography" even though the
+latter is not a universal name. And it works great! No one can phish
+you because you always reach Jill via your bookmark, and you never
+need to remember her exact Domain Name again.
+
+The conclusion I would like you to take away from this is that
+universal names are irretrievably broken, and that DNS should be
+abandoned.
+
+To reinforce this argument, I'd like to talk about why universal names
+were appealing in the first place. In the 1980's when DNS was
+invented, the internet was not an adversarial environment. Nobody had
+a smartphone in their pocket. So it's not a surprise that the
+engineers chose universal human-meaningful names. Their advantage
+is that humans can remember them, and later use them to
+communicate. Back then if you misremembered a name, you would know
+it, and no harm done. 
+
+Things have changed. Today, not only is phishing very real and
+sophisticated, we don't really need to memorize names
+anymore. Smartphones are ubiquitous. Instead of your friend telling
+you the domain name of a site they want you to visit, they just text
+it to you. You don't need to know the name, all that matters is that
+you're sure the text came from your friend. 
+
+Names are for brains, but our brains aren't using them!
+
+It's time to get rid of the names our brains aren't using.
+*** The dangers of internet promiscuity 
+We are promiscuous. We read content on the internet every day, having
+no idea where it came from, or what the true motive was for creating
+it.
+
+It doesn't always hurt us. A funny video or meme is fairly benign -
+it's safe to assume the motive for producing it was just the
+satisfaction of seeing a creation go viral. It doesn't *always* hurt
+us, but usually it does.
+
+We are waking up to reality now, that powerful interests are
+exploiting our promiscuity. Fake news assaults our social media
+feeds. We're inundated with content specially crafted to manipulate
+our emotions and influence us to serve someone else's interests,
+instead of our own.
+
+Who creates this content? We have no idea, it's been shared and
+reshared so many times, the origin is completely lost. However it's
+safe to assume that powerful interests are better able to get content
+in front of our eyeballs than anyone else. They don't put their own
+name on it, they create content designed to make us angry so that
+we'll spread it ourselves. They'll pretend to be someone in our social
+or political circle so that we'll be less skeptical. Corporate
+conglomerates, media, tech companies, political groups, governments,
+they're all playing this game. In fact, social media apps themselves
+are also specially crafted to influence us. Have you noticed that
+Facebook is a platform for people to make their life appear more
+glamorous than it really is? That is not an accident. It is a tool of
+mass influence and control, designed to set us against each other in a
+crazy game of "who can destroy their future the most, to impress their
+friends today". We've been injecting it directly into our brain, by
+the gigabyte.
+
+We are realizing now that we've been tricked, but we don't know how to
+stop. Social media is our only lifeline to many of our friends now. We
+can't just turn it off. Can we?
+
+Yes, we can. Before we get to the "how", let's go on a journey of what
+life would be like when we've freed ourselves.
+
+* Design
+** Overview
+In order to know who a message is from, we need a way to for the
+message to "prove" it comes from a particular name. Humans understand
+*names*, not cryptographic keys. However names are also personal - the
+name you give to someone might not be the name anyone else gives them
+(even themselves).
+
+So let's say Alice wants to know when a message is from someone she
+calls "Bob". She sets up a programmatic "lock", that will ingest a
+message as data, process it, and if it is from Bob, it will return
+"Bob", otherwise return =nothing= (meaning, "I don't know who it's from").
+
+*Note maybe it won't return "Bob", it could just return =true= and the
+actual name associated with the lock won't be part of the lock program
+itself, but rather somewhere outside it (whatever application is
+responsible for executing the program, would have a mapping of names
+to locks). Then the lock program can just be a predicate.
+
+How can it tell who the message is really from? The basic mechanism is
+digital signatures. In order for the "lock" program to process it
+correctly, the message will need to include (for example):
+
++ The message content
++ a digital signature 
+
+The program will already contain the public key Alice expects Bob to
+use, and it will verify the signature on that message. If it verifies,
+it returns "Bob", otherwise, =nothing=.
+
+These scripts can get more complex than "check if the signature is
+valid for pk_x". It could instead require:
+
++ a message delegating the signing from key x to key y
++ the signature by key x
++ the message content
++ the signature with key y
+
+Then the lock would do the following:
+
++ Put all known revocations on the stack and check to see if x is in
+  the list. if not, continue
++ Do the same check for y
++ Check the signature on the delegation message, if good, continue
++ Check the sig on the message content, if good, return Bob
++ otherwise return =nothing=.
+
+Then if Mallory steals Bob's key y, but Bob realizes this, he can send
+this to alice:
+
++ Message content "I lost control of my key y, don't accept it
+  anymore"
++ signature by key x
+
+When alice receives this, she adds y to her list of stolen (and
+therefore useless) keys. 
+
+Let's say after that, Mallory tries to impersonate Bob to
+Alice. Alice's lock will find key y in the revocation list, and the
+program returns =nothing=.
+
+Now let's say Bob loses control of key x. He can revoke that too, but
+that means he's out of cryptographic methods to identify himself to
+Alice. He'll have to perhaps meet Alice in person (or maybe a phone
+call) to tell her a new key so she can update her lock that grants
+access to the name "Bob".
+
+Now maybe Alice decides she doesn't want to call "Bob" "Bob" anymore,
+she wants to call him "Bob Jones". She can just update the name on the
+lock program, so that it returns "Bob Jones" instead of "Bob".
+
+Generally not *every* message Bob sends is going to require this
+cryptographic proof. The network will provide some guarantees, for
+example, that messages coming from a particular network source are
+protected with temporary crypto keys and we can trust that if the
+first message proves it's bob, the next one from the same source must
+also be bob. It's only when Bob moves to a new place on the network
+that he needs to re-prove himself. So in general the first message
+from any network source will be an id proof, and then after that just
+contents.
+** Script
+:PROPERTIES:
+:CREATED:  [2018-04-05 Thu 17:52]
+:END:
+
+Instead of pk as identity, a script is identity. The script is what
+someone else needs to run to authenticate a message from you. Maybe
+the script hash is considered the identity? The DHT lookup for network
+address is keyed off script hash and also contains the actual script.
+
+Similar to bitcoin script, start with the unlock portion and has the
+lock appended.
+
+Lock: [PK_M] op_transitive op_verify
+
+Verify: [MSG_HASH] [SIG] [PK_W]
+
+Seems burdensome to have to execute this on every message. Maybe some
+caching: if K3 is signed transitively by K1, and no new revocations
+came in then op_transitive is a pure function and memoizable.
+
+Instead of op_transitive that delegates to any key signed by master,
+maybe any script hash signed by master? This could work - the top
+level lock would be something like: take master key, a program and
+signature. If the signature is good on the hash of the program,
+execute the program. Then potentially *that* program could delegate
+again.
+
+Lock: op_dup op_swap23 op_hash pk_m op_verify op_eval
+Unlock: s_sig msghash m_sig [pk_s op_verify]
+
+Maybe eval has a max stack depth argument, with a system wide max of
+say 10.
+
+**** Some mocked up Joy code
+#+begin_src joy
+;; silly script hash function just counts the items in the script
+DEFINE hash == size
+;; silly signature verification just checks that sig+msghash+pk equals 30
+DEFINE verify == + + 30 =
+;; an example master script, master pk is 19,
+DEFINE from-jeff == dup swapd hash 19 verify [i] ["Unauthorized child script"] branch
+;; example delegated script (any size=2 script will work)
+DEFINE sub-script == [6 verify]
+;; example message verification
+12 12 9 sub-script from-jeff
+
+;; multisig verify
+;; pk is the 2nd item in a list [sig pk]
+DEFINE pk = rest first
+DEFINE allowed-keys = [swap pk [=] cons some] swap swons
+DEFINE required-sigs  == [[[rest first] dip =] [some] dip] filter
+#+end_src
+
+*** Other possible scripts
+:PROPERTIES:
+:CREATED:  [2018-04-05 Thu 18:53]
+:END:
+
+**** No delegation
+:PROPERTIES:
+:CREATED:  [2018-04-05 Thu 18:54]
+:END:
+
+[PK_M] op_verify
+
+**** Multisig
+:PROPERTIES:
+:CREATED:  [2018-04-05 Thu 18:57]
+:END:
+
+[Pk_1 pk_2 pk_3] 2 op_threshold_verify
+
+msgHash [sig1 sig3]
+
+the hell does this mean anyway.
+
+*** Issues
+**** Overwriting built in words
+If we allow :define, then an unlock script could include
+#+begin_src
+[:verify-ed25519 [:pop :pop :pop true]] :define
+#+end_src
+and that would make any signature verify.
+
+For a general purpose language, allowing overwrite is fine, but there
+has to be a way to seal that off.
+
+An easy way is to have a :safe-define which doesn't allow overwriting and then
+#+begin_src
+[:define [:safe-define]] :define
+#+end_src
+Which should seal off overwriting
+
+It's not even clear that we need :define at all for validating
+identity scripts. If it was used at all it would just be for
+readability and/or convenience. However doesn't seem like it is worth
+the security risk. Should probably just dissoc :define out of the
+words list after bootstrap, to make the words list read-only.
+**** I don't really understand how script delegation will work
+A script for authenticating messages is a program, in particular, a
+predicate. Given a stack, leave true/false (or anything else that will
+be interpreted as false) on the stack.
+
+The predicate can check *anything*, but generally this will be used to
+check whether a message is authentic.
+
+One part of the script's execution can be to check whether a *script*
+on the stack is authentic, and if so, execute it. And again, how it's
+checked for authenticity is up to the parent script. Generally, at
+some point there will be digital signature checks.
+
+***** Example
+Alice's master script says "A message will be authenticated as from me
+if it authenticates by either:
+
+a) A script that is signed by my master keypair kp_a_master
+b) A script that is authentic according to both Bob and Charlie's scripts.
+
+The a) side is straightforward enough. Alice would sign
+#+begin_src
+[kp_a_signing :verify-ed25519]
+#+end_src
+Later alice sends a message like
+#+begin_src
+"I'm alice" sig-message [kp_a_signing :verify-ed25519] sig-script
+#+end_src
+And her master script will pop the first two items (last two in the
+list above), check the script is authentic, and then execute it on the
+last two items.
+
+The b) side is where it gets hairy.
+***** Discussion
+****** Possible infinite loop and vulnerability
+If Alice delegates to Bob and Charlie's master scripts, those two
+scripts may (and probably will) delegate further. Now, under normal
+circumstances, Alice's master script will short-circuit after
+evaluating the a) side to true and will never need to look at Bob or
+Charlie's. Only in the event that Alice has lost control of her master
+key does the b) side need checking.  However, let's say Alice *does*
+lose her master key, that means from then on, Bob and Charlie's
+delegation routines will need to be checked for every message Alice
+sends (modulo caching). And of course we can see this leading to a
+massively expanding recursive call if Bob or Charlie have similar
+scripts to Alice and lose their master keys too. It can also easily
+lead to an infinite loop, where no message can be authenticated and
+the identities are useless.
+
++ [a -> b,c]
++ [b -> c,a]
++ [c -> a,b]
+
+This does cast some doubt on whether this sort of social delegation is
+worth implementing. The only way it can work at all is if Alice and
+Bob or Charlie have some sort of persistent identity outside this
+system (IOW they know each other in real life). Otherwise Bob and
+Charlie have absolutely no way to authenticate Alice and issue her
+another script, because Alice lost her master key and can't prove it's
+her that's requesting it.
+****** Dodging the infinite loop?
+Let's say Alice Bob and Charlie all have scripts that branch with
+master key or social delegation as in the previous chart. At the
+beginning, all works fine because they all use their master keys and
+don't need to check social delegation.
+
+Let's say Alice then loses her master key. It's still fine because she
+can get a new script from Bob and Charlie who can still be
+authenticated without consulting Alice's script.
+
+However at this point they know they need to stop depending on Alice.
+
+What can they do?
+
+Not much, unless there's a reliable timestamp service. If there is, we
+can be sure of revocation times. Bob can sign a new script with his
+master key that delegates to Charlie and Dave. Later when Bob loses
+his private key, and revokes it, we know the Charlie/Dave script is
+still good because his master key hadn't been revoked yet. This seems
+fragile though, and massively increases the requirements to get this
+running.
+****** Should we bother with social delegation at all?
+If Alice and Bob/Charlie know each other in real life, should Alice
+even bother trying to go forward with the same online identity after
+her master key has been lost? Why not just start over? Bob and Charlie
+will happily vouch that Alice's new identity is the same person as her
+old one. Then again, that "vouching" is basically the same as
+delegating - anyone who's been out of touch with Alice for a while is
+going to need Bob and Charlie's say so that Alice's new identity is
+the same person as her old one. And they'll also need to know that
+Bob/Charlie's signature is good too.
+
+So it would tentatively seem that the recursive delegation risk is
+really inherent complexity in the problem being solved, and not just an
+overly complex solution.
+****** Do we need to trust someone else's delegates?
+What if someone you meet has their script delegated
+to people you've never heard of? It's no worse than having terrible
+security with regular keys, or just having a master script of ~[true]~
+(where anyone can impersonate them). If they have obviously bad
+security, what should you do? Well, you could insist they sign with
+~sk_a~ and just locally replace their script with ~[pk_a
+:verify-ed25519]~. This is basically you making up a new identity for
+them, but still can't force them to use good security (they could post
+sk_a in a public place).
+
+****** How do we know a replacement script is meant for Alice?
+If Bob/Charlie are called upon to rescue Alice, how exactly do they
+specify that the new script they're signing is for her use, and not
+someone else's? A: Presumably the new script has a public key in it,
+and Alice can show Bob/Charlie in person that it's hers, otherwise
+they shouldn't sign it.
+
+****** Is it possible to hide who Alice delegates to?
+I believe so, this is essentially what MAST does in bitcoin.
+
+The unexecuted branches of the script can be hidden.
+***** Another way of looking at it
+Dave doesn't have to accept Alice's script as-is. He can just throw
+away the b) branch and supply his own. Basically saying "You better
+give me a signed message with your master key, or if you lose it, go
+get signatures on a new one from our mutual friends Frank and Gary."
+
+That would kind of blow away the notion of "script hash as identity".
+
+In fact this is kind of a big deal. "Script hash as identity" and "Bob
+decides how to identify Alice" are mutually exclusive. So it's probably not the script
+*** TODO Opcodes
+:PROPERTIES:
+:CREATED:  [2018-04-05 Thu 21:02]
+:END:
+
+**** TODO verify
+:PROPERTIES:
+:CREATED:  [2018-04-05 Thu 21:02]
+:END:
+
+Verify signature
+
+Message, pk, sig -> bool
+
+*** TODO Delegation scripts
+:PROPERTIES:
+:CREATED:  [2018-04-10 Tue 12:38]
+:END:
+
+A script can not only limit authentic messages as being signed by
+certain keys, but also limit it to other scripts.
+
+
+**** TODO Eval
+:PROPERTIES:
+:CREATED:  [2018-04-10 Tue 12:48]
+:END:
+
+Stack based langs would need some kind of eval function, eg:
+
+[ 1 2 + ] dup eval swap eval + .
+
+Results in 6.
+*** key types (prot against loss, cost theft by stranger, by trusted, cheap implement)
++ master unenc in vault, safe deposit box (8/8/2/2)
++ master encrypted w memorized pw (4/9/8/2)
++ Memorized low-entropy pw (6/7/7/7)
++ 3-of-5 trusted friend multisig (8/7/1/8)
++ hardware token no backup (3/5/2/3)
++ software token no backup (2/3/2/8)
+
+Protection against theft is more important than loss for most people -
+you can always start over with a new identity (it's cheap for your
+friends to verify a new digital identity in person). But theft can be
+catastrophic.
+
+The more your identity is purely digital, the more loss protection you
+need (it may be catastrophic to have to rebuild reputation after a
+loss)
+**** Regarding the "memorized low entropy pw" (brainwallet)
+There are several schemes for doing this. The basic requirement is
+that the low-entropy pw is stretched using a very expensive KDF. You
+could use something like scrypt, *if* you have fast hardware to derive
+the key yourself just as cheaply as an attacker could. The problem is
+most people don't, they only have a commodity laptop or smartphone.
+
+So the idea is to outsource the computation to someone else, and pay
+for the compute resources. You do it once when generating the key, and
+possible more times if the key or its subordinate key is lost.
+
+***** Vitalik's EC method
+[[https://blog.ethereum.org/2014/10/23/information-theoretic-account-secure-brainwallets/][This one]] sounds the easiest and simplest, although I have no idea
+about the security:
+
+#+BEGIN_QUOTE
+Now, there is one clever way we can go even further: outsourceable
+ultra-expensive KDFs. The idea is to come up with a function which is
+extremely expensive to compute (eg. 240 computational steps), but
+which can be computed in some way without giving the entity computing
+the function access to the output. The cleanest, but most
+cryptographically complicated, way of doing this is to have a function
+which can somehow be "blinded" so unblind(F(blind(x))) = F(x) and
+blinding and unblinding requires a one-time randomly generated
+secret. You then calculate blind(password), and ship the work off to a
+third party, ideally with an ASIC, and then unblind the response when
+you receive it.
+
+One example of this is using elliptic curve cryptography: generate a
+weak curve where the values are only 80 bits long instead of 256, and
+make the hard problem a discrete logarithm computation. That is, we
+calculate a value x by taking the hash of a value, find the associated
+y on the curve, then we "blind" the (x,y) point by adding another
+randomly generated point, N (whose associated private key we know to
+be n), and then ship the result off to a server to crack. Once the
+server comes up with the private key corresponding to N + (x,y), we
+subtract n, and we get the private key corresponding to (x,y) - our
+intended result. The server does not learn any information about what
+this value, or even (x,y), is - theoretically it could be anything
+with the right blinding factor N. Also, note that the user can
+instantly verify the work - simply convert the private key you get
+back into a point, and make sure that the point is actually (x,y).
+#+END_QUOTE
+
+**** Examples
+***** 1
++ Single master in physical vault
++ hardware token at home
++ Software token on phone
+***** 2
++ Single master in physical vault
++ Multisig 2/3 friends
+**** Questions to ask
++ Do you intend to build a reputation online and keep your real world identity secret?
+  Yes: vault
++ Do you have convenient access to physical security? (fireproof safe or safe deposit box)?
+  Yes: favor physical keys
++ Do you know 3 people you trust not to lose their identity, or collude to steal your identity?
+  No: forget social keys
++ Are you confident you can memorize a single word with periodic reminders?
+  No: forget brain keys
++ Can you spend $50/yr on security?
+
+***** College kid
+No, no, yes, yes, no. 2/2 friend/word
+
+***** Upper mid-class professional
+No, yes, yes, no, yes. 2/2 vaults
+
+***** DNM dealer
+yes, yes, no, yes, yes. 2/3 vault/word
+
+** Distributed hash tables
+:PROPERTIES:
+:CREATED:  [2017-12-22 Fri 16:48]
+:END:
+
+Use dhts to map several things
+
+*** PK to network addresses
+:PROPERTIES:
+:CREATED:  [2017-12-22 Fri 16:49]
+:END:
+
+Allows anyone to lookup where on the network a given pk owner can be
+reached. Multiple addresses for multiple devices.
+
+** Streams
+*** Overview
+A stream defines a content *source* accessible with a particular
+symmetric key. For example, family photos that you wish to share with
+a limited set of family members. You can add more photos to the stream
+at any time, it stays open indefinitely. (Whether they'll support
+explicit "close" is undecided, I'm not sure if that's actually
+necessary).
+
+A stream is particular to several things:
++ Your current working auth key
++ An encryption key that allows only authorized people to view the content
++ a set of contents that you wish to send to those people
+
+Users interact with the stream concept probably only when sharing
+content, not viewing it. For example, on your mobile phone you'd
+select some photos, "Share", "Telepathy Stream", "My family
+photos". In other words, content that is semantically related (say,
+photos from the same event) might be split up into different streams
+because of different access controls (you might not want to withhold
+some of the photos from some members of the group). Streams have
+nothing to do with how the data is viewed or presented, only how it's
+transmitted and decrypted. Information on how the data should be
+presented may be contained in the stream data (For example, which
+event the photo is from, for grouping purposes when it's displayed)
+
+Do streams need their own i2p destination? Probably not - if you don't
+want to let anyone know two streams are from the same person, use
+different identities (which would necessarily have different
+destinations)
+
+There needs to be some mechanism by which intended recipients of a
+stream are made aware of its existence.
+
+The "first contact" will be an i2p destination which presumably will
+authenticate the peer and tell them which streams they have access to
+and give them the keys to decrypt.
+*** As they relate to content
+A stream 
+*** Perfect forward secrecy
+It would be nice if there was a way to achieve this, as most modern
+message protocols are supporting it.
+
+I believe this can only be done interactively though, whereas this
+stream design is non-interactive. It would be unfortuate, especially
+in a design where encrypted data is backed up onto other users' disks,
+if keys were compromised much later, that the other users would then
+be able to decrypt the content.
+*** Deniability
+It would also be nice if this was possible, but again it depends on
+interactive key exchange.
+
+Perhaps the best way forward is to have a protocol like OTR/Signal on
+top of a swarm protocol. It would be less bandwidth and storage
+efficient, but better security properties (If Alice Bob and Charlie
+are messaging in a group, Charlie might be storing the same message
+encrypted with Alice's and Bob's keys). This would basically be
+treating the other swarm members as MITM (who are required to be unable
+to attack these protocols anyway).
+** Networking
+
+*** PK -> network address (IP) lookup
+Distributed hash table, where each entry is the network location info
+for the given PK. (could include lots of info like DNS, and can also
+include addresses for multiple devices if the user is re-using the
+same key on more than one device)
+**** Design
+***** Setup
+Alice wants to send a message to Bob. She has Bob's master public key
+(given to her either by Bob directly or via some sort of introduction).
+***** Constraints
+In order for a message to reach Bob, and remain private, we have the
+following constraints:
+
++ The message must be encrypted to a (ephemeral) key that only Bob
+  has.
++ Bob does not have his master private key at hand, he's using a
+  working keypair signed (transitively) by his master key.
++ Alice must have Bob's network address for the message to reach Bob
+  in particular (assume it cannot be broadcast to everyone on the
+  internet).
+
+So Alice needs to query the DHT network for Bob's master public
+key PK_B. In response she should get:
+***** Response
++ Current network address for PK_B
+
+*** Relaying
+It would be nice if sending a message to a large group didn't require
+the sender to connect directly to all the peers. I'm not sure if
+bittorrent protocol (or something like it) would work here.
+
+*** Pull vs push
+When publishing content it's probably better that the subscribers ask
+for it rather than you trying to reach them. The bittorrent-like
+protocol should work.
+*** To build on i2p or a new network?
+I won't pretend I have any kind of expertise on mix networks, but I
+don't want to dismiss the possibility that we can do better than
+i2p/tor.
+
+I am skeptical of Tor because it's not trustless, even though it
+"works" as long as the Tor project organizers are honest. 
+
+I have heard that there are attacks on the totally distributed i2p
+that don't exist on Tor, but I don't know what they are.
+
+**** The ideal private network
+***** A listener on your internet connection gets nothing
+They cannot derive any information at all - not what you're
+saying/hearing, not who you're saying/hearing it to/from, not whether
+you're saying/hearing anything at all.
+
+The only way I can think of to do that is if the traffic entering and
+exiting your node was indistinguishable from random. That's tall order.
+
+To explore this, let's think of a tiny network of 3 participants
+(alice/bob/charlie) and Mallory who can see all the traffic between
+them. How could they route messages to each other such that Mallory
+cannot determine anything from either the contents, addressing data,
+timing, or anything else? And such that the participants cannot tell
+which underlying IP address belongs to the other two?
+
+First of all we have to assume that our participants are not always
+talking. So if we only send messages when people are actually talking,
+Mallory will know when people are not talking (if no packets are being
+broadcast, no one can possibly be sending or receiving messages). So
+that violates the requirements.
+
+What if packets were sent at random from each node to some fraction of
+the others (in our case, 100% because it's tiny).
+
+For example, Alice is sending 1 packet per second, all the
+time. Whether each packet goes to Bob or Charlie, is random. If Bob is
+chosen, and Alice has content that she wants Bob to get, it's bundled
+up and sent. Otherwise, dummy data is encrypted and sent.
+
+Mallory cannot tell who Alice is talking to, or if she's talking at
+all. If Alice isn't talking, she still sends 1 packet per second.
+
+This would cause some latency and throughput hits to Alice's
+connection but that seems to be unavoidable. Also, Bob would know
+Alice's IP address if it worked this way, which violates the
+requirements.
+
+In order to hide Alice's IP address from Bob, she would have to
+randomly route packets through Charlie, so that from Bob's point of
+view, half of the packets from Alice arrive from one IP address, and
+half from the other.
+
+So Alice would be sending at random:
+
++ to Bob direct
++ to Bob routed through Charlie
++ to Charlie direct
++ to Charlie routed through Bob
+
+Unfortunately this naive approach may not be good enough, it may be
+possible from timing analysis for Bob to get a good idea of which IP
+address belongs to Alice. For example, routing through Charlie should
+take longer (all else equal). It's not a certainty, but just leaking
+statistical likelihood is bad and violates the requirements.
+
+So one obvious problem with this model is that the throughput scales
+with the inverse of n (number of participants), assuming ALL other
+nodes are in everyone's anonymity set. If there were 100 nodes, you
+could only send a packet to your destination directly, 1/100 times.
+
+You could improve this by having packets routed one hop to the
+destination, then all the packets would eventually reach the
+destination and throughput is restored. However the problem there is
+what happens if 10 if those nodes are owned by Mallory?
+
+She'll see that a lot of packets are coming to her nodes from ip1, and
+destined for ip2, so ip1 is likely to be talking to ip2.
+
+Unless of course, Alice just fakes it when she's not really talking to
+Bob at all.
+
+This is starting to sound a lot like poker, where the node saves
+resources by bluffing. It keeps Mallory honest.
+
+So how would a node play this poker game on a large network, say 1000 nodds?
+
++ when idle route to random destinations (with randomized number of
+  hops). First hop doesn't have to be the set of all 1000 nodes. It
+  could be 10 nodes chosen at random, with 3 hops could plausibly
+  reach all 1000. 
+
+
+** UI workflows
+*** Contacts / Address Book
+**** Identify
+***** Description
+You have a public key and want to know more about who it might belong to.
+
+In the address book, an unidentified public key is shown as a hooded
+figure with the face obscured, with the intention to convey that we do
+not know who this party is.
+
+All unidentified keys are shown with the same avatar, on purpose. If
+you want to differentiate one unidentified key from another, you must
+identify one of them.
+
+Click on the obscured face area or the "Identify" link to begin.
+
+A list will be displayed of what is known about that identity from
+your web of trust. If any of your direct contacts (who you've
+authorized to identify keys) have names for this key, those are
+presented.
+
+The 2nd to last entry is the key's self-identification, if
+any. clicking this brings up a warning "Have you verified in person
+that this key really belongs to Foo? if not, this could be an attacker
+pretending to be Foo. If Yes, type: VERIFIED to continue
+
+The last entry will be "I know who this is" where you can
+fill in a new contact card from scratch.
+
+Clicking one of those entries will bring up a new Contact form with
+any information we got already filled in.
+
+***** Examples:
+
+****** 9c1f8398f5a92eee44aee58d000a4dc1705f9c25e29683f7730215bc1274cff1
++ Alice Smith calls "Joe"
++ Bob Jones calls "Joe Bloggs"
++ Calls himself "Joe the Berserker"
+
+****** b801a6bd6f4dc2818c8fe86e417a340541008c69317f6265a20055f036587787
++ Alice Smith calls "Online Shopping"
++ Bob Jones calls "Amazon"
++ Google calls "Amazon"
++ Calls himself "Amazon"
+
+***** Possible optimizations
+If you already trust one or more contacts to identify other keys, and
+the trusted identifiers use the same name as the key presents for
+himself, automatically add the Contact with that name (assuming no
+conflicts).
+
+**** Meet (self-introduce)
+***** Description
+The presumption is that the two people exchange names face to face,
+and that when the digital identities are shared, they'll be be checked
+for accuracy.
+***** Technical challenge
+Exchange keys without establishing a direct network connection
+****** Possible method 1
+The users tap their phones together a few times, and the timings of
+the taps are recorded via accelerometer on the phones. Since they're
+tapping together, the timings should be identical on both. Use those
+timings as a lookup (or DH exchange) in a distributed table to match
+the two together.
+
+Then when a match is found, both devices can get each other's network
+address and connect directly. A random number/image is displayed
+on-screen to both users, so they can verify they've connected to each
+other, and not an attacker who's capturing the timing info via video
+or audio surveillance.
+
+Might still be vulnerable to MITM, if the attacker can get both the
+timing info and occupy the network between the two parties trying to
+connect.
+****** Possible method 2
+QR code display/scan.
+****** Literature
+[[https://www.cylab.cmu.edu/_files/pdfs/tech_reports/CMUCyLab11021.pdf][safeslinger]]
+*** Browser
+**** Identify
+***** Description
+Works similarly to Contact/Identify
+**** Passwords
+Password input fields are disabled by default when the site is not
+identified (anti-phishing).
+
+Sites that use this protocol natively shouldn't ask for passwords
+anyway (since they'll be able to identify you using the same protocol)
+**** Legacy websites
+How to identify if there is no persistent public key? Could possibly
+use ssl key even though those do change periodically. The client would
+have to re-identify the site each time it changed its key.
+** API
+*** Authentic? function
+pk, message => boolean
+*** 
+** Identify all the things
+Map from human-meaningless to human-meaningful (and back)
+
+Maybe call it "universal address book". It will unify what is today
+done very piecemeal.
+
+*** Things that we want identified
+**** Pubkeys
+obviously. Who holds the corresponding privkey?
+**** A URL
+What content is at that URL? For example a link to a bug tracker or
+support ticket system. The url has the host and a ticket number in
+it. You might want an address book entry if you're the person
+reporting the issue or the person fixing it.
+**** Cryptocurrency address
+Who paid me? Who did I pay?
+**** A hash
+What content is this the hash of?
+**** A street address
+Who or what is at that address?
+***
+*** Ad hoc addressbooks we can replace
+**** Browser bookmarks
+**** Crypto wallet address labeling
+**** Actual address book or "Contacts" apps
+**** Git branches and tags
+How would this work? Would git binary implement a protocol to share
+addressbook entries, that all happened to map hash<->branch/tag ? Git
+has its own networking methods.
+**** Functions? Programs?
+*** What exactly does it provide?
+**** Is it a service that listens on a network port?
+It could be. Sharing of addressbook entries is a great feature, but it
+would have to be done carefully - only allowing remote access by
+authorized parties.
+
+Might be better to make it a push model - browser bookmarks are not
+available over the network for good reason. The default is to remain
+private, if you want to share, you explicitly share.
+
+However there is a good use case for "make public" and allowing
+network connections to fetch it.
+
+***** What kinds of requests?
+Since the human-readable names are not universal, I would expect the
+primary use case to be putting the non-readable in the request and
+getting a response with name and other info.
+
+However,
+
+*** Does it make sense to also 'introduce all the things'?
+How would you communicate to someone which other protocol you wish to
+use to communicate with them, in a decentralized way? You can't just
+say "bitcoin" or "http" because those words might mean different
+things to different people. But protocols don't have public keys, and
+it's not even possible to prove that software perfectly implements a
+protocol.
+
+A message could say something like, "'Bitcoin' is what i call the
+protocol implemented by the software at x network location, whose
+source hashes to y." The problem there is, there may be lots of
+versions of that software that implement the same protocol. And even
+then, it's possible for a bug to cause two versions to actually not be
+the same protocol, even if they were intended to be.
+
+A curated list of hashes that are known to be software that speak the
+same protocol, might be a good way to identify the protocol. Or if
+there's a spec for the protocol, that might be sufficient- leave the
+decision about what implementation to use for a different introduction?
+
+Or maybe an introduction should just pick an implementation and the
+introducee can switch to a different implementation later, if he
+chooses.
+
+The difficulty here is that it's not possible to capture the essence
+of the behavior - the same thing goes for programs or functions. How
+would you introduce someone to the quicksort function, when the intent
+is for you to pass your trust of that function (to sort things in n
+log n time) to someone else?
+** old Key management
+*** Permanent keys
+An identity is associated with a public key. Shorter lived pks can be
+used in a hierarchy (Alice uses a key signed by a key signed by her
+master key)
+**** Discussion
+As far as I know, SSL has no continuity at all, except by the CA. In
+other words, a website's identity expires, and they just get a new one
+from the CA. They do NOT sign a message with their old key pointing to
+their new one. We can definitely do better than this, whether keys
+expire or not.
+
+It's unrealistic to expect that master keys will never be
+compromised - they will be. So what is the key holder to do in that
+situation? They will have no choice but to rebuild their identity
+using a new secret (verifying with people in-person). I'm not sure
+it's possible to rebuild an online-only identity this way, there's
+just no way for anyone to tell the new key from an impostor (eg if
+satoshi lost his keys, he'd have a real hard time re-establishing his
+identity, just ask Craig Wright - nobody believes him for good
+reason).
+
+***** Key expiration
+What's the purpose? If an attacker sees your private key, AND for
+whatever reason waits a year to do anything with it, I suppose
+expiration is helpful. On the other hand, it can also be harmful - if
+you forget to sign a new key with the old one before it expires, then
+you're stuck. I just don't see the value in this mechanism.
+
+If you are compromised and don't know it, you find out when the
+attacker takes over your identity. This happens regardless of
+expiration. When more than one party has access to the key, whoever
+moves first wins control of the identity.
+
+It's just a question of whether you should accept "pointer messages"
+(a signed message that says "i'm not going to use key X anymore, i'll
+use Y"). If the subject was compromised, you don't know if it's him or
+the attacker. Generally I'd think these messages should not be
+accepted - err on the side of losing identities forever rather than
+talking to the wrong person.
+
+What if you think you may have been compromised but you're not sure?
+You could immediately sign a revocation, but then what? You could sign
+a "pointer message" first but that still doesn't differentiate you
+from the attacker. Your audience will know there was a race against an
+attacker but they won't know who won.
+
+*** Encryption
+We may not need to necessarily include encryption - the transport
+(i2p) might take care of that for us.
+*** Web of trust messages
+Uses working keys as described above
+
+1. PK_B : "I name Thing_A as 'Alice'" (can also include other contact info)
+3. PK_B : "I can decrypt messages to PK_{B'}"
+4. PK_B : "I no longer wish messages to be encrypted to PK_{B'}"
+5. PK_B : "I name group [ PK_A PK_B PK_C ] as 'Jones Family'"
+6. PK_B : "I no longer consider Messages signed by PK_A as authentic"
+7. PK_M : "I name PK_S as representing the same party as PK_M"
+8. PK_M : "PK_Compromised no longer represents PK_M"
+
+
+**** Making sense of all the messages
+
+***** Storage
+Storing on disk could be as simple as just serializing a list of
+messages and dumping them in a file.
+
+Individuals would probably need no more than that. Large businesses
+with many users will need to track revocations and possibly other
+messages, which might require a more sophisticated db.
+***** Materialization
+In order to make sense of a bunch of saved messages, some processing
+is needed.
+
++ Before anything else all key revocations need to be processed (an in
+  memory set might suffice).
+
++ In order to know if a message is signed by a key authorized by a
+  master key, we need to trace a path from the key to the master. An
+  in-memory mapping of key to master might suffice for this. At
+
+
+
+
+**** Message specific details
+***** type 1 (name-pk)
+Contains a public key and a name, signed transitively by the owner's
+master.
+
+**** Script language?
+
+Similar to bitcoin script, which sets up the conditions for spending
+and then provides those conditions. We could set up the conditions for
+various things:
+
+1) A message to be considered authentic from some identity (master
+   pk).  although, this has a chicken/egg problem, doesn't it? How
+   would you know the provided script was authentic?
+
+   You could use this to set up different levels of security for
+   different parties you communicate with.
+
+   For your bank
+
+   1)
+*** Address books
+An individual entry in Alice's book for Bob would consist of
+
+1. Message type 3 from Bob naming his master key.
+2. Message type 1 from Bob naming themselves OR Alice naming Bob
+   something else
+4. Optionally 1 or more type 4 or 5 messages from Bob (type 5 means
+   the type 4 for that key can be discarded)
+
+*** Key revocation
+If Bob loses his key, he can create a new one as described above,
+using a chain of keys leading back to Bob's master key. If the key is
+truly not recoverable by anyone, revoking the lost key may not be
+necessary. If the key is possibly recoverable by anyone else, a
+message of type 7 should be included.
+
+Alice's address book originally contains
+
++ type3 PK_B: "My master key is PK_Master"
++ type2 PK_A: "I name PK_B as Robert Smith"
+
+Alice receives these new messages:
+
++ type8: PK_B-Master: PK_B-Signing represents PK_B-Master
++ type8: PK_B-Signing: PK_B2 represents PK_B-Signing
+
+Her address book, seeing that the type8 messages above arrived later
+than her original entries, and that the master key that signed them is
+the same one Bob's original type3 message referred to, automatically
+creates
+
++ type2: PK_A: "I name PK_B2 as Robert Smith"
+
+Using this type of addressbook based revocation (where keys aren't
+really the thing being revoked, it's the name on the key), we might
+avoid having to bake revocation checking into script
+verification. That would be bad, because then messages could not be
+authenticated solely with self-contained proof. The verifier would
+also need to check the network to see if a revocation exists.
+
+Are there attacks which are overall worse than pgp key revocations?
++ Preventing the victim from broadcasting the revocation
+  message. Might be no worse - depends on how we distribute the
+  message. Could always use a DHT or some such, so that the victim
+  only needs to get the message out to one other party, and it spreads
+  from there. Not really worried about this
++ Mallory compromises alice's 2nd level key, revoke her low level key
+  and replace with Mallory's. Impersonate until Alice realizes her 2nd
+  level is compromised, and uses her master to revoke the 2nd. This is
+  no worse than compromising the low level key. Same as pgp.
+
+However this comes with its own set of issues:
++ After receiving a type8, what do you do with the previously-received
+  messages for that name? A naive solution (that might be ok) is to
+  not relabel anything already received and only apply the changes to
+  new messages.
+
+* Application
+The smartphone is the primary use case, but a desktop app might be a
+good prototype (easy to develop and iterate).
+** Relationship lifecycle
+*** Meet
+**** Introduce
+***** Mutual in Meatspace
+Tapping phones together (ideally) or scanning qr code exchanges
+self-identify info. 
+***** Pull Online
+Browsing public posts (in a forum, blog etc) of an unidentified
+person, you can add their self-identifying info to your addressbook
+(modifying whatever you want). That will change the displayed name
+from a pubkey hash (or a robohash or just an anonymous icon) to an
+actual name.
+***** Paid Push Online
+You can accept interruptions to accept someone into your addressbook,
+for a fee. You set the minimum fee. For example, $5 paid by bitcoin
+lightning network.
+**** Exchange 
+***** Text Messages
+***** Fora
+Decentralized fora are difficult - when each person has a different
+view of who's participating, how do you display that?
+
+Let's say there are 3 people in the conversation, Alice, Bob,
+Charlie. Alice follows Bob and Charlie and vice versa (but Bob and
+Charlie are unknown to each other).
+
+Alice: I like broccoli
+Bob: I hate it, it causes cancer.
+Charlie: So do I
+Alice: What? it doesn't cause cancer!
+
+In this case, Charlie sees Alice's last message but not the message
+she's responding to. If we think of the thread as a tree structure, we
+can just lop off any nodes sent by someone unknown to us, and then we
+won't see any replies even if they're from someone we know. Or we can
+show the whole tree. Or we can show the unknown nodes as collapsed and
+let the user manually open them.
+
+I lean toward the conservative - don't show anything from unknown
+users. If Alice wants Charlie to see her convo with Bob, she can
+explicitly recommend his content. If Charlie accepts, Bob's nodes will
+appear.
+
+Is this a good model for ALL conversations? Obviously, just two people
+is a very simple case where the connection must be mutual or else no
+convo can take place.
+
+Can the entire communication history of the world be modeled this way?
+
+A tree might be insufficient, graph perhaps?
+
+Do we even want a "public" forum? If not, how do we handle people who
+are invited in the middle of a conversation? In "real life" we have to
+re-explain what was said to catch people up. The digital equivalent
+might be unlocking a particular tree node (and its children) so they
+can catch up.
+
+How this would work with encryption and deniability, though, I have no
+idea. You wouldn't want to be having a private convo and say something
+you don't want Alice to hear, and then have one of the participants
+invite Alice and give her access to what you said. When you sign a
+message it should probably be for "their" eyes only (whoever you
+believe your audience is).
+***** Money
+***** Media
+* Priorities
+** Get socially connected
+*** INPROGRESS Get a bitcoin vps
+- State "INPROGRESS" from "TODO"       [2019-04-18 Thu 08:46]
+*** Get burner phone
+*** Register twitter
+*** DONE Buy domain telepathyk.org (if avail)
+- State "DONE"       from "INPROGRESS" [2019-04-24 Wed 10:50]
+- State "INPROGRESS" from "TODO"       [2019-04-24 Wed 10:49]
+Also got telepathyk.com - namecheap
+** INPROGRESS [#A] Scripting language (called kcats for now)
+** Scripting language identity features
+*** TODO Signing and verification
+** p2p protocol
+*** Messages for exchanging identities, signed and encrypted content
+** content sharing p2p protocol
+based on bittorrent? similar to zeronet.io.
+** i2p(d) integration
+*** Create destinations based on identity
+** mobile UI (android)
+* deprecated docs
+** Secret key material
+Ideally each person would generate a random seed once.
+
+1. Generate a random seed
+2. Derive master keypair from seed to represent an identity (a person
+   can derive multiple identities from the same seed)
+3. Generate random signing keypair, signed (message type 8 below) by
+   master key. Save or publish signed message
+4. Store seed safely away, destroy master secret key.
+5. Generate working keypair, signed by signing key.
+
+*** If working key is lost/compromised
+1. Retrieve signing key
+2. Generate new working keypair.
+3. Sign message with signing key revoking old key
+4. Sign new working key with signing key.
+5. Put signing key away in a safe place.
+
+*** If signing key is lost/compromised
+1. Retrieve seed
+2. Derive master key
+3. Generate new signing key
+4. Sign message with master key revoking old signing key
+5. Sign new signing key with master key
+6. Store seed away safely
+7. Destroy master key
+
+This should be done very carefully - using offline hardware, etc.
+
+
+** Spike: Secret sharing
+Goal: to protect against key loss by distributing key material to
+friends such that collusion is necessary to reconstitute the key
+without the owner's permission.
+
+Idea is to split up a master (or signing) private key and distribute
+it to trusted friends with Shamir's Secret Sharing algorithm.
+
+*** Split the signing key
