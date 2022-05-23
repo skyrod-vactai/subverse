@@ -4,25 +4,25 @@
 *** Elevator pitch
 Two major goals:
 
-Agency:  Give the individual control over his identities and how he
-manages his relationships with other identities. Make identification
+Agency: Give the individual control over his communication and how he
+manages his relationships with others. Make communication private,
 programmable, reliable, and seamless.
 
 Give the user control over who can put content into his mind. No one
-can do that without permission. No russian bots, shills, or spammers. 
+can do that without permission. No bots, shills, or spammers.
 
 Bypass censorship. Allow the user to send messages to anyone who wants
 to receive them.
 
-Customizability. Allow the user to alter the software that acts on his
+Customizability: Allow the user to alter the software that acts on his
 behalf, as he sees fit. Provide a simple and appealing programming
 interface, and allow customizations to be shared the same way as any
 other content.
 
-True privacy as with Telepathy: Treat information as the valuable
-commodity that it is. Leak nothing whatsoever - no third party can
-tell whether you're communicating with anyone at all, much less who
-you're communicating with or what you're saying.
+Telepathy level privacy: Treat information as the valuable commodity
+that it is. Leak nothing whatsoever - no outside observer can tell
+whether you're communicating with anyone at all, much less who you're
+communicating with or what you're saying.
 
 *** Properties
 **** Unidentified parties are filtered out
@@ -51,7 +51,7 @@ producers that it already has a relationship with.
 
 Under a codified identity system, what happens is:
 
-+ You indicate to your address book that it's ok for Google to
++ You indicate in your address book that it's ok for Google to
   introduce other parties to you without you having to manually
   approve each one.
 
@@ -61,7 +61,7 @@ Under a codified identity system, what happens is:
   address book notes that each one was introduced to you by Google as
   a result of your shoe search, as you gave it permission to do. The
   address book might, by default, put an expiration time on those
-  contacts of perhaps a few days, after which they are removed.
+  contacts of perhaps a few weeks, after which they are removed.
 
 + Google introduces you to the shoe providers also. Google's address
   book entry for you may contain extra details about what you were
@@ -84,9 +84,6 @@ Under a codified identity system, what happens is:
   you (and optionally remove all existing introductions from google
   from your address book). After that your messaging system will not
   accept any more ads.
-
-
-***
 
 **** By default, you control the experience
 ***** You can delegate the experience to be controlled by someone else
@@ -134,8 +131,6 @@ should get to decide what content is put in front of you?"
 I don't know how anyone can seriously suggest any answer to this
 question, except "YOU". Of course you might choose to delegate that
 power, but ultimately that power must be yours.
-
-
 
 **** Telepathy is better than a whisper 
 Both obscure the message, but telepathy also obscures the metadata
@@ -196,7 +191,7 @@ Dave] - Uncheck any you're not sure
 + Forward secrecy (compromise of SK doesn't help attacker decrypt
   previously sent msgs)
 + Programmable
-
++ Transience - some data is a liability and should not be kept
 ** Services enabled by authenticated messages
 *** Certificate Authority
 Let's say Alice is a web user and Bob is tech-savvy friend. Alice
@@ -584,6 +579,7 @@ life would be like when we've freed ourselves.
 
 * Design
 ** Overview
+*** Identity
 In order to know who a message is from, we need a way to for the
 message to "prove" it comes from a particular name. Humans understand
 *names*, not cryptographic keys. However names are also personal - the
@@ -662,6 +658,111 @@ also be bob. It's only when Bob moves to a new place on the network
 that he needs to re-prove himself. So in general the first message
 from any network source will be an id proof, and then after that just
 contents.
+*** Messaging
+At the application level, telepathyk will resemble Signal or Whatsapp
+or any other messenger. The main screen will be a list of contacts,
+and clicking on one will go to your conversations with that contact.
+
+One major difference from Signal etc is that among the contacts will
+be programs you can communicate with. Many of those will be local
+programs - your own agents that act automatically on your behalf. They
+do things like filter incoming messages, notify you about important
+messages, forward information to other people, add items to your
+calendar, make payments, etc.
+
+**** First communication
+This can be with an in-real-life contact, or someone introduced online
+via a service like google.
+
+When you are introduced, several pieces of info need to be collected:
+
++ What you want to call this contact
++ Use a fresh identity?
+
+  If you use a fresh identity, the app will automatically track it -
+  that identity will only be used with this contact.
+
+  If you message a contact with whom you've used multiple identities,
+  you'll need to choose which one you're going to use this time (or a
+  fresh one).
+
+  The main window will let you swipe left/right to switch
+  identities. There is a search bar at the top which searches all
+  messages, for all identities.
+
+  Examples
+
+  
+**** Forget/remember
+By default all new conversations will use fresh identities. But there
+are some contacts (like google) that you don't want to recognize you
+from earlier (and be able to tie together all your interests).
+
+So there is a "forget me" function (perhaps a button) that will start
+a new conversation with the existing contact.
+
+If it turns out later that you need the contact to remember you, there
+will be a "Remember" function that will send a proof to the contact
+that you control both the new identity and whichever identity had the
+old conversation you want them to remember.
+
+This will result in a rather large number of public keys being
+created. It is a bit more complex to manage but it should be possible
+to hide the complexity from the user.
+
+When Alice introduces you to Bob, which key do you give him? Alice can
+just give him the one you gave her. Or she can ask you for a new
+one. Probably the most secure is for Alice to be the middleman for a
+Diffie-Hellman between you and Bob where you negotiate keys for the
+conversation and then exchange pubkeys. Sure, Alice could MITM you and
+for example, pretend to be Bob. But that's always the case. You have
+to trust the introducer.
+
+Let's say Bob is internet-famous. How do you know Alice is introducing
+you to the "real" Bob? It's up to Bob to prove to you he controls the
+"famous" identity. A simple method would be for you to send Bob a
+secret random large number (eg 1352471928206147350861) at his "famous"
+identity, and in your introduction session Bob echoes back the random
+number to you. Then you're satisfied it's him but you can't prove it
+to anyone else. (To understand why you can't prove it to anyone else:
+Since both you and Bob knew the secret number, the echo reply could
+have come from either you or him. The only person who is sure it
+didn't come from you, is you. So it doesn't work as proof for anyone
+but you).
+
+Of course, Bob could just skip all this complexity by just using his
+famous key in your introduction. Generally speaking, the "remember"
+procedure will only be needed when you change your mind later about
+remaining anonymous.
+**** Managing identity
+Do we really want to create separate i2p destinations (and
+client/server tunnels) for every identity? That gets expensive. How
+long do we keep those?
+
+I believe we can keep the keys for destinations as long as we want,
+but we can shut down tunnels for those that are unused (and perhaps
+spin them up occasionally just to see if there's any new messages).
+
+How many tunnels we can have active at once is something I'll have to
+look into. But I suspect that for most users, this limit will not be a
+problem.
+**** Shopping example
+
+Google
+#+begin_example
+Me: shoes
+
+Google: Let me introduce you to contacts who know about "shoes"
+
+Google: Joe's shoes [long description] [meet button] 
+...
+#+end_example
+
+You click the =meet= button. A popup appears that shows that this
+identity calls himself "Joe's shoes" and your current contact "Google"
+also calls him that. You click "Ok" to accept that name (but you can
+edit it if you want).
+
 ** Script
 :PROPERTIES:
 :CREATED:  [2018-04-05 Thu 17:52]
@@ -1014,15 +1115,43 @@ yes, yes, no, yes, yes. 2/3 vault/word
 :CREATED:  [2017-12-22 Fri 16:48]
 :END:
 
-Use dhts to map several things
+Use dhts to map several things:
 
-*** PK to network addresses
-:PROPERTIES:
-:CREATED:  [2017-12-22 Fri 16:49]
-:END:
+**** A hash to content
+This doesn't require authentication - the recipient can hash the data
+himself to make sure it's legit. This is the basic DHT use case
+**** A public identity to its various properties
++ The script whose hash is the key for the DHT
++ Network location(s)
++ self-identifying info (what this identity calls himself etc)
 
-Allows anyone to lookup where on the network a given pk owner can be
-reached. Multiple addresses for multiple devices.
+*** Discussion
++ h1: "[script content...]" (as bytes) - this doesn't need to be
+  signed, as this is an identity starting point (Bob has already been
+  told out of band this is his script hash). These types of entries
+  are not updateable by definition as any change to the content
+  changes the key.
++ Could also include other fields that *are* signed. eg
+  #+begin_example kcats
+  ["abcd" [[value "[foo bar...]"]
+           [properties [network-address 1234567890]]
+           [signature "defg"]]]
+  #+end_example
++ What about privacy? we don't want people scraping the DHT and
+  compiling worldwide addressbooks. The entries could be encrypted,
+  similar to i2p encrypted lease sets. The idea is, instead of handing
+  out your script hash, you encrypt the script with a password, then
+  hand out the hash of the encrypted script and the password. The
+  recipient looks up the hash in the DHT, gets the ciphertext, and
+  decrypts the script.
++ What about updateable properties vs fixed? Obviously content that
+  hashes to the key in the dht is already as "authentic" as it can get
+  (the tamper point is before that - when giving that hash to someone
+  to use). Use the same dht? Could maybe just use ipfs or similar for
+  plain content.
+  
+
+  
 
 ** Streams
 *** Overview
@@ -1040,7 +1169,7 @@ A stream is particular to several things:
 
 Users interact with the stream concept probably only when sharing
 content, not viewing it. For example, on your mobile phone you'd
-select some photos, "Share", "Telepathy Stream", "My family
+select some photos, "Share", "Telepathyk Stream", "My family
 photos". In other words, content that is semantically related (say,
 photos from the same event) might be split up into different streams
 because of different access controls (you might not want to withhold
@@ -1083,6 +1212,43 @@ are messaging in a group, Charlie might be storing the same message
 encrypted with Alice's and Bob's keys). This would basically be
 treating the other swarm members as MITM (who are required to be unable
 to attack these protocols anyway).
+*** Implementation
+This would be something similar to bittorrent but instead of having a
+fixed set of bytes to transmit, it's open-ended (more content can be
+added at any time). So how could this protocol work? 
+
+Similar to bittorrent's mainline dht, map a hash to some peers
+(destinations). (what is the hash of, if the stream keeps getting more
+appended to it? Maybe just generate some random bytes as an id)
+
+Connect to those peers, resolve which pieces can be exchanged for the
+given hash, and exchange them. There's the issues of authenticating
+and assembling the pieces.
+
+I think we can use a merkle tree. Each time a new chunk is appended,
+the root gets recalculated.
+
+How does a client know he's got the latest root? I think the old roots
+are going to be co-roots in the latest one (or you can easily generate
+it at least). So you can prove to a client that you appended. See
+https://transparency.dev/verifiable-data-structures/
+
+When Alice makes new content (a new stream, or new additions to an old
+one), how does Bob know this happened? Does bob have to keep polling
+to check? Does alice connect to bob's destination (and if so she might
+as well just deliver the content too)? Kind of a chicken/egg problem
+here of if content is distributed, how do you find out about it in the
+first place - you have to know what you're looking for, somehow. What
+does "subscribe" look like here?
+
+Maybe a destination (or pk of some sort) makes a DHT entry of all his
+streams roots. Each encrypted with a key that also decrypts the
+content. A user downloads the list, sees which ones he can decrypt and
+then proceeds to fetch all those streams' contents (which he can
+decrypt).
+** Persistence
+Locally a database that we can treat as a stream would be nice (so
+that we can backup our encrypted database to other users). 
 ** Networking
 
 *** PK -> network address (IP) lookup
@@ -1212,7 +1378,6 @@ So how would a node play this poker game on a large network, say 1000 nodds?
   hops). First hop doesn't have to be the set of all 1000 nodes. It
   could be 10 nodes chosen at random, with 3 hops could plausibly
   reach all 1000. 
-
 
 ** UI workflows
 *** Contacts / Address Book
@@ -1625,14 +1790,16 @@ believe your audience is).
 *** INPROGRESS Get a bitcoin vps
 - State "INPROGRESS" from "TODO"       [2019-04-18 Thu 08:46]
 *** Get burner phone
-*** Register twitter
+*** DONE Register twitter
+- State "DONE"       from              [2022-05-15 Sun 09:04]
 *** DONE Buy domain telepathyk.org (if avail)
 - State "DONE"       from "INPROGRESS" [2019-04-24 Wed 10:50]
 - State "INPROGRESS" from "TODO"       [2019-04-24 Wed 10:49]
 Also got telepathyk.com - namecheap
 ** INPROGRESS [#A] Scripting language (called kcats for now)
 ** Scripting language identity features
-*** TODO Signing and verification
+*** INPROGRESS Signing and verification
+- State "INPROGRESS" from "TODO"       [2022-05-15 Sun 09:04]
 ** p2p protocol
 *** Messages for exchanging identities, signed and encrypted content
 ** content sharing p2p protocol
