@@ -1,4 +1,5 @@
 #+TODO: TODO(t) INPROGRESS(i@/!) | DONE(d!) CANCELED(c@)
+
 * Goals and Rationale
 ** Empower the individual
 *** Elevator pitch
@@ -300,6 +301,86 @@ are free to ignore timestamps and just order comments by arrival time.
 "Likes" would work similarly.
 * Background
 ** About Identity
+*** Overview
+In order to know who a message is from, we need a way to for the
+message to "prove" it comes from a particular name. Humans understand
+*names*, not cryptographic keys. However names are also personal - the
+name you give to someone might not be the name anyone else gives them
+(even themselves).
+
+So let's say Alice wants to know when a message is from someone she
+calls "Bob". She sets up a programmatic "lock", that will ingest a
+message as data, process it, and if it is from Bob, it will return
+"Bob", otherwise return =nothing= (meaning, "I don't know who it's from").
+
+*Note maybe it won't return "Bob", it could just return =true= and the
+actual name associated with the lock won't be part of the lock program
+itself, but rather somewhere outside it (whatever application is
+responsible for executing the program, would have a mapping of names
+to locks). Then the lock program can just be a predicate.
+
+How can it tell who the message is really from? The basic mechanism is
+digital signatures. In order for the "lock" program to process it
+correctly, the message will need to include (for example):
+
++ The message content
++ a digital signature 
+
+The program will already contain the public key Alice expects Bob to
+use, and it will verify the signature on that message. If it verifies,
+it returns "Bob", otherwise, =nothing=.
+
+These scripts can get more complex than "check if the signature is
+valid for pk_x". It could instead require:
+
++ a message delegating the signing from key x to key y
++ the signature by key x
++ the message content
++ the signature with key y
+
+Then the lock would do the following:
+
++ Put all known revocations on the stack and check to see if x is in
+  the list. if not, continue
++ Do the same check for y
++ Check the signature on the delegation message, if good, continue
++ Check the sig on the message content, if good, return Bob
++ otherwise return =nothing=.
+
+Then if Mallory steals Bob's key y, but Bob realizes this, he can send
+this to alice:
+
++ Message content "I lost control of my key y, don't accept it
+  anymore"
++ signature by key x
+
+When alice receives this, she adds y to her list of stolen (and
+therefore useless) keys. 
+
+Let's say after that, Mallory tries to impersonate Bob to
+Alice. Alice's lock will find key y in the revocation list, and the
+program returns =nothing=.
+
+Now let's say Bob loses control of key x. He can revoke that too, but
+that means he's out of cryptographic methods to identify himself to
+Alice. He'll have to perhaps meet Alice in person (or maybe a phone
+call) to tell her a new key so she can update her lock that grants
+access to the name "Bob".
+
+Now maybe Alice decides she doesn't want to call "Bob" "Bob" anymore,
+she wants to call him "Bob Jones". She can just update the name on the
+lock program, so that it returns "Bob Jones" instead of "Bob".
+
+Generally not *every* message Bob sends is going to require this
+cryptographic proof. The network will provide some guarantees, for
+example, that messages coming from a particular network source are
+protected with temporary crypto keys and we can trust that if the
+first message proves it's bob, the next one from the same source must
+also be bob. It's only when Bob moves to a new place on the network
+that he needs to re-prove himself. So in general the first message
+from any network source will be an id proof, and then after that just
+contents.
+
 *** A story
 You're walking down the street, and a stranger passing by calls your
 name and stops you. "Hey! It's been a long time, how are you?"
@@ -420,25 +501,6 @@ about, and so you and your friend can use it to identify each other
 
 **** Secrets
 What makes a strong secret?
-** Today's internet
-What's happening on the internet today is absolutely insidious, and
-few recognize the issue. We encounter repeated messages, and our
-instinct is to assume that those messages reached us independently. If
-you keep hearing the same thing from different people, you might
-assume it must be true - after all, how else did all those people
-arrive at that conclusion?
-
-Well, of course the answer is that they are just repeating what some
-manipulator wanted them to repeat. The manipulator packages up lies
-into a nice meme, and puts it in front of the right people, and they
-will claim it as their own idea with no independent verification of
-any facts. You might hear something 20 times just because one person
-wanted it to be repeated to you many times. And you start to believe
-it.
-
-Some examples of this phenomenon: "Vaccines cause autism", "flat
-earthers", etc.
-
 ** Blog posts
 *** A name by any other name 
 What's in an internet name?
@@ -579,85 +641,6 @@ life would be like when we've freed ourselves.
 
 * Design
 ** Overview
-*** Identity
-In order to know who a message is from, we need a way to for the
-message to "prove" it comes from a particular name. Humans understand
-*names*, not cryptographic keys. However names are also personal - the
-name you give to someone might not be the name anyone else gives them
-(even themselves).
-
-So let's say Alice wants to know when a message is from someone she
-calls "Bob". She sets up a programmatic "lock", that will ingest a
-message as data, process it, and if it is from Bob, it will return
-"Bob", otherwise return =nothing= (meaning, "I don't know who it's from").
-
-*Note maybe it won't return "Bob", it could just return =true= and the
-actual name associated with the lock won't be part of the lock program
-itself, but rather somewhere outside it (whatever application is
-responsible for executing the program, would have a mapping of names
-to locks). Then the lock program can just be a predicate.
-
-How can it tell who the message is really from? The basic mechanism is
-digital signatures. In order for the "lock" program to process it
-correctly, the message will need to include (for example):
-
-+ The message content
-+ a digital signature 
-
-The program will already contain the public key Alice expects Bob to
-use, and it will verify the signature on that message. If it verifies,
-it returns "Bob", otherwise, =nothing=.
-
-These scripts can get more complex than "check if the signature is
-valid for pk_x". It could instead require:
-
-+ a message delegating the signing from key x to key y
-+ the signature by key x
-+ the message content
-+ the signature with key y
-
-Then the lock would do the following:
-
-+ Put all known revocations on the stack and check to see if x is in
-  the list. if not, continue
-+ Do the same check for y
-+ Check the signature on the delegation message, if good, continue
-+ Check the sig on the message content, if good, return Bob
-+ otherwise return =nothing=.
-
-Then if Mallory steals Bob's key y, but Bob realizes this, he can send
-this to alice:
-
-+ Message content "I lost control of my key y, don't accept it
-  anymore"
-+ signature by key x
-
-When alice receives this, she adds y to her list of stolen (and
-therefore useless) keys. 
-
-Let's say after that, Mallory tries to impersonate Bob to
-Alice. Alice's lock will find key y in the revocation list, and the
-program returns =nothing=.
-
-Now let's say Bob loses control of key x. He can revoke that too, but
-that means he's out of cryptographic methods to identify himself to
-Alice. He'll have to perhaps meet Alice in person (or maybe a phone
-call) to tell her a new key so she can update her lock that grants
-access to the name "Bob".
-
-Now maybe Alice decides she doesn't want to call "Bob" "Bob" anymore,
-she wants to call him "Bob Jones". She can just update the name on the
-lock program, so that it returns "Bob Jones" instead of "Bob".
-
-Generally not *every* message Bob sends is going to require this
-cryptographic proof. The network will provide some guarantees, for
-example, that messages coming from a particular network source are
-protected with temporary crypto keys and we can trust that if the
-first message proves it's bob, the next one from the same source must
-also be bob. It's only when Bob moves to a new place on the network
-that he needs to re-prove himself. So in general the first message
-from any network source will be an id proof, and then after that just
-contents.
 *** Messaging
 At the application level, telepathyk will resemble Signal or Whatsapp
 or any other messenger. The main screen will be a list of contacts,
@@ -762,6 +745,48 @@ You click the =meet= button. A popup appears that shows that this
 identity calls himself "Joe's shoes" and your current contact "Google"
 also calls him that. You click "Ok" to accept that name (but you can
 edit it if you want).
+** Key management
+The seed is the secret from which all others are derived.
+
+In order to maximize metadata privacy, it will be necessary to use
+different public keys as often as possible (so that other people can't
+compare keys and connect your activities together into a cohesive
+history).
+
+So the question then is how to create and manage these keys.
+
+The idea is for a seed to map 1:1 with a brain (physical person) and
+then that person will have many identities. Each of those identities
+also needs to be able to recover from key compromise so each one must
+have a "higher level" key that is kept offline (and those keys must
+also be different for each identity, for the same reason).
+
+The problem is how to only store a small amount of secret material,
+while also having the ability to roll keys independently for each of
+many identities, without having a common root pubkey for any two
+identities.
+
+This will work exactly the same way as if there was only one identity,
+except many top-level pubkeys will be generated instead of one.
+
++ Seed (safe deposit box)
+  + Secret1 (drawer)
+    + Keypair1
+    + Keypair2
+  + RootKey1
+  + RootKey2
+
++ generate =seed= from device entropy
++ Derive =Secret1= from =seed=
++ Derive a series of =RootKey= from seed
++ Derive series of =Keypair= from =Secret1=
++ Construct scripts such that "any message signed by a key, signed by a key, with Rootkey at root, not revoked is valid"
++ Generate i2p destinations from device entropy, assign to keypairs
++ Prompt user to write down =seed=
++ Destroy seed on device
++ Prompt user to write down =Secret1=
++ Destroy =Secret1= on device
++ Publish hash => destination mappings to DHT (using anonymous submission, so they can't be linked)
 
 ** Script
 :PROPERTIES:
@@ -1554,6 +1579,168 @@ of the behavior - the same thing goes for programs or functions. How
 would you introduce someone to the quicksort function, when the intent
 is for you to pass your trust of that function (to sort things in n
 log n time) to someone else?
+** Data schema
+I've been considering storing "facts" along with who asserted them:
+
+| Who (subject) | entity (object) | attribute   | value |
+|---------------+-----------------+-------------+-------|
+| Bob           | Alice           | age         | 35    |
+| Me            | Bob             | trust-level | high  |
+|               |                 |             |       |
+
+With these two facts, we can ask the database what Alice's age is and
+be confident that the answer is "35". Note that Bob merely asserting
+or making an attestation to it, is not enough. We have to have reason
+to believe Bob's assertion.
+* Application
+The smartphone is the primary use case, but a desktop app might be a
+good prototype (easy to develop and iterate).
+** Relationship lifecycle
+*** Meet
+**** Introduce
+***** Mutual in Meatspace
+Tapping phones together (ideally) or scanning qr code exchanges
+self-identify info. 
+***** Pull Online
+Browsing public posts (in a forum, blog etc) of an unidentified
+person, you can add their self-identifying info to your addressbook
+(modifying whatever you want). That will change the displayed name
+from a pubkey hash (or a robohash or just an anonymous icon) to an
+actual name.
+***** Paid Push Online
+You can accept interruptions to accept someone into your addressbook,
+for a fee. You set the minimum fee. For example, $5 paid by bitcoin
+lightning network.
+**** Exchange 
+***** Text Messages
+***** Fora
+Decentralized fora are difficult - when each person has a different
+view of who's participating, how do you display that?
+
+Let's say there are 3 people in the conversation, Alice, Bob,
+Charlie. Alice follows Bob and Charlie and vice versa (but Bob and
+Charlie are unknown to each other).
+
+Alice: I like broccoli
+Bob: I hate it, it causes cancer.
+Charlie: So do I
+Alice: What? it doesn't cause cancer!
+
+In this case, Charlie sees Alice's last message but not the message
+she's responding to. If we think of the thread as a tree structure, we
+can just lop off any nodes sent by someone unknown to us, and then we
+won't see any replies even if they're from someone we know. Or we can
+show the whole tree. Or we can show the unknown nodes as collapsed and
+let the user manually open them.
+
+I lean toward the conservative - don't show anything from unknown
+users. If Alice wants Charlie to see her convo with Bob, she can
+explicitly recommend his content. If Charlie accepts, Bob's nodes will
+appear.
+
+Is this a good model for ALL conversations? Obviously, just two people
+is a very simple case where the connection must be mutual or else no
+convo can take place.
+
+Can the entire communication history of the world be modeled this way?
+
+A tree might be insufficient, graph perhaps?
+
+Do we even want a "public" forum? If not, how do we handle people who
+are invited in the middle of a conversation? In "real life" we have to
+re-explain what was said to catch people up. The digital equivalent
+might be unlocking a particular tree node (and its children) so they
+can catch up.
+
+How this would work with encryption and deniability, though, I have no
+idea. You wouldn't want to be having a private convo and say something
+you don't want Alice to hear, and then have one of the participants
+invite Alice and give her access to what you said. When you sign a
+message it should probably be for "their" eyes only (whoever you
+believe your audience is).
+***** Money
+***** Media
+* Priorities
+** Get socially connected
+*** INPROGRESS Get a bitcoin vps
+- State "INPROGRESS" from "TODO"       [2019-04-18 Thu 08:46]
+*** Get burner phone
+*** DONE Register twitter
+- State "DONE"       from              [2022-05-15 Sun 09:04]
+*** DONE Buy domain telepathyk.org (if avail)
+- State "DONE"       from "INPROGRESS" [2019-04-24 Wed 10:50]
+- State "INPROGRESS" from "TODO"       [2019-04-24 Wed 10:49]
+Also got telepathyk.com - namecheap
+** INPROGRESS [#A] Scripting language (called kcats for now)
+** Scripting language identity features
+*** INPROGRESS Signing and verification
+- State "INPROGRESS" from "TODO"       [2022-05-15 Sun 09:04]
+** p2p protocol
+*** Messages for exchanging identities, signed and encrypted content
+** content sharing p2p protocol
+based on bittorrent? similar to zeronet.io.
+** i2p(d) integration
+*** Create destinations based on identity
+** mobile UI (android)
+* deprecated docs
+** Secret key material
+Ideally each person would generate a random seed once.
+
+1. Generate a random seed
+2. Derive master keypair from seed to represent an identity (a person
+   can derive multiple identities from the same seed)
+3. Generate random signing keypair, signed (message type 8 below) by
+   master key. Save or publish signed message
+4. Store seed safely away, destroy master secret key.
+5. Generate working keypair, signed by signing key.
+
+*** If working key is lost/compromised
+1. Retrieve signing key
+2. Generate new working keypair.
+3. Sign message with signing key revoking old key
+4. Sign new working key with signing key.
+5. Put signing key away in a safe place.
+
+*** If signing key is lost/compromised
+1. Retrieve seed
+2. Derive master key
+3. Generate new signing key
+4. Sign message with master key revoking old signing key
+5. Sign new signing key with master key
+6. Store seed away safely
+7. Destroy master key
+
+This should be done very carefully - using offline hardware, etc.
+
+
+** Spike: Secret sharing
+Goal: to protect against key loss by distributing key material to
+friends such that collusion is necessary to reconstitute the key
+without the owner's permission.
+
+Idea is to split up a master (or signing) private key and distribute
+it to trusted friends with Shamir's Secret Sharing algorithm.
+
+*** Split the signing key
+** Today's internet
+What's happening on the internet today is absolutely insidious, and
+few recognize the issue. We encounter repeated messages, and our
+instinct is to assume that those messages reached us independently. If
+you keep hearing the same thing from different people, you might
+assume it must be true - after all, how else did all those people
+arrive at that conclusion?
+
+Well, of course the answer is that they are just repeating what some
+manipulator wanted them to repeat. The manipulator packages up lies
+into a nice meme, and puts it in front of the right people, and they
+will claim it as their own idea with no independent verification of
+any facts. You might hear something 20 times just because one person
+wanted it to be repeated to you many times. And you start to believe
+it.
+
+Some examples of this phenomenon: "Vaccines cause autism", "flat
+earthers", etc.
+
 ** old Key management
 *** Permanent keys
 An identity is associated with a public key. Shorter lived pks can be
@@ -1717,133 +1904,3 @@ However this comes with its own set of issues:
   not relabel anything already received and only apply the changes to
   new messages.
 
-* Application
-The smartphone is the primary use case, but a desktop app might be a
-good prototype (easy to develop and iterate).
-** Relationship lifecycle
-*** Meet
-**** Introduce
-***** Mutual in Meatspace
-Tapping phones together (ideally) or scanning qr code exchanges
-self-identify info. 
-***** Pull Online
-Browsing public posts (in a forum, blog etc) of an unidentified
-person, you can add their self-identifying info to your addressbook
-(modifying whatever you want). That will change the displayed name
-from a pubkey hash (or a robohash or just an anonymous icon) to an
-actual name.
-***** Paid Push Online
-You can accept interruptions to accept someone into your addressbook,
-for a fee. You set the minimum fee. For example, $5 paid by bitcoin
-lightning network.
-**** Exchange 
-***** Text Messages
-***** Fora
-Decentralized fora are difficult - when each person has a different
-view of who's participating, how do you display that?
-
-Let's say there are 3 people in the conversation, Alice, Bob,
-Charlie. Alice follows Bob and Charlie and vice versa (but Bob and
-Charlie are unknown to each other).
-
-Alice: I like broccoli
-Bob: I hate it, it causes cancer.
-Charlie: So do I
-Alice: What? it doesn't cause cancer!
-
-In this case, Charlie sees Alice's last message but not the message
-she's responding to. If we think of the thread as a tree structure, we
-can just lop off any nodes sent by someone unknown to us, and then we
-won't see any replies even if they're from someone we know. Or we can
-show the whole tree. Or we can show the unknown nodes as collapsed and
-let the user manually open them.
-
-I lean toward the conservative - don't show anything from unknown
-users. If Alice wants Charlie to see her convo with Bob, she can
-explicitly recommend his content. If Charlie accepts, Bob's nodes will
-appear.
-
-Is this a good model for ALL conversations? Obviously, just two people
-is a very simple case where the connection must be mutual or else no
-convo can take place.
-
-Can the entire communication history of the world be modeled this way?
-
-A tree might be insufficient, graph perhaps?
-
-Do we even want a "public" forum? If not, how do we handle people who
-are invited in the middle of a conversation? In "real life" we have to
-re-explain what was said to catch people up. The digital equivalent
-might be unlocking a particular tree node (and its children) so they
-can catch up.
-
-How this would work with encryption and deniability, though, I have no
-idea. You wouldn't want to be having a private convo and say something
-you don't want Alice to hear, and then have one of the participants
-invite Alice and give her access to what you said. When you sign a
-message it should probably be for "their" eyes only (whoever you
-believe your audience is).
-***** Money
-***** Media
-* Priorities
-** Get socially connected
-*** INPROGRESS Get a bitcoin vps
-- State "INPROGRESS" from "TODO"       [2019-04-18 Thu 08:46]
-*** Get burner phone
-*** DONE Register twitter
-- State "DONE"       from              [2022-05-15 Sun 09:04]
-*** DONE Buy domain telepathyk.org (if avail)
-- State "DONE"       from "INPROGRESS" [2019-04-24 Wed 10:50]
-- State "INPROGRESS" from "TODO"       [2019-04-24 Wed 10:49]
-Also got telepathyk.com - namecheap
-** INPROGRESS [#A] Scripting language (called kcats for now)
-** Scripting language identity features
-*** INPROGRESS Signing and verification
-- State "INPROGRESS" from "TODO"       [2022-05-15 Sun 09:04]
-** p2p protocol
-*** Messages for exchanging identities, signed and encrypted content
-** content sharing p2p protocol
-based on bittorrent? similar to zeronet.io.
-** i2p(d) integration
-*** Create destinations based on identity
-** mobile UI (android)
-* deprecated docs
-** Secret key material
-Ideally each person would generate a random seed once.
-
-1. Generate a random seed
-2. Derive master keypair from seed to represent an identity (a person
-   can derive multiple identities from the same seed)
-3. Generate random signing keypair, signed (message type 8 below) by
-   master key. Save or publish signed message
-4. Store seed safely away, destroy master secret key.
-5. Generate working keypair, signed by signing key.
-
-*** If working key is lost/compromised
-1. Retrieve signing key
-2. Generate new working keypair.
-3. Sign message with signing key revoking old key
-4. Sign new working key with signing key.
-5. Put signing key away in a safe place.
-
-*** If signing key is lost/compromised
-1. Retrieve seed
-2. Derive master key
-3. Generate new signing key
-4. Sign message with master key revoking old signing key
-5. Sign new signing key with master key
-6. Store seed away safely
-7. Destroy master key
-
-This should be done very carefully - using offline hardware, etc.
-
-
-** Spike: Secret sharing
-Goal: to protect against key loss by distributing key material to
-friends such that collusion is necessary to reconstitute the key
-without the owner's permission.
-
-Idea is to split up a master (or signing) private key and distribute
-it to trusted friends with Shamir's Secret Sharing algorithm.
-
-*** Split the signing key
