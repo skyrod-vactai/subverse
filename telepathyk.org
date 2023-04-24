@@ -1,186 +1,58 @@
 #+TODO: TODO(t) INPROGRESS(i@/!) | DONE(d!) CANCELED(c@)
+* Elevator Pitch
+** Pioneering Sovereign Communication
+Telepathyk: A communication software designed to empower users by
+providing agency, control, and customizability over their online
+interactions. This revolutionary tool addresses the need for
+communication sovereignty in an age of constant data breaches, privacy
+concerns, and censorship. Users can easily manage their relationships,
+ensuring private, programmable, reliable, and seamless communication.
 
-* Goals and Rationale
-** Empower the individual
-*** Elevator pitch
-Two major goals:
-
-Agency: Give the individual control over his communication and how he
-manages his relationships with others. Make communication private,
-programmable, reliable, and seamless.
-
-Give the user control over who can put content into his mind. No one
-can do that without permission. No bots, shills, or spammers.
-
-Bypass censorship. Allow the user to send messages to anyone who wants
-to receive them.
-
-Customizability: Allow the user to alter the software that acts on his
-behalf, as he sees fit. Provide a simple and appealing programming
-interface, and allow customizations to be shared the same way as any
+With Telepathyk, users can control the content that influences their
+thoughts, filtering out unwanted bots, shills, or spammers. The
+software enables the bypassing of censorship, allowing free and open
+messaging to anyone interested in receiving them. Customizability is
+at the core of Telepathyk, offering a user-friendly programming
+interface and the ability to share customizations as easily as any
 other content.
 
-Telepathy level privacy: Treat information as the valuable commodity
-that it is. Leak nothing whatsoever - no outside observer can tell
-whether you're communicating with anyone at all, much less who you're
-communicating with or what you're saying.
+Featuring telepathy-level privacy, Telepathyk treats information as
+the valuable commodity it is, ensuring no outside observer can detect
+if, when, or with whom a user is communicating. By adopting
+Telepathyk, users will experience enhanced privacy, freedom, and
+adaptability in their online communication, giving them a distinct
+advantage in the digital world.
 
-*** Properties
-**** Unidentified parties are filtered out
-On the internet, stories cost nothing to make up and disseminate, but
-they can be highly influential. Powerful hidden interests create
-stories specially crafted to manipulate your emotions and lead you to
-take actions that benefit them. It's a sort of brain parasite. By
-closing the door to anyone hidden, you lock out these influences,
-leaving you with just those who deserve your attention - friends,
-family, people you admire.
+* Goals and Rationale
+** Properties
+*** Authenticated
+With telepathyk, you always know with maximum confidence, that a
+message was really written by who it claims to be from. Phishing
+becomes impossible, no one can impersonate your friends, associates,
+or service providers.
+
+In the telepathyk protocol, authentication is programmable and
+flexible to balance the goals of security and convenience.
+*** Trusted
+Your attention is precious, and the internet is awash in bullshit.
+It's a kind of parasite, sucking your attention and resources. Even if
+you aren't swayed by it, you still waste time wading through it to
+find legitimate quality content. By closing the door to anyone you
+don't trust, you cut off the flow of garbage content, leaving you in
+peace with just those who deserve your attention - friends, family,
+people you admire.
 
 There is no legitimate scenario where you want to see a message from
-an unidentified party. Anyone who wants to communicate with you will
-need to be introduced first.
+an unidentified or untrusted party. Anyone who wants to communicate
+with you will need to be introduced first.
 
-Messaging software will not only know who a message is from, but also
-who introduced that party to you in the first place, and can
-prioritize messages accordingly.
-
-***** A perhaps contrived example
-What about ads for products you hadn't heard of but might actually
-want? You can still see advertisements, if you want to. But there
-needs to be an introduction first. We already do this, informally -
-you search google for "shoes" and google introduces you to shoe
-producers that it already has a relationship with.
-
-Under a codified identity system, what happens is:
-
-+ You indicate in your address book that it's ok for Google to
-  introduce other parties to you without you having to manually
-  approve each one.
-
-+ You search google for "shoes".
-
-+ Google sends your address book a list of shoe providers, and your
-  address book notes that each one was introduced to you by Google as
-  a result of your shoe search, as you gave it permission to do. The
-  address book might, by default, put an expiration time on those
-  contacts of perhaps a few weeks, after which they are removed.
-
-+ Google introduces you to the shoe providers also. Google's address
-  book entry for you may contain extra details about what you were
-  searching for, or other details Google might know about you.
-
-+ Those providers are now allowed to contact you directly for some
-  period of time. While this might seem to open the door to spam, keep
-  in mind that your address book already knows exactly who these
-  senders are: shoe salesmen, and the messages can be filed
-  accordingly (by default, filed under "shoes", deleted after a
-  relatively short period).
-
-+ Let's say a party who google says is a shoe seller, actually sends
-  you a message about penis enlargement pills (which you didn't
-  want). You can react in one of two ways: 1) Flag the message as
-  inappropriate, which triggers some automatic actions -
-  "de-friending" the advertiser and providing proof to google of the
-  violation of your trust, which hopefully they will act on 2) Assume
-  malice on google's part, distrust them to introduce advertisers to
-  you (and optionally remove all existing introductions from google
-  from your address book). After that your messaging system will not
-  accept any more ads.
-
-**** By default, you control the experience
-***** You can delegate the experience to be controlled by someone else
-If you can't be bothered to curate your own address book, you can
-accept entries from someone else without having to review them.
-***** You can override the delegate's choices anywhere
-The choices you make yourself override the choices made by others (if
-there is a conflict).
-***** You can completely revoke trust in a delegate
-If you later decide it was a bad idea to let someone else control the
-experience, when you revoke that trust, it eliminates everything
-except the choices you made yourself.
-***** You can delegate to anyone
-There is no barrier to entry - it's not just for corporations or
-government. You can delegate to your technophile cousin or your wife.
-***** You can have multiple delegates
-You decide which ones have priority (generally, you'd probably
-prioritize individuals you know personally over large corporations)
-***** Why is this important?
-Imagine just picking a few people you admire, and getting their
-perspective on the world almost instantly. You see only what the best
-people are looking at (for however you define "best"). You might pick
-several subject matter experts, and whatever other parties they see
-are labeled for you. You might choose an economics expert Charles, and
-later when you read an article about a new cancer treatment, it's
-labeled as recommended by Charles - you might not normally associate
-the two.
-
-****** Isn't that a 'filter bubble'?
-Yes it is. The modern internet is without question an adversarial
-environment. Filters are required. Without them, we are flooded with
-garbage - advertisements, propaganda, trolling, etc. It would be
-impossible to wade past it, because this garbage costs nothing to
-produce. We can see the need for filters with email - without them
-email is basically unusable due to the sheer volume of spam.
-
-The rest of the internet is no different. Facebook is overrun with
-spam. Nearly everyone who uses facebook regularly, has many facebook
-friends who post almost no content of their own, and merely re-share
-low value memes.
-
-The question of filter bubbles is perhaps best put another way: "Who
-should get to decide what content is put in front of you?"
-
-I don't know how anyone can seriously suggest any answer to this
-question, except "YOU". Of course you might choose to delegate that
-power, but ultimately that power must be yours.
-
-**** Telepathy is better than a whisper 
-Both obscure the message, but telepathy also obscures the metadata
-(who you communicated with). Observers can see who you whispered to,
-but they cannot see who you communicated with telepathically - in fact
-they don't know that you communicated anything at all. Telepathy
-doesn't exist of course, but we can do the next best thing using mix
-networks like i2p or Tor.
-
-*** Ideal user experience
-Someone tells you about the most secure chat app, Telepathy. You
-decide to try. They send you a link and you click it. An app is
-installed, you open it. "Joining the Weltgeist (world spirit)"
-**** Key gen
-"Telepathy uses a portable internet identity - no more creating
-separate accounts for everything! Create it once and you're done." 
-
-"Create your identity. To protect your new identity, you must keep a
-secret safe. We'll show you how, it will take 10 minutes. You can skip
-this part if you're not at home, but it's crucial you do it soon."
-
-Do it now / Remind me [later / at a specific time]
-Now: 
-
-"Do you have access to physically secure places, like a safe deposit
-box, or a strong and fireproof home safe?"
-
-"Do you have at least two friends or relatives, that you'd trust not
-to ever plot against you?"
-
-***** Yes/Yes: 2/3 multisig
-
-"Great. You'll need 3 sheets of paper and pen/pencil. Write down these
-12 words ... then these ... then these. Keep sheet1 in your physically
-secure place, and give one each to a trusted friend to store for
-you. If you ever lose your phone, you can restore your identity with
-your sheet1. If you lose sheet1, you can restore your identity with
-sheet2 and sheet3. If you lose those, your identity is lost. You can
-create a new one, but like getting a new phone number, no one will
-know it's you and it's a pain. So best not to lose all your
-sheets. We'll remind you to get those sheets where they need to go."
-
-**** Startup - integrate
-Was it really Bob that sent you this app? Yes: Open messenger with
-message "I'm here!" ready to send. Add Bob's key to existing contact.
-
-***** Introductions
-Bob knows identities for these people in your contacts list: [Charlie,
-Dave] - Uncheck any you're not sure
+By using an introduction-based protocol, you always know who you're
+dealing with and how much you can trust them. 
+*** Telepathy is better than a whisper 
+Both obscure the message, but telepathy also obscures who you
+communicated with - in fact they don't know that you communicated
+anything at all. Telepathy doesn't exist in the real world but it
+exists online, if you choose to use it.
 ** Desirable properties
 + Confidential (only recipient can read messages)
 + Authenticated (can be sure message was sent by sender)
@@ -1427,7 +1299,7 @@ presented.
 
 The 2nd to last entry is the key's self-identification, if
 any. clicking this brings up a warning "Have you verified in person
-that this key really belongs to Foo? if not, this could be an attacker
+that this key really belongs to Telepathyk? if not, this could be an attacker
 pretending to be Foo. If Yes, type: VERIFIED to continue
 
 The last entry will be "I know who this is" where you can
