@@ -155,6 +155,14 @@ In Telepathyk, all names are local and for human eyes only. Everyone's
 name in your address book is *your* name for them. The app itself
 doesn't use names, it uses the hash of the person's script to track
 who's who.
+** Prior art, components, and inspiration
++ [[https://geti2p.net][i2p (anonymizing network)]]
++ [[https::/torproject.org][Tor (anonymizing network)]]
++ [[https://en.wikipedia.org/wiki/Joy_(programming_language)][Joy (programming language)]]
++ [[https://www.bittorrent.org/introduction.html][Bittorrent (file sharing protocol)]]
++ [[https://retroshare.cc][Retroshare (decentralized content sharing)]]
++ [[https://zeronet.io][Zeronet (decentralized content and APIs)]]
++ [[https://bitcoin.org][Bitcoin (cryptocurrency, programmable authentication)]]
 * Background
 ** About Identity
 *** Overview
