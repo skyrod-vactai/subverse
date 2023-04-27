@@ -4,8 +4,8 @@
 Telepathyk is communication software designed to empower users by
 providing agency, control, and customizability over their online
 interactions. This tool addresses the need for
-communication sovereignty in an age of frequent data breaches, privacy
-concerns, and censorship. Users can easily manage their relationships,
+communication sovereignty in an age of spam, data breaches, leaks,
+and censorship. Users can easily manage their relationships,
 ensuring private, programmable, reliable, and seamless communication.
 
 With Telepathyk, you decide who makes high value content. Enjoy the
