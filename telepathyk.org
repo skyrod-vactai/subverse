@@ -1,20 +1,19 @@
 #+TODO: TODO(t) INPROGRESS(i@/!) | DONE(d!) CANCELED(c@)
-* Elevator Pitch
+* Introducing Telepathyk
 ** Pioneering Sovereign Communication
-Telepathyk: A communication software designed to empower users by
+Telepathyk is communication software designed to empower users by
 providing agency, control, and customizability over their online
 interactions. This revolutionary tool addresses the need for
-communication sovereignty in an age of constant data breaches, privacy
+communication sovereignty in an age of frequent data breaches, privacy
 concerns, and censorship. Users can easily manage their relationships,
 ensuring private, programmable, reliable, and seamless communication.
 
-With Telepathyk, users can control the content that influences their
-thoughts, filtering out unwanted bots, shills, or spammers. The
-software enables the bypassing of censorship, allowing free and open
-messaging to anyone interested in receiving them. Customizability is
-at the core of Telepathyk, offering a user-friendly programming
-interface and the ability to share customizations as easily as any
-other content.
+With Telepathyk, you decide who makes high value content. Enjoy the
+peace without spammers, shills, bots, and useless social media
+posts. The software bypasses censorship, allowing free and open
+messaging. Customizability is at the core of Telepathyk, offering a
+user-friendly programming interface and the ability to share
+customizations as easily as any other content.
 
 Featuring telepathy-level privacy, Telepathyk treats information as
 the valuable commodity it is, ensuring no outside observer can detect
@@ -22,155 +21,139 @@ if, when, or with whom a user is communicating. By adopting
 Telepathyk, users will experience enhanced privacy, freedom, and
 adaptability in their online communication, giving them a distinct
 advantage in the digital world.
-
-* Goals and Rationale
+* Overview
+** Goals
++ Users communicate with privacy and trust
++ Users create content with a simple programming language that's
+  approachable for non-programmers
++ Users serve their own content. Message-based storefronts, social
+  media feeds etc.
++ Give users a way to automate interactions via chatbots that act on
+  their behalf (and speak either programmable API or natural language)
++ Push functionality from the center to the edges (what is done by central
+  servers today will be spread to individual mobile devices)
 ** Properties
 *** Authenticated
-With telepathyk, you always know with maximum confidence, that a
-message was really written by who it claims to be from. Phishing
-becomes impossible, no one can impersonate your friends, associates,
-or service providers.
+With Telepathyk, you always know with maximum confidence, that a
+message is really from who it says it's from. Phishing is
+impossible. No one can impersonate anyone else.
 
 In the telepathyk protocol, authentication is programmable and
 flexible to balance the goals of security and convenience.
 *** Trusted
-Your attention is precious, and the internet is awash in bullshit.
-It's a kind of parasite, sucking your attention and resources. Even if
-you aren't swayed by it, you still waste time wading through it to
-find legitimate quality content. By closing the door to anyone you
-don't trust, you cut off the flow of garbage content, leaving you in
-peace with just those who deserve your attention - friends, family,
-people you admire.
+Your attention is a precious resource, with millions of internet
+voices competing for it. Telepathyk provides a personal entourage that
+filters out the voices, leaving you in peace to communicate with
+friends, family, associates and people you admire.
 
-There is no legitimate scenario where you want to see a message from
-an unidentified or untrusted party. Anyone who wants to communicate
-with you will need to be introduced first.
+In the Telepathyk protocol, no one can talk to you without first being
+properly introduced by someone you trust. Spam does not and cannot
+exist. Any low quality content you do receive immediately reduces the
+influence of whoever introduced you to its source, making it less and
+less likely over time that you'll receive any low quality
+content. 
 
 By using an introduction-based protocol, you always know who you're
 dealing with and how much you can trust them. 
-*** Telepathy is better than a whisper 
-Both obscure the message, but telepathy also obscures who you
-communicated with - in fact they don't know that you communicated
-anything at all. Telepathy doesn't exist in the real world but it
-exists online, if you choose to use it.
-** Desirable properties
-+ Confidential (only recipient can read messages)
-+ Authenticated (can be sure message was sent by sender)
-+ Authentication and Confidentiality protected against theft and loss
-+ Location confidentiality (ip address not revealed)
-+ Data replication - recover everything from peers after wiping device
-+ No reliance on central authorities for naming or reputation
-+ No reliance on central authorities for routing
-+ Forward secrecy (compromise of SK doesn't help attacker decrypt
-  previously sent msgs)
-+ Programmable
-+ Transience - some data is a liability and should not be kept
-** Services enabled by authenticated messages
-*** Certificate Authority
-Let's say Alice is a web user and Bob is tech-savvy friend. Alice
-decides to trust Bob as a naming authority. She would sign a message
-(of type 2) above saying she trusts Bob to name public keys, then
-imports that message into her browser.
+*** Private
+Current "privacy" messengers send whispers: No one else knows what you
+are saying, but they can see who you're whispering to. Telepathyk gets
+its name from the superpower it gives you: telepathy. While telepathy
+is not possible in the physical world, Telepathyk brings it to the
+digital realm. Your thoughts reach their target and no one knows you
+did anything at all.
+*** Durable
+Your private data is treated as a valuable resource. It is encrypted
+and replicated on the network, such that if you lose access to your
+device, you can pick up right where you left off on a new device. All
+you need is your secret key.
+*** Censorship Resistant
+All communication is done over a censorship resistant network, which
+has several techniques for bypassing firewalls. Since you already have
+complete privacy it is not possible for anyone to block messages based
+on content.
+*** Automated
+Telepathyk is intended as a replacement for the web - it has the
+functionality of both a web server (it can serve your data via an
+API), and a browser (you can consume and view data).
 
-Later, Alice wants to do some shopping. She types "amazon" in the
-location bar. The browser either connects to a server containing Bob's
-signed messages (by a mechanism not described here) or has already
-imported a set of signed messages from Bob. The browser retrieves any
-messages of type 1, where the target name is "amazon". If one is
-found, then IP address lookup is done on the PK_{amazon} (see other
-section). The public key at that address is compared to PK_{amazon}
-and if there's a match then the connection proceeds.
+The web is a document-based system originally designed for desktop
+computing. Telepathyk is a message-based system, where content from
+humans and programs integrate seamlessly.  AI chatbots fit right in.
 
-Practically, most people would probably not delegate their name:PK
-lookup to friends but rather large organizations, like Google or
-the university they attend.
-*** Introductions
-Alice wants to introduce two of her contacts (Bob and Charlie) to each
-other.
+** How it works
+*** Authentication
+Authentication is done by small programs called scripts, inspired by
+the way bitcoin (and other cryptocurrency) decides whether the person
+spending money is really the one authorized to spend it. The script
+acts as a lock, requires some cryptographic proof that acts as the key
+to unlock it. Scripts can be off-the-shelf or customized to serve your
+particular security needs.
+*** Trust
+Trust starts with you. If you trust someone (say, a family member),
+you mark them as such in the telepathyk address book. That tells the
+application they're allowed to do things that other people can't -
+they can message you, introduce you to others, etc. Your network
+expands in much the same way it often does in real life: via
+introductions. Introductions don't have to be person to person - for
+example you can think of Google as an introduction service. Whether
+you trust someone like Google to make introductions is up to you. You
+can revoke that trust at any time.
+*** Privacy
+Underlying Telepathyk's networking is an anonymity network that
+guarantees that no third party can determine what you're saying, or
+who you're talking to, or even if you are talking to anyone at all. It
+also guarantees that no second party (people you talk to) can
+determine your physical location unless you explicitly tell them.
 
-She already has type 3 and 1 messages for each of them, she passes Bob's to
-Charlie and Charlie's to Bob.
+Telepathyk automatically creates single-use identities when
+needed. For example, you don't want a search engine to compile a
+database of everything you've ever searched for, so every time you
+search, Telepathyk will use a fresh identity.
 
-*** Messaging (email replacement)
-Messages are passed via a relay network (not described here).
+Telepathyk also encrypts data at rest on your device, and can
+automatically expire old content such that it does not become a
+liability.
+*** Durability
+All content you create becomes part of an encrypted "stream", which is
+similar to a bittorrent file share, but content can be added over
+time. Other users participate as peers in the data sharing. Some users
+have the decryption key (the people who you want to be able to read
+the messages), and some don't (they hold the encrypted data as a
+backup in case anyone needs it later, but they cannot read it
+themselves).
 
-Let's say Alice wants to message Bob. She has already met Bob in
-person and Bob has given her (say, via a mobile app) a WOT message
-type 1: PK_{Bob} : "I name PK_{Bob} as Bob". She has compared the
-public keys to make sure Bob really owns that PK. Then she also
-receives a message type 4: PK_{Bob}: "I can decrypt messages to
-PK{BobSecret}".
+Every part of the app is streamed - your address book, app
+configuration, message history, file attachments, etc.
+*** Censorship resistance
+The internet itself is a powerful censorship resistance tool - it
+automatically routes around censorship. However most people don't use
+it that way, they give all their content to a third party (google,
+facebook) instead of serving it themselves, and that third party can
+easily censor the content. Telepathyk fixes that by making it trivial
+to serve your own content.
 
-By default the key manager will accept PK's own names for themselves,
-giving the importing user a chance to change it if they want (perhaps
-Alice would rather call Bob "Robert Smith" in her own address book).
+It goes even further by using [[https::/geti2p.net][i2p]] for networking. Anyone who is upset
+about your content generally doesn't know who or where you are, so
+it's very difficult for them to threaten you.
 
-Alice opens the messaging app and selects "Robert Smith" as the
-recipient. The address book looks up the key as PK_{Bob} and also the
-encryption key PK_{BobSecret}. It encrypts the message and sends using
-the PK_{Bob} key which the relay network uses to route the message.
+Telepathyk is completely decentralized, so there is no company for
+governments to sue, or server to disconnect. 
 
-Bob receives the message from the relay network and decrypts it with
-his private key.
+*** Automation
+Most functionality in the app is programmable via a very simple
+programming language called [[https://github.com/skyrod-vactai/kcats/blob/master/book-of-kcats.org][kcats]]. In order to automate things in
+telepathyk, you create bots - programs that receive messages and
+respond to them. You then introduce the bots to your contacts so they
+can interact with it.
 
-**** Messages from less-trusted senders
-Email currently allows people to receive messages from anyone, not
-just those in their address book. To support this use case, Alice
-needs to publish her public key and encryption key so that it's
-retrievable by anyone. Note that even if she doesn't publish her key,
-someone else might, so it cannot be assumed that public keys will
-remain secret to spammers.
-
-***** Spam
-Alice's messaging client needs a way to deal with spam. The following
-rules are suggested but will be configurable:
-
-1. The messaging client allows messages signed by anyone in alice's
-   addressbook (not flagged as a spammer)
-
-2. If the message is not signed by anyone in the address book, Proof
-   of Work is required. The amount of work required by default is
-   configurable.
-
-*** Social networking, publishing
-This can be built on top of the messaging protocol, for special
-handling of social networking specific content. It would properly
-display images, comments, videos, "likes" etc.
-
-For the use case of sharing with a group, Alice can construct a group
-called "Jones Family" in the following manner:
-
-1. Create a random keypair for encryption, PK/SK_{JonesFamilySecret}.
-2. Send this key to each of the family members using the above
-   messaging protocol. Optionally, wait for a response message of type
-   4 from each member, referring to PK_{JonesFamilySecret}.
-3. Create a local addressbook group, as a list of family members'
-   PK's: [ PK_{Charlie}, PK_{Dave}, PK_{Eve} ]
-4. Share the local group by signing message type 6 and sending via
-   messaging protocol.
-5. To share a photo, encrypt it to PK_{JonesFamilySecret}, send it via
-   the messaging protocol to each member of the group. Or perhaps
-   relay it just to a few members, and let their client software
-   automatically relay to the rest of the group.
-
-Caveat: Once alice releases SK_{JonesFamilySecret}, she cannot know
-who else it will be shared with. Other group members may secretly add
-new group members without Alice's knowledge. However this trust
-relationship already implicitly exists with Facebook too, any group
-member can copy/paste content and forward it without the knowledge of
-the original sender.
-
-Of course Alice can construct any size group - including one for all
-her 'friends'.
-
-**** Comments, Likes
-Comments would be sent as any other social networking message
-(broadcast to other group members), just needs a timestamp and a
-reference to the original post. Commenters could lie about the
-timestamp to change the order that comments would appear, but clients
-are free to ignore timestamps and just order comments by arrival time.
-
-"Likes" would work similarly.
+The bot can do things as simple as sharing photos, or as complex as
+running an online store.
+*** Names
+In Telepathyk, all names are local and for human eyes only. Everyone's
+name in your address book is *your* name for them. The app itself
+doesn't use names, it uses the hash of the person's script to track
+who's who.
 * Background
 ** About Identity
 *** Overview
@@ -511,7 +494,7 @@ can't just turn it off. Can we?
 Yes, we can. Before we get to the "how", let's go on a journey of what
 life would be like when we've freed ourselves.
 
-* Design
+* Design notes
 ** Overview
 *** Messaging
 At the application level, telepathyk will resemble Signal or Whatsapp
@@ -1368,10 +1351,6 @@ anyway (since they'll be able to identify you using the same protocol)
 How to identify if there is no persistent public key? Could possibly
 use ssl key even though those do change periodically. The client would
 have to re-identify the site each time it changed its key.
-** API
-*** Authentic? function
-pk, message => boolean
-*** 
 ** Identify all the things
 Map from human-meaningless to human-meaningful (and back)
 
@@ -1464,9 +1443,6 @@ With these two facts, we can ask the database what Alice's age is and
 be confident that the answer is "35". Note that Bob merely asserting
 or making an attestation to it, is not enough. We have to have reason
 to believe Bob's assertion.
-* Application
-The smartphone is the primary use case, but a desktop app might be a
-good prototype (easy to develop and iterate).
 ** Relationship lifecycle
 *** Meet
 **** Introduce
@@ -1532,247 +1508,36 @@ message it should probably be for "their" eyes only (whoever you
 believe your audience is).
 ***** Money
 ***** Media
-* Priorities
-** Get socially connected
-*** INPROGRESS Get a bitcoin vps
+* Roadmap
+** DONE Get socially connected
+*** CANCELED Get a bitcoin vps
+- State "CANCELED"   from "INPROGRESS" [2023-04-27 Thu 09:57] \\
+  No longer needed
 - State "INPROGRESS" from "TODO"       [2019-04-18 Thu 08:46]
-*** Get burner phone
+*** DONE Get phone number
+Done via phoneblur
 *** DONE Register twitter
 - State "DONE"       from              [2022-05-15 Sun 09:04]
 *** DONE Buy domain telepathyk.org (if avail)
 - State "DONE"       from "INPROGRESS" [2019-04-24 Wed 10:50]
 - State "INPROGRESS" from "TODO"       [2019-04-24 Wed 10:49]
 Also got telepathyk.com - namecheap
-** INPROGRESS [#A] Scripting language (called kcats for now)
-** Scripting language identity features
-*** INPROGRESS Signing and verification
+** INPROGRESS [#A] Scripting language kcats
+*** DONE Core language functionality
+*** INPROGRESS Testing and bugfixing
+- State "INPROGRESS" from "TODO"       [2023-04-27 Thu 09:58]
+** INPROGRESS Scripting language identity features
+*** DONE Signing and verification
+- State "DONE"       from "INPROGRESS" [2023-04-26 Wed 08:54]
 - State "INPROGRESS" from "TODO"       [2022-05-15 Sun 09:04]
-** p2p protocol
-*** Messages for exchanging identities, signed and encrypted content
-** content sharing p2p protocol
+*** TODO Example scripts
+** INPROGRESS Durability
+** TODO p2p protocol
+*** TODO Messages for exchanging identities, signed and encrypted content
+*** TODO Distributed Hash Table for network locations, stream seeding peers etc
+** TODO content sharing p2p protocol
 based on bittorrent? similar to zeronet.io.
-** i2p(d) integration
+** TODO i2p(d) integration
 *** Create destinations based on identity
-** mobile UI (android)
-* deprecated docs
-** Secret key material
-Ideally each person would generate a random seed once.
-
-1. Generate a random seed
-2. Derive master keypair from seed to represent an identity (a person
-   can derive multiple identities from the same seed)
-3. Generate random signing keypair, signed (message type 8 below) by
-   master key. Save or publish signed message
-4. Store seed safely away, destroy master secret key.
-5. Generate working keypair, signed by signing key.
-
-*** If working key is lost/compromised
-1. Retrieve signing key
-2. Generate new working keypair.
-3. Sign message with signing key revoking old key
-4. Sign new working key with signing key.
-5. Put signing key away in a safe place.
-
-*** If signing key is lost/compromised
-1. Retrieve seed
-2. Derive master key
-3. Generate new signing key
-4. Sign message with master key revoking old signing key
-5. Sign new signing key with master key
-6. Store seed away safely
-7. Destroy master key
-
-This should be done very carefully - using offline hardware, etc.
-
-
-** Spike: Secret sharing
-Goal: to protect against key loss by distributing key material to
-friends such that collusion is necessary to reconstitute the key
-without the owner's permission.
-
-Idea is to split up a master (or signing) private key and distribute
-it to trusted friends with Shamir's Secret Sharing algorithm.
-
-*** Split the signing key
-** Today's internet
-What's happening on the internet today is absolutely insidious, and
-few recognize the issue. We encounter repeated messages, and our
-instinct is to assume that those messages reached us independently. If
-you keep hearing the same thing from different people, you might
-assume it must be true - after all, how else did all those people
-arrive at that conclusion?
-
-Well, of course the answer is that they are just repeating what some
-manipulator wanted them to repeat. The manipulator packages up lies
-into a nice meme, and puts it in front of the right people, and they
-will claim it as their own idea with no independent verification of
-any facts. You might hear something 20 times just because one person
-wanted it to be repeated to you many times. And you start to believe
-it.
-
-Some examples of this phenomenon: "Vaccines cause autism", "flat
-earthers", etc.
-
-** old Key management
-*** Permanent keys
-An identity is associated with a public key. Shorter lived pks can be
-used in a hierarchy (Alice uses a key signed by a key signed by her
-master key)
-**** Discussion
-As far as I know, SSL has no continuity at all, except by the CA. In
-other words, a website's identity expires, and they just get a new one
-from the CA. They do NOT sign a message with their old key pointing to
-their new one. We can definitely do better than this, whether keys
-expire or not.
-
-It's unrealistic to expect that master keys will never be
-compromised - they will be. So what is the key holder to do in that
-situation? They will have no choice but to rebuild their identity
-using a new secret (verifying with people in-person). I'm not sure
-it's possible to rebuild an online-only identity this way, there's
-just no way for anyone to tell the new key from an impostor (eg if
-satoshi lost his keys, he'd have a real hard time re-establishing his
-identity, just ask Craig Wright - nobody believes him for good
-reason).
-
-***** Key expiration
-What's the purpose? If an attacker sees your private key, AND for
-whatever reason waits a year to do anything with it, I suppose
-expiration is helpful. On the other hand, it can also be harmful - if
-you forget to sign a new key with the old one before it expires, then
-you're stuck. I just don't see the value in this mechanism.
-
-If you are compromised and don't know it, you find out when the
-attacker takes over your identity. This happens regardless of
-expiration. When more than one party has access to the key, whoever
-moves first wins control of the identity.
-
-It's just a question of whether you should accept "pointer messages"
-(a signed message that says "i'm not going to use key X anymore, i'll
-use Y"). If the subject was compromised, you don't know if it's him or
-the attacker. Generally I'd think these messages should not be
-accepted - err on the side of losing identities forever rather than
-talking to the wrong person.
-
-What if you think you may have been compromised but you're not sure?
-You could immediately sign a revocation, but then what? You could sign
-a "pointer message" first but that still doesn't differentiate you
-from the attacker. Your audience will know there was a race against an
-attacker but they won't know who won.
-
-*** Encryption
-We may not need to necessarily include encryption - the transport
-(i2p) might take care of that for us.
-*** Web of trust messages
-Uses working keys as described above
-
-1. PK_B : "I name Thing_A as 'Alice'" (can also include other contact info)
-3. PK_B : "I can decrypt messages to PK_{B'}"
-4. PK_B : "I no longer wish messages to be encrypted to PK_{B'}"
-5. PK_B : "I name group [ PK_A PK_B PK_C ] as 'Jones Family'"
-6. PK_B : "I no longer consider Messages signed by PK_A as authentic"
-7. PK_M : "I name PK_S as representing the same party as PK_M"
-8. PK_M : "PK_Compromised no longer represents PK_M"
-
-
-**** Making sense of all the messages
-
-***** Storage
-Storing on disk could be as simple as just serializing a list of
-messages and dumping them in a file.
-
-Individuals would probably need no more than that. Large businesses
-with many users will need to track revocations and possibly other
-messages, which might require a more sophisticated db.
-***** Materialization
-In order to make sense of a bunch of saved messages, some processing
-is needed.
-
-+ Before anything else all key revocations need to be processed (an in
-  memory set might suffice).
-
-+ In order to know if a message is signed by a key authorized by a
-  master key, we need to trace a path from the key to the master. An
-  in-memory mapping of key to master might suffice for this. At
-
-
-
-
-**** Message specific details
-***** type 1 (name-pk)
-Contains a public key and a name, signed transitively by the owner's
-master.
-
-**** Script language?
-
-Similar to bitcoin script, which sets up the conditions for spending
-and then provides those conditions. We could set up the conditions for
-various things:
-
-1) A message to be considered authentic from some identity (master
-   pk).  although, this has a chicken/egg problem, doesn't it? How
-   would you know the provided script was authentic?
-
-   You could use this to set up different levels of security for
-   different parties you communicate with.
-
-   For your bank
-
-   1)
-*** Address books
-An individual entry in Alice's book for Bob would consist of
-
-1. Message type 3 from Bob naming his master key.
-2. Message type 1 from Bob naming themselves OR Alice naming Bob
-   something else
-4. Optionally 1 or more type 4 or 5 messages from Bob (type 5 means
-   the type 4 for that key can be discarded)
-
-*** Key revocation
-If Bob loses his key, he can create a new one as described above,
-using a chain of keys leading back to Bob's master key. If the key is
-truly not recoverable by anyone, revoking the lost key may not be
-necessary. If the key is possibly recoverable by anyone else, a
-message of type 7 should be included.
-
-Alice's address book originally contains
-
-+ type3 PK_B: "My master key is PK_Master"
-+ type2 PK_A: "I name PK_B as Robert Smith"
-
-Alice receives these new messages:
-
-+ type8: PK_B-Master: PK_B-Signing represents PK_B-Master
-+ type8: PK_B-Signing: PK_B2 represents PK_B-Signing
-
-Her address book, seeing that the type8 messages above arrived later
-than her original entries, and that the master key that signed them is
-the same one Bob's original type3 message referred to, automatically
-creates
-
-+ type2: PK_A: "I name PK_B2 as Robert Smith"
-
-Using this type of addressbook based revocation (where keys aren't
-really the thing being revoked, it's the name on the key), we might
-avoid having to bake revocation checking into script
-verification. That would be bad, because then messages could not be
-authenticated solely with self-contained proof. The verifier would
-also need to check the network to see if a revocation exists.
-
-Are there attacks which are overall worse than pgp key revocations?
-+ Preventing the victim from broadcasting the revocation
-  message. Might be no worse - depends on how we distribute the
-  message. Could always use a DHT or some such, so that the victim
-  only needs to get the message out to one other party, and it spreads
-  from there. Not really worried about this
-+ Mallory compromises alice's 2nd level key, revoke her low level key
-  and replace with Mallory's. Impersonate until Alice realizes her 2nd
-  level is compromised, and uses her master to revoke the 2nd. This is
-  no worse than compromising the low level key. Same as pgp.
-
-However this comes with its own set of issues:
-+ After receiving a type8, what do you do with the previously-received
-  messages for that name? A naive solution (that might be ok) is to
-  not relabel anything already received and only apply the changes to
-  new messages.
-
+** TODO Bot creation functionality
+** TODO mobile UI
