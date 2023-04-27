@@ -124,7 +124,8 @@ backup in case anyone needs it later, but they cannot read it
 themselves).
 
 Every part of the app is streamed - your address book, app
-configuration, message history, file attachments, etc.
+configuration, message history, file attachments, etc. If you lose
+your phone you can restore everything from the network. 
 *** Censorship resistance
 The internet itself is a powerful censorship resistance tool - it
 automatically routes around censorship. However most people don't use
