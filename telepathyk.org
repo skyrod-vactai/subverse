@@ -3,10 +3,10 @@
 ** Advancing Sovereign Communication
 Telepathyk is communication software designed to empower users by
 providing agency, control, and customizability over their online
-interactions. This tool addresses the need for
-communication sovereignty in an age of spam, data breaches, leaks,
-and censorship. Users can easily manage their relationships,
-ensuring private, programmable, reliable, and seamless communication.
+interactions. This tool addresses the need for communication
+sovereignty in an age of spam, propaganda, data breaches, leaks, and
+censorship. Users can easily manage their relationships, ensuring
+private, programmable, reliable, and seamless communication.
 
 With Telepathyk, you decide who makes high value content. Enjoy the
 peace without spammers, shills, bots, and useless social media
@@ -24,19 +24,23 @@ advantage in the digital world.
 * Overview
 ** Goals
 + Users communicate with privacy and trust
-+ Users create content with a simple programming language that's
-  approachable for non-programmers
-+ Users serve their own content. Message-based storefronts, social
-  media feeds etc.
-+ Give users a way to automate interactions via chatbots that act on
++ Users control their own content
++ Users can program and share their own applications on the platform
++ Users can automate interactions via chatbots that act on
   their behalf (and speak either programmable API or natural language)
 + Push functionality from the center to the edges (what is done by central
   servers today will be spread to individual mobile devices)
 ** Properties
 *** Authenticated
-With Telepathyk, you always know with maximum confidence, that a
-message is really from who it says it's from. Phishing is
-impossible. No one can impersonate anyone else.
+With Telepathyk, you always know with maximum confidence, that content
+is really from who it says it's from. Since no one can impersonate
+anyone else, a lot of current internet problems go away completely or
+are greatly diminished: phishing, propaganda, deep fakes. It can go
+even further with a small tweak from hardware makers to keep audio and
+video trustworthy even after AI makes faking audio and video trivial:
+digitally sign the recording inside the hardware that captured
+it. Camera manufacturers like Sony could theoretically still make fake
+videos, but third parties couldn't.
 
 In the telepathyk protocol, authentication is programmable and
 flexible to balance the goals of security and convenience.
@@ -67,6 +71,10 @@ Your private data is treated as a valuable resource. It is encrypted
 and replicated on the network, such that if you lose access to your
 device, you can pick up right where you left off on a new device. All
 you need is your secret key.
+*** Reliable
+If you go offline, other peers will collect data being sent to you (in
+encrypted form) and deliver it when you are back online. Messages will
+always reach you as long as you have your secret key.
 *** Censorship Resistant
 All communication is done over a censorship resistant network, which
 has several techniques for bypassing firewalls. Since you already have
@@ -80,7 +88,15 @@ API), and a browser (you can consume and view data).
 The web is a document-based system originally designed for desktop
 computing. Telepathyk is a message-based system, where content from
 humans and programs integrate seamlessly.  AI chatbots fit right in.
-
+*** Serverless
+Because Telepathyk offers strong authentication, privacy, and
+reliability, it eliminates the need for central servers in many use
+cases.
+*** Device agnostic
+Move between devices seamlessly. While technically your identity on
+different devices is different, you have access to the same content,
+and everyone will treat your multiple device identities as the same
+person.
 ** How it works
 *** Authentication
 Authentication is done by small programs called scripts, inspired by
@@ -106,10 +122,12 @@ who you're talking to, or even if you are talking to anyone at all. It
 also guarantees that no second party (people you talk to) can
 determine your physical location unless you explicitly tell them.
 
-Telepathyk automatically creates single-use identities when
-needed. For example, you don't want a search engine to compile a
-database of everything you've ever searched for, so every time you
-search, Telepathyk will use a fresh identity.
+Telepathyk automatically creates new identities when needed. For
+example, you don't want a search engine to compile a database of
+everything you've ever searched for, so every time you search,
+Telepathyk will use a fresh identity. It's only when you need someone
+to remember you, or be able to reach you later, that telepathyk will
+re-use identities.
 
 Telepathyk also encrypts data at rest on your device, and can
 automatically expire old content such that it does not become a
@@ -123,9 +141,22 @@ the messages), and some don't (they hold the encrypted data as a
 backup in case anyone needs it later, but they cannot read it
 themselves).
 
-Every part of the app is streamed - your address book, app
-configuration, message history, file attachments, etc. If you lose
-your phone you can restore everything from the network. 
+Every part of the app is streamed, even those where the only person
+with the key is you - your address book, app configuration, message
+history, file attachments, etc. If you lose your phone you can restore
+everything from the network.
+*** Reliability
+Since all data in the system is duplicated in the network, message
+senders can go offline without delaying delivery. Receivers can go
+offline without dropping messages.
+
+The way duplication is handled is similar to bittorrent in that chunks
+of data are exchanged between peers, and a user seeking to download an
+entire stream can download from multiple peers at once. Where
+Telepathyk differs is that peers who don't care about the content also
+participate, and are incentivized by micropayments. They serve as both
+durability (store the content long term) and reliability (can serve
+the content when the creator is offline).
 *** Censorship resistance
 The internet itself is a powerful censorship resistance tool - it
 automatically routes around censorship. However most people don't use
@@ -145,7 +176,7 @@ governments to sue, or server to disconnect.
 Most functionality in the app is programmable via a very simple
 programming language called [[https://github.com/skyrod-vactai/kcats/blob/master/book-of-kcats.org][kcats]]. In order to automate things in
 telepathyk, you create bots - programs that receive messages and
-respond to them. You then introduce the bots to your contacts so they
+respond to them. You then introduce the bots to your contacts, so they
 can interact with it.
 
 The bot can do things as simple as sharing photos, or as complex as
@@ -154,7 +185,21 @@ running an online store.
 In Telepathyk, all names are local and for human eyes only. Everyone's
 name in your address book is *your* name for them. The app itself
 doesn't use names, it uses the hash of the person's script to track
-who's who.
+who's who. Like nearly anything else in telepathyk, address book
+entries can be shared, and the receiver can edit it however he
+chooses.
+*** Serverlessness
+If you examine a company, each employee usually doesn't generate that
+much content that they could not serve it from their own device. All
+that remains is coordinating the communication, which is easily
+modeled inside telepathyk. 
+
+The exceptions to this are services that aggregate or process vast
+amounts of data. For example, while likely no Google employee
+generates vast amounts of data, their web crawler certainly does.
+That cannot be easily distributed and will still require a large
+datacenter. However most corporate functions could be distributed -
+email, issue tracking, scheduling, payments, administration, etc.
 ** Prior art, components, and inspiration
 + [[https://geti2p.net][i2p (anonymizing network)]]
 + [[https::/torproject.org][Tor (anonymizing network)]]
