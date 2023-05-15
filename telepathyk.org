@@ -31,13 +31,13 @@ advantage in the digital world.
 + Push functionality from the center to the edges (what is done by central
   servers today will be spread to individual mobile devices)
 ** Properties
-*** Authenticated
-With Telepathyk, you always know with maximum confidence, that content
-is really from who it says it's from. Since no one can impersonate
-anyone else, a lot of current internet problems go away completely or
-are greatly diminished: phishing, propaganda, deep fakes. It can go
-even further with a small tweak from hardware makers to keep audio and
-video trustworthy even after AI makes faking audio and video trivial:
+*** Authenticated and attributed
+With Telepathyk, you always know with maximum confidence, who created
+the content you are viewing. Since no one can impersonate anyone else,
+a lot of current internet problems go away completely or are greatly
+diminished: phishing, propaganda, deep fakes. It can go even further
+with a small tweak from hardware makers to keep audio and video
+trustworthy even after AI makes faking audio and video trivial:
 digitally sign the recording inside the hardware that captured
 it. Camera manufacturers like Sony could theoretically still make fake
 videos, but third parties couldn't.
@@ -98,13 +98,14 @@ different devices is different, you have access to the same content,
 and everyone will treat your multiple device identities as the same
 person.
 ** How it works
-*** Authentication
+*** Authentication and attribution
 Authentication is done by small programs called scripts, inspired by
 the way bitcoin (and other cryptocurrency) decides whether the person
 spending money is really the one authorized to spend it. The script
 acts as a lock, requires some cryptographic proof that acts as the key
-to unlock it. Scripts can be off-the-shelf or customized to serve your
-particular security needs.
+to unlock it. This allows users to prove who created given content and
+attribute the content to someone. Scripts can be off-the-shelf or
+customized to serve your particular security needs.
 *** Trust
 Trust starts with you. If you trust someone (say, a family member),
 you mark them as such in the telepathyk address book. That tells the
@@ -134,12 +135,12 @@ automatically expire old content such that it does not become a
 liability.
 *** Durability
 All content you create becomes part of an encrypted "stream", which is
-similar to a bittorrent file share, but content can be added over
-time. Other users participate as peers in the data sharing. Some users
-have the decryption key (the people who you want to be able to read
-the messages), and some don't (they hold the encrypted data as a
-backup in case anyone needs it later, but they cannot read it
-themselves).
+similar to a bittorrent file share, but content can be added over time
+and cannot be deleted. Other users participate as peers in the data
+sharing. Some users have the decryption key (the people who you want
+to be able to read the messages), and some don't (they hold the
+encrypted data as a backup in case anyone needs it later, but they
+cannot read it themselves).
 
 Every part of the app is streamed, even those where the only person
 with the key is you - your address book, app configuration, message
@@ -189,17 +190,114 @@ who's who. Like nearly anything else in telepathyk, address book
 entries can be shared, and the receiver can edit it however he
 chooses.
 *** Serverlessness
+Many examples of modern coordination software are centralized mostly
+because that was the only way to get attribution and durability of
+data. However now we have those properties in a decentralized protocol
+and can move functionality to the edges, making more efficient use of
+computing resources and making systems more robust.
+
 If you examine a company, each employee usually doesn't generate that
-much content that they could not serve it from their own device. All
-that remains is coordinating the communication, which is easily
-modeled inside telepathyk. 
+much content that they could not serve it from their own device
+(either a workstation or mobile device). All that remains is
+coordinating the communication, which is easily modeled inside
+telepathyk.
 
 The exceptions to this are services that aggregate or process vast
 amounts of data. For example, while likely no Google employee
 generates vast amounts of data, their web crawler certainly does.
 That cannot be easily distributed and will still require a large
 datacenter. However most corporate functions could be distributed -
-email, issue tracking, scheduling, payments, administration, etc.
+email, issue tracking, planning and scheduling, payments,
+administration, etc.
+
+The simplest example of coordinating communication without a server,
+is a group chat. Your device would understand the group chat protocol,
+which goes something like this: You produce a stream of messages,
+(your side of the group conversation). Each message includes an ID of
+the message it's replying to. The stream is encrypted and distributed
+as described in the "durability" section. Similarly your device will
+download the encrypted streams produced by all the other members,
+decrypt them and assemble the messages in the correct order,
+displaying them in much the same way modern messaging apps do.
+
+This is a fairly boring example because there are applications that
+handle this functionality already. It gets more interesting when we
+generalize to more complex coordination protocols. Ignoring
+regulatory burdens for a moment, let's examine a much more complex
+group and see how its currently centralized rules and protocols could
+be pushed to the edges. Let's look at a hospital.
+
+There are many parties involved in medical care, including: the
+patient, doctors, nurses, technicians, imaging equipment, and
+administrators. Let's look at the content each one produces, and how
+it can be coordinated.
+
+Patient: he has access to his internal state - how he is feeling, if
+he is sick or injured, what hurts, and how much. He knows what
+medications he took and when, etc.
+
+Doctor: Creates medical diagnoses and decisions on a per-patient basis
+
+Nurse: Creates records of treatments administered to patients,
+observations of patient condition
+
+Imaging and sensing equipment: produces data and images of the patient
+of various types (heart rate, xray, MRI etc).
+
+Technician: interprets data and images
+
+Administration: controls resources like rooms, equipment, doctors,
+nurses. Decides how much needs to be paid.
+
+A patient breaks his ankle and goes to the hospital. At the entrance
+he's asked to share his medical stream with the hospital, which would
+include all his medical history. It would include not only his own
+content but the keys he was given to other data relevant to his
+treatments. The doctor examines him, thinks the ankle looks broken,
+adds that to his stream (all hospital staff would create a new stream
+for each patient to preserve confidentiality), shares the key with the
+patient and administration. Administration allocates an ER room and
+xray. Patient is taken to xray machine, images are taken. The machine
+(which also speaks the protocol) streams the xray images and grants
+access to the patient, technicians, doctor, and nurses. Presumably the
+administration does not need to see the xray since they rely on the
+doctor's diagnosis, and thus does not fetch or store any images
+themselves. Doctor views the xray and diagnoses a broken ankle,
+prescribes a cast, crutches, and pain medication, and adds those data
+points to his stream. Administration accesses the doctor's stream and
+calculates the bill, and so forth.
+
+The patient gets treated just as he would with a centralized
+coordination system that hospitals use today. However in this case,
+the patient leaves the hospital with all his medical data directly
+under his control. He has the keys to the streams and can download and
+view everything, and can take it with him wherever he might get
+treated next. The next doctor can see exactly what happened - not just
+the final result but who did and said what and when. If there was an
+initial incorrect diagnosis or other mistake, he'd see that as well
+since streams are append-only. The nature of the system enforces
+accountability because the data is immutable.
+
+A real decentralized hospital protocol would be quite complex, but it
+will result in a system that has far less complexity at the *center*
+than current systems, which are run by administrators and have to
+store and process all the data, not just the data required for
+administration. A simpler center means a smaller central point of
+failure. If the hospital's central system goes down, patients can
+still be treated, doctors can still view xrays and prescribe
+medication and nurses can receive that information and administer
+treatments. The administration's system can catch up when it comes
+back online.
+
+Of course, building a working system as described would be a complex
+undertaking, but no more complex than existing systems.
+
+The reason a system like this is "decentralizable" is that there is
+not much need for aggregation where one party needs all the data. In
+fact, in the medical industry where confidentiality is required by
+law, that could be a liability. 
+
+
 ** Prior art, components, and inspiration
 + [[https://geti2p.net][i2p (anonymizing network)]]
 + [[https::/torproject.org][Tor (anonymizing network)]]
