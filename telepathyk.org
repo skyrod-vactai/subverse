@@ -4,16 +4,17 @@
 Telepathyk is communication software designed to empower users by
 providing agency, control, and customizability over their online
 interactions. This tool addresses the need for communication
-sovereignty in an age of spam, propaganda, data breaches, leaks, and
-censorship. Users can easily manage their relationships, ensuring
-private, programmable, reliable, and seamless communication.
+sovereignty in an age of spam, authentication fatigue, propaganda, 
+data breaches, leaks, and censorship. Users can easily manage their
+relationships, ensuring private, programmable, reliable, and seamless
+communication.
 
 With Telepathyk, you decide who makes high value content. Enjoy the
 peace without spammers, shills, bots, and useless social media
 posts. The software bypasses censorship, allowing free and open
-messaging. Customizability is at the core of Telepathyk, offering a
-user-friendly programming interface and the ability to share
-customizations as easily as any other content.
+messaging. Automation and customizability are at the core of
+Telepathyk, offering a user-friendly programming interface and the
+ability to build and share apps as easily as any other content.
 
 Featuring telepathy-level privacy, Telepathyk treats information as
 the valuable commodity it is, ensuring no outside observer can detect
@@ -28,22 +29,21 @@ advantage in the digital world.
 + Users can program and share their own applications on the platform
 + Users can automate interactions via chatbots that act on
   their behalf (and speak either programmable API or natural language)
-+ Push functionality from the center to the edges (what is done by central
-  servers today will be spread to individual mobile devices)
++ Users are freed from central control, by pushing functionality to
+  the edges
 ** Properties
 *** Authenticated and attributed
 With Telepathyk, you always know with maximum confidence, who created
 the content you are viewing. Since no one can impersonate anyone else,
 a lot of current internet problems go away completely or are greatly
-diminished: phishing, propaganda, deep fakes. It can go even further
-with a small tweak from hardware makers to keep audio and video
-trustworthy even after AI makes faking audio and video trivial:
-digitally sign the recording inside the hardware that captured
-it. Camera manufacturers like Sony could theoretically still make fake
-videos, but third parties couldn't.
+diminished: phishing, propaganda, deep fakes.
 
-In the telepathyk protocol, authentication is programmable and
-flexible to balance the goals of security and convenience.
+In the telepathyk protocol, authentication is automatic, programmable
+and flexible to balance the goals of security and convenience.
+
+You will never need to enter a username or password, or complete a
+captcha to "prove you are human" or do any kind of manual
+authentication. It will "just work".
 *** Trusted
 Your attention is a precious resource, with millions of internet
 voices competing for it. Telepathyk provides a personal entourage that
@@ -87,7 +87,8 @@ API), and a browser (you can consume and view data).
 
 The web is a document-based system originally designed for desktop
 computing. Telepathyk is a message-based system, where content from
-humans and programs integrate seamlessly.  AI chatbots fit right in.
+humans and programs integrate seamlessly.  AI chatbots fit right in
+and actually benefit from the network's authenticated nature.
 *** Serverless
 Because Telepathyk offers strong authentication, privacy, and
 reliability, it eliminates the need for central servers in many use
@@ -1151,11 +1152,19 @@ Use dhts to map several things:
 
 **** A hash to content
 This doesn't require authentication - the recipient can hash the data
-himself to make sure it's legit. This is the basic DHT use case
+himself to make sure it's legit. This is the basic DHT use case. I am
+not sure what content is small enough that peers don't mind storing it
+but big enough that the client wouldn't already have it. I am guessing
+somewhere in the kilobytes range.
+
+**** A content hash to peer ids
+The typical bittorrent use case - I am looking for a large video file
+and I want to know which peers have it.
 **** A public identity to its various properties
 + The script whose hash is the key for the DHT
 + Network location(s)
 + self-identifying info (what this identity calls himself etc)
+**** A hash to a revocation document
 
 *** Discussion
 + h1: "[script content...]" (as bytes) - this doesn't need to be
@@ -1181,9 +1190,20 @@ himself to make sure it's legit. This is the basic DHT use case
   (the tamper point is before that - when giving that hash to someone
   to use). Use the same dht? Could maybe just use ipfs or similar for
   plain content.
-  
++ Should peer values be identities, or just destinations? Maybe we
+  don't care *who* it is as long as they have the content.
+*** Implementation
+The DHT will hold several types of data:
++ Key revocations, meaning, if you find a valid revocation for an
+  identity, you should no longer trust any messages from that
+  identity. Key = identity, a hash. Value = revocation + valid sig
++ Peers for a given stream id. Key = stream id, value = identity
++ Locations on the network. Key = identity, value = destination
+
+
 
   
+
 
 ** Streams
 *** Overview
