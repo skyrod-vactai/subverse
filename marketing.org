@@ -1,0 +1,150 @@
+* Telepathyk
+** What is it?
+The rich and famous have their entourage to handle things for
+them. Now you do too.
+
++ Handle social engagements according to your wishes: Strangers can't
+  start talking to you without a trusted member of your entourage
+  vetting them first
++ Arrange your calendar according to your wishes
++ Notify you of important happenings, according to your wishes
++ Handle your finances according to your wishes
++ Keep your private details private (who you associate with, what you
+  talk about)
+** Dangers of inferior communication tools
++ [[https://www.msn.com/en-us/news/crime/facebook-handed-over-a-teen-s-dms-to-police-who-then-arrested-her-for-having-an-abortion/ar-AA10usV9][Facebook handed over a teen’s DMs to police, who then arrested her for having an abortion]]
++ [[https://edition.cnn.com/2021/05/08/media/trump-doj-reporter-washington-post/index.html][Trump’s DOJ secretly obtained phone records of Washington Post reporters]]
++ [[https://www.theguardian.com/technology/2012/sep/11/minnesota-woman-songs-illegally-downloaded][Minnesota woman to pay $220,000 fine for 24 illegally downloaded songs]]
++ [[https://www.latimes.com/california/story/2022-03-16/fresno-swindled-out-of-600000-in-wire-fraud-case][Why the city of Fresno kept silent about losing $600,000 to a phishing scam]]
++ [[https://thenextweb.com/news/mattel-nearly-loses-3m-to-a-classic-phishing-scam][Mattel nearly loses $3M to a classic phishing scam]]
++ [[https://www.cnbc.com/2021/03/23/consumers-lost-56-billion-dollars-to-identity-fraud-last-year.html][Consumers lost $56 billion to identity fraud last year]]
++ [[https://kdvr.com/news/local/woman-loses-18000-in-bank-impersonation-scam/][Woman loses $18,000 in bank impersonation scam]]
++ [[https://www.theguardian.com/us-news/2017/may/18/facebook-comments-arrest-prosecution][Jailed for a Facebook post: how US police target critics with arrest and prosecution]]
++ [[https://privacyinternational.org/explainer/4505/how-police-can-access-your-digital-communications-protest][How the police can access your digital communications at a protest]]
++ [[https://www.cnn.com/2023/07/06/china/hong-kong-arrests-aiding-overseas-activists-intl-hnk/index.html][Hong Kong police arrest 5 for allegedly aiding dissidents abroad]]
++ [[https://www.theguardian.com/world/2023/jul/05/french-government-should-control-social-media-during-unrest-macron-says][Macron accused of authoritarianism after threat to cut off social media]]
++ [[https://www.wired.com/story/cuba-social-media-blackout/][Cuba’s Social Media Blackout Reflects an Alarming New Normal]]
++ [[https://www.businessinsider.com/saudi-woman-gets-30-years-prison-criticizing-neom-megacity-twitter-2023-6?op=1][A Saudi woman was given 30 years in prison for criticizing the Neom megacity project on Twitter]]
+** More Features
+*** Data safety
+All your important private data (your contacts, messages, photos, etc)
+is encrypted and backed up automatically. The only data you have to
+protect outside telepathyk is your master key, a simple code which you
+can write on a piece of paper and put somewhere safe. If you lose your
+phone, all you have to do to recover is type the master key into your
+new phone. Your backup will be automatically restored.
+
+Telepathyk keeps your data that need it to remember, and disposes of
+toxic waste (your data that is worth much more to your adversaries
+than it is to you).
+*** Infinitely customizable
+You can change anything about how you communicate telepathyk-ly. Do
+you want to be notified only when messages contain certain words, or
+from certain people, or contain payments? Do you want certain messages
+to trigger automatic reactions, like creating calendar entries or
+sending new messages?
+
+You can do all of that. Telepathyk is powered by a simple programming
+language that you can use right in the app. Not a programmer? Not a
+problem. You have access to the entire ecosystem of community mods.
+*** First class participation
+You have content you want others to see, and you won't need a
+middleman to deliver it. There will be no Facebook to bury your
+posts. There will be no youtube to censor your videos or force in
+advertisements. No shopify or apple store to take a huge cut of your
+hard-earned sales.  Just you and your audience in direct contact.
+
+Telepathyk is information, software. Once you have it, you have the
+all the power it confers, and no one can take it from you. Telepathyk
+has creators, but it is not a company. It can't sell you anything,
+because you already have it.
+** FAQ
+*** Why should I use telepathyk if none of my friends do?
+All music and movies (and all other content) are free. 
+
+Once you install telepathyk, your friends have two reasons to
+join. The free content, plus telepathyk communication with their
+friend (you).
+*** Can I get in trouble for viewing copyrighted content?
+No. At least, the methods authorities use today would be useless
+against you. With telepathyk they have no way to know what content you
+shared or downloaded, or even if you did anything at all. They don't
+know where any particular telepathyk users are, so there's no way to
+apply their local laws to anyone. They would have to physically seize
+your phone and get it unlocked, which is not something typically done
+in the name of copyright enforcement.
+*** Why should I care about privacy, when I have nothing to hide?
+What you probably mean is "I have nothing to be ashamed of", which is
+not the same as "I have nothing to hide".
+
++ Do you want every registered sex offender in your city to have your
+  child's photo and your address?
+
++ Do you want your employer and co-workers to have access to all your
+  personal financial transactions, and net worth?
+  
++ Do you want your entire neighborhood to know where you keep your
+  valuables, or what you do in your bedroom?
+
+You need privacy. Just because you don't directly give this
+information to the people you don't want to have it, doesn't mean they
+won't get it. If you leak information on the internet, anyone can
+potentially get it. The only way to guarantee your data doesn't fall
+into the wrong hands is to keep it private.
+
+Finally, "I have nothing to hide" means "I will always comply".
+
+What would you do if authoritarians came to power, and ordered you to
+either turn a blind eye to horrific crimes, or participate in them?
+Would you follow any order? If there are some orders you would
+disobey, if there are some crowds you wouldn't follow, if there are
+some movements you would resist, you have something to hide.
+*** Why does telepathyk sound like a political tool?
+Telepathyk is designed to shield its users from threats of
+violence. There is nothing unethical, or politically extreme, about
+that goal.
+*** Who am I trying to have privacy from?
+There are a lot of adversaries on the internet.
+
+- People who would gather your private information and exploit you
+  with it (facebook, google, your ISP, insurers, advertisers, data
+  brokers, scammers)
+  
+- People who could use violence against you based on any what they
+  discover in your personal data (governments, abusive exes, stalkers,
+  kidnappers)
+*** Can anyone monitoring my communications tell if I'm using telepathyk?
+No.
+
+They can tell you're connected to i2p (the anonymizing network
+telepathyk communicates over). They cannot tell if you are using it to
+communicate at all, and they cannot tell if you use telepathyk or even
+have it installed.
+
+There are ways to hide even that you are connected to i2p.
+*** Doesn't using a privacy tool flag me as 'hiding something'?
+Potentially it can attract unwanted attention. It really depends on
+how common the tool is, its effectiveness, and the level of
+authorities' paranoia. Nearly every website uses SSL to encrypt
+connections, so it generally doesn't arouse suspicion. But SSL is
+absolutely a privacy tool.
+*** What happens if I lose my master key?
+Your backup data would be permanently inaccessible, and you would have
+to re-establish contact with your friends and colleagues, similiar to
+how you would today if you changed phone numbers.
+
+Definitely avoid losing your master key, if possible, but it's not the
+end of the world. You can start over with a new one.
+*** What happens if someone steals or copies my master key?
+They can impersonate you until you discover the breach. At that point
+you can "burn" the key so that no one can ever use it in your name
+again, and then start with a new master key.
+*** Why are my old messages gone?
+Telepathyk eventually erases them by default. Any conversation or
+message you want to keep, add it to your vault, and then it's kept
+forever.
+
+The reason telepathyk forgets anything you don't tell it to keep
+forever, is that your old personal data is often more valuable to your
+adversaries than it is to you, so it's a liability that is better
+destroyed than kept.
