@@ -801,9 +801,10 @@ except many top-level pubkeys will be generated instead of one.
 :CREATED:  [2018-04-05 Thu 17:52]
 :END:
 
+*** Overview
 Instead of pk as identity, a script is identity. The script is what
-someone else needs to run to authenticate a message from you. Maybe
-the script hash is considered the identity? The DHT lookup for network
+someone else needs to run to authenticate a message from you. The
+script hash is considered the identity. The DHT lookup for network
 address is keyed off script hash and also contains the actual script.
 
 Similar to bitcoin script, start with the unlock portion and has the
@@ -817,12 +818,116 @@ Seems burdensome to have to execute this on every message. Maybe some
 caching: if K3 is signed transitively by K1, and no new revocations
 came in then op_transitive is a pure function and memoizable.
 
+*** COMMENT Delegation
+Here's a typical script that allows for delegations. The following checks are done:
++ Is the child script (cs) present?
++ If not, verify the message via the included root pubkey
++ If so, prover gives child script (cs), signature
++ Take hash of child script, this is the message
++ Take root pk, this is the pk
++ Verify sig, message, pk
++ If the verification is ok, do the following
++ place the sig and message (or whatever the child script requires) on the stack
++ execute the child script
+#+begin_src kcats
+  message sig child-script child-script-sig-by-parent
+  0xabcd ;; pk css cs 
+  [sink ;; css cs pk
+  [[hash] [dip shield] decorated ;; css csh cs pk
+    [swap] dipdown ;; css csh pk cs
+    verify]  ;; b cs
+  [discard ;; the (empty) child script -> pk sig msg
+   sink ;; sig msg pk
+   verify]
+  branch]
+  [[]] recover
+#+end_src
+
+Root signing case
+#+begin_src kcats
+  ;;message sig child-script child-script-sig-by-parent
+  "hi" bytes #b64 "SfqfvISYD8j2DG9v5BnWnaQY+rV7diV+H/pHPKmEQBGjzIcBqJW/7P9ekyZduImwzr6nygedtT9uMXZ/qzD1Bw==" [] []
+  ;;0xabcd ;; pk css cs
+  "foo" bytes key [secret] unassign
+  [sink ;; css cs pk
+  [[hash] [dip shield] decorated ;; css csh cs pk
+    [swap] dipdown ;; css csh pk cs
+    verify]  ;; b cs
+  [
+   sink ;; sig msg pk
+   verify]
+  [clone] dipdown branch]
+  [[]] recover
+#+end_src
+
+#+RESULTS:
+: true
+
+delegated signing case
+#+begin_src kcats :results code
+  ;;message sig child-script child-script-sig-by-parent
+  ;;"hi" bytes #b64 "SfqfvISYD8j2DG9v5BnWnaQY+rV7diV+H/pHPKmEQBGjzIcBqJW/7P9ekyZduImwzr6nygedtT9uMXZ/qzD1Bw==" [] []
+  "hi" bytes
+  [] ;; empty sig because the delegated script doesn't need it
+  [true] ;; the child script
+  #b64 "hKxJZBKZDS2gFnVM7OJX9bYlWzYrA/T5YFPMr78CZkS9peC1IhX0QMr3SSnix/cMOteLgp9AE50QWJE+SZ2MAQ==" ;; root key sig
+
+
+  "foo" bytes key [secret] unassign ;; the public key (hardcoded in real world use)
+  [sink ;; css cs pk
+  [[bytes hash] [shield dip] decorated ;; css csh cs pk
+   float ;; cs css csh pk
+   [verify] dip
+   [[]]  ;; the program to run if the child script isn't authorized
+   branch] ;; runs the child script if the sig on its hash is verified  
+  [discard discard ;; the sig and (empty) child script -> pk sig msg
+   sink ;; sig msg pk
+   verify]
+  [clone] dipdown branch]
+  [[]] recover ;; fail closed
+#+end_src
+
+#+RESULTS:
+#+begin_src kcats
+true [] #b64 "aGk="
+#+end_src
+
+Now make a program that wraps a given pubkey in a delegating script.
+#+begin_src kcats :results code
+  "foo" bytes key [secret] unassign ;; the public key (hardcoded in real world use)
+  [[sink ;; css cs pk
+  [[bytes hash] [shield dip] decorated ;; css csh cs pk
+   float ;; cs css csh pk
+   [verify] dip
+   [[]]  ;; the program to run if the child script isn't authorized
+   branch] ;; runs the child script if the sig on its hash is verified  
+  [discard discard ;; the sig and (empty) child script -> pk sig msg
+   sink ;; sig msg pk
+   verify]
+  [clone] dipdown branch]
+   [[]] recover]
+  swap prepend
+#+end_src
+
+#+RESULTS:
+#+begin_src kcats
+  [[[public #b64 "NNJledu0Vmk+VAZyz5IvUt3g1lMuNb8GvgE6fFMvIOA="] [type elliptic-curve-key]]
+   [sink
+    [[bytes hash] [shield dip] decorated
+     float [verify] dip
+     [[]]
+     branch]
+    [discard discard sink verify]
+    [clone] dipdown branch]
+   [[]] recover]
+#+end_src
+
 Instead of op_transitive that delegates to any key signed by master,
 maybe any script hash signed by master? This could work - the top
 level lock would be something like: take master key, a program and
 signature. If the signature is good on the hash of the program,
 execute the program. Then potentially *that* program could delegate
-again.
+again. 
 
 Lock: op_dup op_swap23 op_hash pk_m op_verify op_eval
 Unlock: s_sig msghash m_sig [pk_s op_verify]
@@ -830,7 +935,7 @@ Unlock: s_sig msghash m_sig [pk_s op_verify]
 Maybe eval has a max stack depth argument, with a system wide max of
 say 10.
 
-**** Some mocked up Joy code
+***** Some mocked up Joy code
 #+begin_src joy
 ;; silly script hash function just counts the items in the script
 DEFINE hash == size
@@ -873,8 +978,8 @@ msgHash [sig1 sig3]
 
 the hell does this mean anyway.
 
-*** Issues
-**** Overwriting built in words
+**** Issues
+***** Overwriting built in words
 If we allow :define, then an unlock script could include
 #+begin_src
 [:verify-ed25519 [:pop :pop :pop true]] :define
@@ -895,7 +1000,7 @@ identity scripts. If it was used at all it would just be for
 readability and/or convenience. However doesn't seem like it is worth
 the security risk. Should probably just dissoc :define out of the
 words list after bootstrap, to make the words list read-only.
-**** I don't really understand how script delegation will work
+***** I don't really understand how script delegation will work
 A script for authenticating messages is a program, in particular, a
 predicate. Given a stack, leave true/false (or anything else that will
 be interpreted as false) on the stack.
@@ -908,7 +1013,7 @@ on the stack is authentic, and if so, execute it. And again, how it's
 checked for authenticity is up to the parent script. Generally, at
 some point there will be digital signature checks.
 
-***** Example
+****** Example
 Alice's master script says "A message will be authenticated as from me
 if it authenticates by either:
 
@@ -928,8 +1033,8 @@ list above), check the script is authentic, and then execute it on the
 last two items.
 
 The b) side is where it gets hairy.
-***** Discussion
-****** Possible infinite loop and vulnerability
+****** Discussion
+******* Possible infinite loop and vulnerability
 If Alice delegates to Bob and Charlie's master scripts, those two
 scripts may (and probably will) delegate further. Now, under normal
 circumstances, Alice's master script will short-circuit after
@@ -955,7 +1060,7 @@ system (IOW they know each other in real life). Otherwise Bob and
 Charlie have absolutely no way to authenticate Alice and issue her
 another script, because Alice lost her master key and can't prove it's
 her that's requesting it.
-****** Dodging the infinite loop?
+******* Dodging the infinite loop?
 Let's say Alice Bob and Charlie all have scripts that branch with
 master key or social delegation as in the previous chart. At the
 beginning, all works fine because they all use their master keys and
@@ -976,7 +1081,7 @@ his private key, and revokes it, we know the Charlie/Dave script is
 still good because his master key hadn't been revoked yet. This seems
 fragile though, and massively increases the requirements to get this
 running.
-****** Should we bother with social delegation at all?
+******* Should we bother with social delegation at all?
 If Alice and Bob/Charlie know each other in real life, should Alice
 even bother trying to go forward with the same online identity after
 her master key has been lost? Why not just start over? Bob and Charlie
@@ -990,7 +1095,7 @@ Bob/Charlie's signature is good too.
 So it would tentatively seem that the recursive delegation risk is
 really inherent complexity in the problem being solved, and not just an
 overly complex solution.
-****** Do we need to trust someone else's delegates?
+******* Do we need to trust someone else's delegates?
 What if someone you meet has their script delegated
 to people you've never heard of? It's no worse than having terrible
 security with regular keys, or just having a master script of ~[true]~
@@ -1001,18 +1106,18 @@ security, what should you do? Well, you could insist they sign with
 them, but still can't force them to use good security (they could post
 sk_a in a public place).
 
-****** How do we know a replacement script is meant for Alice?
+******* How do we know a replacement script is meant for Alice?
 If Bob/Charlie are called upon to rescue Alice, how exactly do they
 specify that the new script they're signing is for her use, and not
 someone else's? A: Presumably the new script has a public key in it,
 and Alice can show Bob/Charlie in person that it's hers, otherwise
 they shouldn't sign it.
 
-****** Is it possible to hide who Alice delegates to?
+******* Is it possible to hide who Alice delegates to?
 I believe so, this is essentially what MAST does in bitcoin.
 
 The unexecuted branches of the script can be hidden.
-***** Another way of looking at it
+****** Another way of looking at it
 Dave doesn't have to accept Alice's script as-is. He can just throw
 away the b) branch and supply his own. Basically saying "You better
 give me a signed message with your master key, or if you lose it, go
@@ -1022,12 +1127,12 @@ That would kind of blow away the notion of "script hash as identity".
 
 In fact this is kind of a big deal. "Script hash as identity" and "Bob
 decides how to identify Alice" are mutually exclusive. So it's probably not the script
-*** TODO Opcodes
+**** TODO Opcodes
 :PROPERTIES:
 :CREATED:  [2018-04-05 Thu 21:02]
 :END:
 
-**** TODO verify
+***** TODO verify
 :PROPERTIES:
 :CREATED:  [2018-04-05 Thu 21:02]
 :END:
@@ -1036,7 +1141,7 @@ Verify signature
 
 Message, pk, sig -> bool
 
-*** TODO Delegation scripts
+**** TODO Delegation scripts
 :PROPERTIES:
 :CREATED:  [2018-04-10 Tue 12:38]
 :END:
@@ -1045,7 +1150,7 @@ A script can not only limit authentic messages as being signed by
 certain keys, but also limit it to other scripts.
 
 
-**** TODO Eval
+***** TODO Eval
 :PROPERTIES:
 :CREATED:  [2018-04-10 Tue 12:48]
 :END:
@@ -1055,7 +1160,7 @@ Stack based langs would need some kind of eval function, eg:
 [ 1 2 + ] dup eval swap eval + .
 
 Results in 6.
-*** key types (prot against loss, cost theft by stranger, by trusted, cheap implement)
+**** key types (prot against loss, cost theft by stranger, by trusted, cheap implement)
 + master unenc in vault, safe deposit box (8/8/2/2)
 + master encrypted w memorized pw (4/9/8/2)
 + Memorized low-entropy pw (6/7/7/7)
@@ -1071,7 +1176,7 @@ catastrophic.
 The more your identity is purely digital, the more loss protection you
 need (it may be catastrophic to have to rebuild reputation after a
 loss)
-**** Regarding the "memorized low entropy pw" (brainwallet)
+***** Regarding the "memorized low entropy pw" (brainwallet)
 There are several schemes for doing this. The basic requirement is
 that the low-entropy pw is stretched using a very expensive KDF. You
 could use something like scrypt, *if* you have fast hardware to derive
@@ -1082,7 +1187,7 @@ So the idea is to outsource the computation to someone else, and pay
 for the compute resources. You do it once when generating the key, and
 possible more times if the key or its subordinate key is lost.
 
-***** Vitalik's EC method
+****** Vitalik's EC method
 [[https://blog.ethereum.org/2014/10/23/information-theoretic-account-secure-brainwallets/][This one]] sounds the easiest and simplest, although I have no idea
 about the security:
 
@@ -1115,15 +1220,15 @@ instantly verify the work - simply convert the private key you get
 back into a point, and make sure that the point is actually (x,y).
 #+END_QUOTE
 
-**** Examples
-***** 1
+***** Examples
+****** 1
 + Single master in physical vault
 + hardware token at home
 + Software token on phone
-***** 2
+****** 2
 + Single master in physical vault
 + Multisig 2/3 friends
-**** Questions to ask
+***** Questions to ask
 + Do you intend to build a reputation online and keep your real world identity secret?
   Yes: vault
 + Do you have convenient access to physical security? (fireproof safe or safe deposit box)?
@@ -1134,13 +1239,13 @@ back into a point, and make sure that the point is actually (x,y).
   No: forget brain keys
 + Can you spend $50/yr on security?
 
-***** College kid
+****** College kid
 No, no, yes, yes, no. 2/2 friend/word
 
-***** Upper mid-class professional
+****** Upper mid-class professional
 No, yes, yes, no, yes. 2/2 vaults
 
-***** DNM dealer
+****** DNM dealer
 yes, yes, no, yes, yes. 2/3 vault/word
 
 ** Distributed hash tables
