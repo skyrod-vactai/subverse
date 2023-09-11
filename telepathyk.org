@@ -39,11 +39,16 @@ a lot of current internet problems go away completely or are greatly
 diminished: phishing, propaganda, deep fakes.
 
 In the telepathyk protocol, authentication is automatic, programmable
-and flexible to balance the goals of security and convenience.
+and flexible to balance the goals of security and convenience. 
 
-You will never need to enter a username or password, or complete a
-captcha to "prove you are human" or do any kind of manual
-authentication. It will "just work".
+In telepathyk, you will never need to:
+
++ Create an account
++ Verify your email address
++ Enter a username or password
++ Prove you are human
++ Enter a bank account or credit card number
+    
 *** Trusted
 Your attention is a precious resource, with millions of internet
 voices competing for it. Telepathyk provides a personal entourage that
@@ -58,7 +63,12 @@ less likely over time that you'll receive any low quality
 content. 
 
 By using an introduction-based protocol, you always know who you're
-dealing with and how much you can trust them. 
+dealing with and how much you can trust them.
+
+In telepathyk's trusted environment, the presentation of content is
+controlled by you, not the other party. Every shopping site works
+exactly the same way, so you can get things done and get on with your
+life. You aren't bombarded by flashy branding and ads.
 *** Private
 Current "privacy" messengers send whispers: No one else knows what you
 are saying, but they can see who you're whispering to. Telepathyk gets
@@ -92,7 +102,8 @@ and actually benefit from the network's authenticated nature.
 *** Serverless
 Because Telepathyk offers strong authentication, privacy, and
 reliability, it eliminates the need for central servers in many use
-cases.
+cases - denial of service attacks are harder for an attacker to pull
+off, no need to pay CloudFlare to serve your content for you.
 *** Device agnostic
 Move between devices seamlessly. While technically your identity on
 different devices is different, you have access to the same content,
