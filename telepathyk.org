@@ -1,3 +1,4 @@
+#+PROPERTY: header-args:kcats :noweb yes :results code :exports both
 #+TODO: TODO(t) INPROGRESS(i@/!) | DONE(d!) CANCELED(c@)
 * Introducing Telepathyk
 ** Advancing Sovereign Communication
@@ -295,11 +296,14 @@ will result in a system that has far less complexity at the *center*
 than current systems, which are run by administrators and have to
 store and process all the data, not just the data required for
 administration. A simpler center means a smaller central point of
-failure. If the hospital's central system goes down, patients can
-still be treated, doctors can still view xrays and prescribe
-medication and nurses can receive that information and administer
-treatments. The administration's system can catch up when it comes
-back online.
+failure. All these communications protocols are independent and don't
+require the others to function properly. If the hospital's central
+system goes down, patients can still be treated, doctors can still
+view xrays and prescribe medication and nurses can receive that
+information and administer treatments. The administration's system can
+catch up when it comes back online. In fact, the system could probably
+function reasonably well even without an internet connection, where
+data is shared p2p via bluetooth or ad-hoc wifi.
 
 Of course, building a working system as described would be a complex
 undertaking, but no more complex than existing systems.
@@ -903,68 +907,104 @@ delegated signing case
 true [] #b64 "aGk="
 #+end_src
 
-Now make a program that wraps a given pubkey in a delegating script.
+Now make a program that wraps a given pubkey in a delegating
+script. This script says "any script signed by this pubkey is
+authorized". (Ignores revocations for now).
 #+begin_src kcats :results code
   "foo" bytes key [secret] unassign ;; the public key (hardcoded in real world use)
   [[sink ;; css cs pk
-  [[bytes hash] [shield dip] decorated ;; css csh cs pk
-   float ;; cs css csh pk
-   [verify] dip
-   [[]]  ;; the program to run if the child script isn't authorized
-   branch] ;; runs the child script if the sig on its hash is verified  
-  [discard discard ;; the sig and (empty) child script -> pk sig msg
-   sink ;; sig msg pk
-   verify]
-  [clone] dipdown branch]
+    [[bytes hash] [shield dip] decorated ;; css csh cs pk
+     float ;; cs css csh pk
+     [verify] dip
+     [[]]  ;; the program to run if the child script isn't authorized
+     branch] ;; runs the child script if the sig on its hash is verified  
+    [drop drop ;; the sig and (empty) child script -> pk sig msg
+     sink ;; sig msg pk
+     verify]
+    [clone] dipdown branch]
    [[]] recover]
   swap prepend
 #+end_src
 
 #+RESULTS:
 #+begin_src kcats
-  [[[public #b64 "NNJledu0Vmk+VAZyz5IvUt3g1lMuNb8GvgE6fFMvIOA="] [type elliptic-curve-key]]
-   [sink
-    [[bytes hash] [shield dip] decorated
-     float [verify] dip
-     [[]]
-     branch]
-    [discard discard sink verify]
-    [clone] dipdown branch]
-   [[]] recover]
+[[[public #b64 "NNJledu0Vmk+VAZyz5IvUt3g1lMuNb8GvgE6fFMvIOA="] [type elliptic-curve-key]]
+ [sink [[bytes hash]
+        [shield dip]
+        decorated float [verify] dip [[]] branch]
+  [drop drop sink verify] [clone] dipdown branch]
+ [[]] recover]
 #+end_src
 
-Instead of op_transitive that delegates to any key signed by master,
-maybe any script hash signed by master? This could work - the top
-level lock would be something like: take master key, a program and
-signature. If the signature is good on the hash of the program,
-execute the program. Then potentially *that* program could delegate
-again. 
+Here's a demonstration of delegating.
 
-Lock: op_dup op_swap23 op_hash pk_m op_verify op_eval
-Unlock: s_sig msghash m_sig [pk_s op_verify]
+#+begin_src kcats
+  [[make-simple-script [[secret] unassign [first] sort wrap [sink verify] join emit bytes]]
+   [delegated-script [[secret] unassign
+                      [[sink ;; css cs pk
+                        [[hash] [shield dip] decorated ;; css csh cs pk
+                         float ;; cs css csh pk
+                         string read first;; bytes => program
+                         [ verify] dip; ;dump
+                         [[]]  ;; the program to run if the child script isn't authorized
+                         branch] ;; runs the child script if the sig on its hash is verified  
+                        [drop drop ;; the sig and (empty) child script -> pk sig msg
+                         sink ;; sig msg pk
+                         verify]
+                        [clone] dipdown branch]
+                       [[]] recover]
+                      swap prepend emit bytes]]
+   [authenticate [[[[hash =] dive]
+                   [swap string read first functional [inject] lingo first]
+                   [drop drop []] if]
+                  [[]] recover]]]
+  ["bar" bytes key ;; child key
+   "we attack at dawn" bytes ;; message
+   [sign] shield ;; sign it
+   float
+   make-simple-script [hash] shield 
 
-Maybe eval has a max stack depth argument, with a system wide max of
-say 10.
+   "foo" bytes key swap [sign] shielddown ;; sig hash pk
 
-***** Some mocked up Joy code
-#+begin_src joy
-;; silly script hash function just counts the items in the script
-DEFINE hash == size
-;; silly signature verification just checks that sig+msghash+pk equals 30
-DEFINE verify == + + 30 =
-;; an example master script, master pk is 19,
-DEFINE from-jeff == dup swapd hash 19 verify [i] ["Unauthorized child script"] branch
-;; example delegated script (any size=2 script will work)
-DEFINE sub-script == [6 verify]
-;; example message verification
-12 12 9 sub-script from-jeff
+   swap
+   delegated-script
 
-;; multisig verify
-;; pk is the 2nd item in a list [sig pk]
-DEFINE pk = rest first
-DEFINE allowed-keys = [swap pk [=] cons some] swap swons
-DEFINE required-sigs  == [[[rest first] dip =] [some] dip] filter
+   ;; ps cssig cs msig m
+   [hash] shield swap dump
+   authenticate
+  ] 
+  let
+
 #+end_src
+
+#+RESULTS:
+#+begin_src kcats
+[#b64 "W1tbdHlwZSBlbGxpcHRpYy1jdXJ2ZS1rZXldIFtwdWJsaWMgI2I2NCAiTk5KbGVkdTBWbWsrVkFaeXo1SXZVdDNnMWxNdU5iOEd2Z0U2ZkZNdklPQT0iXV0gW3NpbmsgW1toYXNoXSBbc2hpZWxkIGRpcF0gZGVjb3JhdGVkIGZsb2F0IHN0cmluZyByZWFkIGZpcnN0IFt2ZXJpZnldIGRpcCBbW11dIGJyYW5jaF0gW2Ryb3AgZHJvcCBzaW5rIHZlcmlmeV0gW2Nsb25lXSBkaXBkb3duIGJyYW5jaF0gW1tdXSByZWNvdmVyXQ==" #b64 "zS6d398nwCs2wQHdksZHzJ6ehyVk8ftPS7qNsDQ5q4M=" #b64 "ordodvDX8kNhFllnC++7Y5eELx9pF3hsuIH2+lkgmrqF2HuqJ/nEN0ru2mChKk1naYrBW2VA2gfmCCPvkdn9BQ==" #b64 "W1tbcHVibGljICNiNjQgInpLUmJRR3JZaHBsOE5OaHZOQnNoSVZPaHpJRStPdG1abytGUmJvTG9GNEU9Il0gW3R5cGUgZWxsaXB0aWMtY3VydmUta2V5XV0gc2luayB2ZXJpZnld" #b64 "wX8EhVgU6RLipJ77haemv9ISE3UDosCv/OUGYCKWPEiyRxCEMyAnzZGZ9hRI+MUmloTXbk/gx9h0KGWUxkGjDA==" #b64 "d2UgYXR0YWNrIGF0IGRhd24="]
+[] #b64 "ordodvDX8kNhFllnC++7Y5eELx9pF3hsuIH2+lkgmrqF2HuqJ/nEN0ru2mChKk1naYrBW2VA2gfmCCPvkdn9BQ=="
+#b64 "W1tbcHVibGljICNiNjQgInpLUmJRR3JZaHBsOE5OaHZOQnNoSVZPaHpJRStPdG1abytGUmJvTG9GNEU9Il0gW3R5cGUgZWxsaXB0aWMtY3VydmUta2V5XV0gc2luayB2ZXJpZnld"
+#b64 "wX8EhVgU6RLipJ77haemv9ISE3UDosCv/OUGYCKWPEiyRxCEMyAnzZGZ9hRI+MUmloTXbk/gx9h0KGWUxkGjDA=="
+#b64 "d2UgYXR0YWNrIGF0IGRhd24="
+#+end_src
+
+ord = cssig
+W1t = cs
+wX8 = msig
+d2U = m
+#+RESULTS:
+#+begin_src kcats
+[[[type elliptic-curve-key]
+  [public #b64 "NNJledu0Vmk+VAZyz5IvUt3g1lMuNb8GvgE6fFMvIOA="]]
+ [sink [[bytes hash]
+        [shield dip]
+        decorated float string read first [verify] dip dump [[]] branch]
+  [drop drop sink verify] [clone] dipdown branch]
+ [[]] recover]
+#b64 "ordodvDX8kNhFllnC++7Y5eELx9pF3hsuIH2+lkgmrqF2HuqJ/nEN0ru2mChKk1naYrBW2VA2gfmCCPvkdn9BQ=="
+#b64 "W1tbcHVibGljICNiNjQgInpLUmJRR3JZaHBsOE5OaHZOQnNoSVZPaHpJRStPdG1abytGUmJvTG9GNEU9Il0gW3R5cGUgZWxsaXB0aWMtY3VydmUta2V5XV0gc2luayB2ZXJpZnld"
+#b64 "wX8EhVgU6RLipJ77haemv9ISE3UDosCv/OUGYCKWPEiyRxCEMyAnzZGZ9hRI+MUmloTXbk/gx9h0KGWUxkGjDA=="
+#b64 "d2UgYXR0YWNrIGF0IGRhd24="
+#+end_src
+
 
 *** Other possible scripts
 :PROPERTIES:
@@ -1011,133 +1051,6 @@ identity scripts. If it was used at all it would just be for
 readability and/or convenience. However doesn't seem like it is worth
 the security risk. Should probably just dissoc :define out of the
 words list after bootstrap, to make the words list read-only.
-***** I don't really understand how script delegation will work
-A script for authenticating messages is a program, in particular, a
-predicate. Given a stack, leave true/false (or anything else that will
-be interpreted as false) on the stack.
-
-The predicate can check *anything*, but generally this will be used to
-check whether a message is authentic.
-
-One part of the script's execution can be to check whether a *script*
-on the stack is authentic, and if so, execute it. And again, how it's
-checked for authenticity is up to the parent script. Generally, at
-some point there will be digital signature checks.
-
-****** Example
-Alice's master script says "A message will be authenticated as from me
-if it authenticates by either:
-
-a) A script that is signed by my master keypair kp_a_master
-b) A script that is authentic according to both Bob and Charlie's scripts.
-
-The a) side is straightforward enough. Alice would sign
-#+begin_src
-[kp_a_signing :verify-ed25519]
-#+end_src
-Later alice sends a message like
-#+begin_src
-"I'm alice" sig-message [kp_a_signing :verify-ed25519] sig-script
-#+end_src
-And her master script will pop the first two items (last two in the
-list above), check the script is authentic, and then execute it on the
-last two items.
-
-The b) side is where it gets hairy.
-****** Discussion
-******* Possible infinite loop and vulnerability
-If Alice delegates to Bob and Charlie's master scripts, those two
-scripts may (and probably will) delegate further. Now, under normal
-circumstances, Alice's master script will short-circuit after
-evaluating the a) side to true and will never need to look at Bob or
-Charlie's. Only in the event that Alice has lost control of her master
-key does the b) side need checking.  However, let's say Alice *does*
-lose her master key, that means from then on, Bob and Charlie's
-delegation routines will need to be checked for every message Alice
-sends (modulo caching). And of course we can see this leading to a
-massively expanding recursive call if Bob or Charlie have similar
-scripts to Alice and lose their master keys too. It can also easily
-lead to an infinite loop, where no message can be authenticated and
-the identities are useless.
-
-+ [a -> b,c]
-+ [b -> c,a]
-+ [c -> a,b]
-
-This does cast some doubt on whether this sort of social delegation is
-worth implementing. The only way it can work at all is if Alice and
-Bob or Charlie have some sort of persistent identity outside this
-system (IOW they know each other in real life). Otherwise Bob and
-Charlie have absolutely no way to authenticate Alice and issue her
-another script, because Alice lost her master key and can't prove it's
-her that's requesting it.
-******* Dodging the infinite loop?
-Let's say Alice Bob and Charlie all have scripts that branch with
-master key or social delegation as in the previous chart. At the
-beginning, all works fine because they all use their master keys and
-don't need to check social delegation.
-
-Let's say Alice then loses her master key. It's still fine because she
-can get a new script from Bob and Charlie who can still be
-authenticated without consulting Alice's script.
-
-However at this point they know they need to stop depending on Alice.
-
-What can they do?
-
-Not much, unless there's a reliable timestamp service. If there is, we
-can be sure of revocation times. Bob can sign a new script with his
-master key that delegates to Charlie and Dave. Later when Bob loses
-his private key, and revokes it, we know the Charlie/Dave script is
-still good because his master key hadn't been revoked yet. This seems
-fragile though, and massively increases the requirements to get this
-running.
-******* Should we bother with social delegation at all?
-If Alice and Bob/Charlie know each other in real life, should Alice
-even bother trying to go forward with the same online identity after
-her master key has been lost? Why not just start over? Bob and Charlie
-will happily vouch that Alice's new identity is the same person as her
-old one. Then again, that "vouching" is basically the same as
-delegating - anyone who's been out of touch with Alice for a while is
-going to need Bob and Charlie's say so that Alice's new identity is
-the same person as her old one. And they'll also need to know that
-Bob/Charlie's signature is good too.
-
-So it would tentatively seem that the recursive delegation risk is
-really inherent complexity in the problem being solved, and not just an
-overly complex solution.
-******* Do we need to trust someone else's delegates?
-What if someone you meet has their script delegated
-to people you've never heard of? It's no worse than having terrible
-security with regular keys, or just having a master script of ~[true]~
-(where anyone can impersonate them). If they have obviously bad
-security, what should you do? Well, you could insist they sign with
-~sk_a~ and just locally replace their script with ~[pk_a
-:verify-ed25519]~. This is basically you making up a new identity for
-them, but still can't force them to use good security (they could post
-sk_a in a public place).
-
-******* How do we know a replacement script is meant for Alice?
-If Bob/Charlie are called upon to rescue Alice, how exactly do they
-specify that the new script they're signing is for her use, and not
-someone else's? A: Presumably the new script has a public key in it,
-and Alice can show Bob/Charlie in person that it's hers, otherwise
-they shouldn't sign it.
-
-******* Is it possible to hide who Alice delegates to?
-I believe so, this is essentially what MAST does in bitcoin.
-
-The unexecuted branches of the script can be hidden.
-****** Another way of looking at it
-Dave doesn't have to accept Alice's script as-is. He can just throw
-away the b) branch and supply his own. Basically saying "You better
-give me a signed message with your master key, or if you lose it, go
-get signatures on a new one from our mutual friends Frank and Gary."
-
-That would kind of blow away the notion of "script hash as identity".
-
-In fact this is kind of a big deal. "Script hash as identity" and "Bob
-decides how to identify Alice" are mutually exclusive. So it's probably not the script
 **** TODO Opcodes
 :PROPERTIES:
 :CREATED:  [2018-04-05 Thu 21:02]
