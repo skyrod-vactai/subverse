@@ -833,7 +833,7 @@ Seems burdensome to have to execute this on every message. Maybe some
 caching: if K3 is signed transitively by K1, and no new revocations
 came in then op_transitive is a pure function and memoizable.
 
-*** COMMENT Delegation
+*** Delegation
 Here's a typical script that allows for delegations. The following checks are done:
 + Is the child script (cs) present?
 + If not, verify the message via the included root pubkey
@@ -876,7 +876,17 @@ Root signing case
 #+end_src
 
 #+RESULTS:
-: true
+#+begin_src kcats
+[] [[unwound [verify]]
+    [asked [bytes]]
+    [type error]
+    [reason "type mismatch"]
+    [actual []]
+    [handled true]]
+[[public #b64 "NNJledu0Vmk+VAZyz5IvUt3g1lMuNb8GvgE6fFMvIOA="] [type elliptic-curve-key]]
+[] [] #b64 "SfqfvISYD8j2DG9v5BnWnaQY+rV7diV+H/pHPKmEQBGjzIcBqJW/7P9ekyZduImwzr6nygedtT9uMXZ/qzD1Bw=="
+#b64 "aGk="
+#+end_src
 
 delegated signing case
 #+begin_src kcats :results code
@@ -939,13 +949,14 @@ authorized". (Ignores revocations for now).
 Here's a demonstration of delegating.
 
 #+begin_src kcats
+  ;; all script making functions expect a keypair or pk
   [[make-simple-script [[secret] unassign [first] sort wrap [sink verify] join emit bytes]]
-   [delegated-script [[secret] unassign
-                      [[sink ;; css cs pk
+   [delegated-script [[secret] unassign [first] sort
+                      [[sink ;; cssig cs pk
                         [[hash] [shield dip] decorated ;; css csh cs pk
                          float ;; cs css csh pk
-                         string read first;; bytes => program
-                         [ verify] dip; ;dump
+                         string read first ;; bytes => program
+                         [verify] dip ;; dump
                          [[]]  ;; the program to run if the child script isn't authorized
                          branch] ;; runs the child script if the sig on its hash is verified  
                         [drop drop ;; the sig and (empty) child script -> pk sig msg
@@ -954,24 +965,26 @@ Here's a demonstration of delegating.
                         [clone] dipdown branch]
                        [[]] recover]
                       swap prepend emit bytes]]
-   [authenticate [[[[hash =] dive]
-                   [swap string read first functional [inject] lingo first]
+   ;; scrhash script args 
+   [authenticate [[[[emit bytes hash] dip =]
+                   [swap string read first dump functional [inject] lingo first]
                    [drop drop []] if]
                   [[]] recover]]]
   ["bar" bytes key ;; child key
    "we attack at dawn" bytes ;; message
    [sign] shield ;; sign it
    float
-   make-simple-script [hash] shield 
+   make-simple-script [hash] shield ;; csh cs
 
-   "foo" bytes key swap [sign] shielddown ;; sig hash pk
+   "foo" bytes key swap [sign] shielddown ;; sig pk
 
-   swap
-   delegated-script
-
+   swap ;; pk sig 
+   delegated-script ;; ps cssig cs msig m
+   dump
    ;; ps cssig cs msig m
-   [hash] shield swap dump
-   authenticate
+   [hash] shield ;; psh ps cssig ...
+   ;dump
+   ;authenticate ;; i think the problem is this expects args to be wrapped
   ] 
   let
 
@@ -979,33 +992,91 @@ Here's a demonstration of delegating.
 
 #+RESULTS:
 #+begin_src kcats
-[#b64 "W1tbdHlwZSBlbGxpcHRpYy1jdXJ2ZS1rZXldIFtwdWJsaWMgI2I2NCAiTk5KbGVkdTBWbWsrVkFaeXo1SXZVdDNnMWxNdU5iOEd2Z0U2ZkZNdklPQT0iXV0gW3NpbmsgW1toYXNoXSBbc2hpZWxkIGRpcF0gZGVjb3JhdGVkIGZsb2F0IHN0cmluZyByZWFkIGZpcnN0IFt2ZXJpZnldIGRpcCBbW11dIGJyYW5jaF0gW2Ryb3AgZHJvcCBzaW5rIHZlcmlmeV0gW2Nsb25lXSBkaXBkb3duIGJyYW5jaF0gW1tdXSByZWNvdmVyXQ==" #b64 "zS6d398nwCs2wQHdksZHzJ6ehyVk8ftPS7qNsDQ5q4M=" #b64 "ordodvDX8kNhFllnC++7Y5eELx9pF3hsuIH2+lkgmrqF2HuqJ/nEN0ru2mChKk1naYrBW2VA2gfmCCPvkdn9BQ==" #b64 "W1tbcHVibGljICNiNjQgInpLUmJRR3JZaHBsOE5OaHZOQnNoSVZPaHpJRStPdG1abytGUmJvTG9GNEU9Il0gW3R5cGUgZWxsaXB0aWMtY3VydmUta2V5XV0gc2luayB2ZXJpZnld" #b64 "wX8EhVgU6RLipJ77haemv9ISE3UDosCv/OUGYCKWPEiyRxCEMyAnzZGZ9hRI+MUmloTXbk/gx9h0KGWUxkGjDA==" #b64 "d2UgYXR0YWNrIGF0IGRhd24="]
-[] #b64 "ordodvDX8kNhFllnC++7Y5eELx9pF3hsuIH2+lkgmrqF2HuqJ/nEN0ru2mChKk1naYrBW2VA2gfmCCPvkdn9BQ=="
-#b64 "W1tbcHVibGljICNiNjQgInpLUmJRR3JZaHBsOE5OaHZOQnNoSVZPaHpJRStPdG1abytGUmJvTG9GNEU9Il0gW3R5cGUgZWxsaXB0aWMtY3VydmUta2V5XV0gc2luayB2ZXJpZnld"
-#b64 "wX8EhVgU6RLipJ77haemv9ISE3UDosCv/OUGYCKWPEiyRxCEMyAnzZGZ9hRI+MUmloTXbk/gx9h0KGWUxkGjDA=="
-#b64 "d2UgYXR0YWNrIGF0IGRhd24="
+  [#b64 "W1tbcHVibGljICNiNjQgIk5OSmxlZHUwVm1rK1ZBWnl6NUl2VXQzZzFsTXVOYjhHdmdFNmZGTXZJT0E9Il0gW3R5cGUgZWxsaXB0aWMtY3VydmUta2V5XV0gW3NpbmsgW1toYXNoXSBbc2hpZWxkIGRpcF0gZGVjb3JhdGVkIGZsb2F0IHN0cmluZyByZWFkIGZpcnN0IFt2ZXJpZnldIGRpcCBbW11dIGJyYW5jaF0gW2Ryb3AgZHJvcCBzaW5rIHZlcmlmeV0gW2Nsb25lXSBkaXBkb3duIGJyYW5jaF0gW1tdXSByZWNvdmVyXQ==" #b64 "ordodvDX8kNhFllnC++7Y5eELx9pF3hsuIH2+lkgmrqF2HuqJ/nEN0ru2mChKk1naYrBW2VA2gfmCCPvkdn9BQ==" #b64 "W1tbcHVibGljICNiNjQgInpLUmJRR3JZaHBsOE5OaHZOQnNoSVZPaHpJRStPdG1abytGUmJvTG9GNEU9Il0gW3R5cGUgZWxsaXB0aWMtY3VydmUta2V5XV0gc2luayB2ZXJpZnld" #b64 "wX8EhVgU6RLipJ77haemv9ISE3UDosCv/OUGYCKWPEiyRxCEMyAnzZGZ9hRI+MUmloTXbk/gx9h0KGWUxkGjDA==" #b64 "d2UgYXR0YWNrIGF0IGRhd24="]
+  #b64 "nOVx+lfLynibC5E4n1PcEnpYFGuLBtjQMcH5Ni0Mfy4=" #b64 "W1tbcHVibGljICNiNjQgIk5OSmxlZHUwVm1rK1ZBWnl6NUl2VXQzZzFsTXVOYjhHdmdFNmZGTXZJT0E9Il0gW3R5cGUgZWxsaXB0aWMtY3VydmUta2V5XV0gW3NpbmsgW1toYXNoXSBbc2hpZWxkIGRpcF0gZGVjb3JhdGVkIGZsb2F0IHN0cmluZyByZWFkIGZpcnN0IFt2ZXJpZnldIGRpcCBbW11dIGJyYW5jaF0gW2Ryb3AgZHJvcCBzaW5rIHZlcmlmeV0gW2Nsb25lXSBkaXBkb3duIGJyYW5jaF0gW1tdXSByZWNvdmVyXQ=="
+  #b64 "ordodvDX8kNhFllnC++7Y5eELx9pF3hsuIH2+lkgmrqF2HuqJ/nEN0ru2mChKk1naYrBW2VA2gfmCCPvkdn9BQ=="
+  #b64 "W1tbcHVibGljICNiNjQgInpLUmJRR3JZaHBsOE5OaHZOQnNoSVZPaHpJRStPdG1abytGUmJvTG9GNEU9Il0gW3R5cGUgZWxsaXB0aWMtY3VydmUta2V5XV0gc2luayB2ZXJpZnld"
+  #b64 "wX8EhVgU6RLipJ77haemv9ISE3UDosCv/OUGYCKWPEiyRxCEMyAnzZGZ9hRI+MUmloTXbk/gx9h0KGWUxkGjDA=="
+  #b64 "d2UgYXR0YWNrIGF0IGRhd24="
 #+end_src
 
 ord = cssig
-W1t = cs
+W1tbc = cs
+W1tbd = ps
 wX8 = msig
 d2U = m
-#+RESULTS:
+
+What is the form of authenticate? It's going to take:
++ the hash of who it purports to be from
++ The encoded script that should hash to the above (lock)
++ The encoded list of arguments to that script (key)
+
+Ok so what is the form of proof for both scripts?
+
+The inner (child) script: encoded bytes of a list, [key message sig]
+
+The outer parent script: encoded bytes of a list [childscript, cssig, csargs]
+
+Should the authenticate script be responsible for decoding the inputs?
+Or should the caller do that? On the one hand, it's nice to deal with
+actual data instead of a byte blob, but we have to re-encode anyway it
+to get the hash (at least for the script itself, not the inputs generally).
+
+Should the authenticate function be responsible for checking against a
+known hash? Or should it just return [from, message] or nothing? The
+reason to go with the former, is that I expect filtering to be applied
+even before authentication - if the sender isn't in our address book,
+for example, we can drop it without even caring if it's authentic.
+
+Is authenticate something we can call recursively? If possible we
+should. Let's try it
+
 #+begin_src kcats
-[[[type elliptic-curve-key]
-  [public #b64 "NNJledu0Vmk+VAZyz5IvUt3g1lMuNb8GvgE6fFMvIOA="]]
- [sink [[bytes hash]
-        [shield dip]
-        decorated float string read first [verify] dip dump [[]] branch]
-  [drop drop sink verify] [clone] dipdown branch]
- [[]] recover]
-#b64 "ordodvDX8kNhFllnC++7Y5eELx9pF3hsuIH2+lkgmrqF2HuqJ/nEN0ru2mChKk1naYrBW2VA2gfmCCPvkdn9BQ=="
-#b64 "W1tbcHVibGljICNiNjQgInpLUmJRR3JZaHBsOE5OaHZOQnNoSVZPaHpJRStPdG1abytGUmJvTG9GNEU9Il0gW3R5cGUgZWxsaXB0aWMtY3VydmUta2V5XV0gc2luayB2ZXJpZnld"
-#b64 "wX8EhVgU6RLipJ77haemv9ISE3UDosCv/OUGYCKWPEiyRxCEMyAnzZGZ9hRI+MUmloTXbk/gx9h0KGWUxkGjDA=="
-#b64 "d2UgYXR0YWNrIGF0IGRhd24="
+  ;; take a hash, script (list) and args (list) => message or nothing
+  [[authenticate [[[[emit bytes hash] dip =]
+                   [drop [] [inject] lingo first] ;; use functional before [inject] to turn off debug mode
+                   [drop drop []] if]
+                  [[]] recover]]
+   [make-simple-script [[secret] unassign [first] sort wrap [sink verify] join]]
+   [delegated-script [dump [secret] unassign [first] sort
+                      [sink ;; cssig cs pk args
+                       [emit bytes hash] [shield dip] decorated ;; css csh cs pk args
+                       float ;; cs css csh pk args
+                       [verify] dive ;; csh cs args
+                       [authenticate] bail] swap prepend]]]
+  ;[["hi"] [emit bytes hash] shield dump [] sink authenticate]
+  ["bar" bytes key ;; child key
+   "we attack at dawn" bytes ;; message
+   [sign] shield ;; sign it
+   ;swap
+   swap  pair swap
+   make-simple-script [emit bytes hash] shield ;; csh cs
+   "foo" bytes key swap [sign] shielddown ;; sig pk
+
+   swap ;; pk sig 
+   delegated-script ;; ps cssig cs [msig m]
+   [triplet reverse] dip
+   ;; add the hash on top
+   [emit bytes hash] shield
+   authenticate [string] bail
+   ;dump
+   ;; ps cssig cs msig m
+   ;[hash] shield ;; psh ps cssig ...
+   ;dump
+   ;authenticate ;; i think the problem is this expects args to be wrapped
+
+  ]
+
+  let
 #+end_src
 
+#+RESULTS:
+#+begin_src kcats
+[[[secret #b64 "LCa0a2j/xo/5m0U8HTBBNBNCLXBkg7+g+YpeiGJm564="] [public #b64 "NNJledu0Vmk+VAZyz5IvUt3g1lMuNb8GvgE6fFMvIOA="] [type elliptic-curve-key]] #b64 "ordodvDX8kNhFllnC++7Y5eELx9pF3hsuIH2+lkgmrqF2HuqJ/nEN0ru2mChKk1naYrBW2VA2gfmCCPvkdn9BQ==" [[[public #b64 "zKRbQGrYhpl8NNhvNBshIVOhzIE+OtmZo+FRboLoF4E="] [type elliptic-curve-key]] sink verify] [#b64 "wX8EhVgU6RLipJ77haemv9ISE3UDosCv/OUGYCKWPEiyRxCEMyAnzZGZ9hRI+MUmloTXbk/gx9h0KGWUxkGjDA==" #b64 "d2UgYXR0YWNrIGF0IGRhd24="]]
+"we attack at dawn"
+#+end_src
 
+A delegated script should take: =[cs sig [args]]= and verify the sig. If it verifies, it should call =authenticate= with =[csh, cs, args]= 
 *** Other possible scripts
 :PROPERTIES:
 :CREATED:  [2018-04-05 Thu 18:53]
@@ -1731,7 +1802,8 @@ Also got telepathyk.com - namecheap
 *** DONE Signing and verification
 - State "DONE"       from "INPROGRESS" [2023-04-26 Wed 08:54]
 - State "INPROGRESS" from "TODO"       [2022-05-15 Sun 09:04]
-*** TODO Example scripts
+*** INPROGRESS Example scripts
+- State "INPROGRESS" from "TODO"       [2023-10-02 Mon 18:11]
 ** INPROGRESS Durability
 ** TODO p2p protocol
 *** TODO Messages for exchanging identities, signed and encrypted content
