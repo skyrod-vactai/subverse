@@ -1034,37 +1034,32 @@ should. Let's try it
 #+begin_src kcats
   ;; take a hash, script (list) and args (list) => message or nothing
   [[authenticate [[[[emit bytes hash] dip =]
-                   [drop [] [inject] lingo first] ;; use functional before [inject] to turn off debug mode
+                   [drop functional [inject] lingo first] ;; use functional before [inject] to turn off debug mode
                    [drop drop []] if]
                   [[]] recover]]
    [make-simple-script [[secret] unassign [first] sort wrap [sink verify] join]]
-   [delegated-script [dump [secret] unassign [first] sort
+   [delegated-script [[secret] unassign [first] sort
                       [sink ;; cssig cs pk args
                        [emit bytes hash] [shield dip] decorated ;; css csh cs pk args
                        float ;; cs css csh pk args
                        [verify] dive ;; csh cs args
                        [authenticate] bail] swap prepend]]]
-  ;[["hi"] [emit bytes hash] shield dump [] sink authenticate]
-  ["bar" bytes key ;; child key
+  ["working-key" bytes key ;; child key
    "we attack at dawn" bytes ;; message
-   [sign] shield ;; sign it
-   ;swap
-   swap  pair swap
+   [sign] shield ;; sign the message with the working key
+   swap
+   ;; 76 put ;; altering the message after signing, should fail to auth
+   pair swap
    make-simple-script [emit bytes hash] shield ;; csh cs
-   "foo" bytes key swap [sign] shielddown ;; sig pk
+   ;;["mallory" put] dip ;; alter the child script after signing, should not auth anymore 
+   "master-key" bytes key swap [sign] shielddown ;; sig pk
 
    swap ;; pk sig 
    delegated-script ;; ps cssig cs [msig m]
    [triplet reverse] dip
-   ;; add the hash on top
+   ;; add the parent script hash on top
    [emit bytes hash] shield
    authenticate [string] bail
-   ;dump
-   ;; ps cssig cs msig m
-   ;[hash] shield ;; psh ps cssig ...
-   ;dump
-   ;authenticate ;; i think the problem is this expects args to be wrapped
-
   ]
 
   let
@@ -1072,7 +1067,6 @@ should. Let's try it
 
 #+RESULTS:
 #+begin_src kcats
-[[[secret #b64 "LCa0a2j/xo/5m0U8HTBBNBNCLXBkg7+g+YpeiGJm564="] [public #b64 "NNJledu0Vmk+VAZyz5IvUt3g1lMuNb8GvgE6fFMvIOA="] [type elliptic-curve-key]] #b64 "ordodvDX8kNhFllnC++7Y5eELx9pF3hsuIH2+lkgmrqF2HuqJ/nEN0ru2mChKk1naYrBW2VA2gfmCCPvkdn9BQ==" [[[public #b64 "zKRbQGrYhpl8NNhvNBshIVOhzIE+OtmZo+FRboLoF4E="] [type elliptic-curve-key]] sink verify] [#b64 "wX8EhVgU6RLipJ77haemv9ISE3UDosCv/OUGYCKWPEiyRxCEMyAnzZGZ9hRI+MUmloTXbk/gx9h0KGWUxkGjDA==" #b64 "d2UgYXR0YWNrIGF0IGRhd24="]]
 "we attack at dawn"
 #+end_src
 
