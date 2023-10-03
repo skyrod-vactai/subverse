@@ -1,8 +1,8 @@
 #+PROPERTY: header-args:kcats :noweb yes :results code :exports both
 #+TODO: TODO(t) INPROGRESS(i@/!) | DONE(d!) CANCELED(c@)
-* Introducing Telepathyk
+* Introducing Subverse
 ** Advancing Sovereign Communication
-Telepathyk is communication software designed to empower users by
+Subverse is communication software designed to empower users by
 providing agency, control, and customizability over their online
 interactions. This tool addresses the need for communication
 sovereignty in an age of spam, authentication fatigue, propaganda, 
@@ -10,17 +10,17 @@ data breaches, leaks, and censorship. Users can easily manage their
 relationships, ensuring private, programmable, reliable, and seamless
 communication.
 
-With Telepathyk, you decide who makes high value content. Enjoy the
+With Subverse, you decide who makes high value content. Enjoy the
 peace without spammers, shills, bots, and useless social media
 posts. The software bypasses censorship, allowing free and open
 messaging. Automation and customizability are at the core of
-Telepathyk, offering a user-friendly programming interface and the
+Subverse, offering a user-friendly programming interface and the
 ability to build and share apps as easily as any other content.
 
-Featuring telepathy-level privacy, Telepathyk treats information as
+Featuring telepathy-level privacy, Subverse treats information as
 the valuable commodity it is, ensuring no outside observer can detect
 if, when, or with whom a user is communicating. By adopting
-Telepathyk, users will experience enhanced privacy, freedom, and
+Subverse, users will experience enhanced privacy, freedom, and
 adaptability in their online communication, giving them a distinct
 advantage in the digital world.
 * Overview
@@ -34,15 +34,15 @@ advantage in the digital world.
   the edges
 ** Properties
 *** Authenticated and attributed
-With Telepathyk, you always know with maximum confidence, who created
+With Subverse, you always know with maximum confidence, who created
 the content you are viewing. Since no one can impersonate anyone else,
 a lot of current internet problems go away completely or are greatly
 diminished: phishing, propaganda, deep fakes.
 
-In the telepathyk protocol, authentication is automatic, programmable
+In the subverse protocol, authentication is automatic, programmable
 and flexible to balance the goals of security and convenience. 
 
-In telepathyk, you will never need to:
+In subverse, you will never need to:
 
 + Create an account
 + Verify your email address
@@ -52,11 +52,11 @@ In telepathyk, you will never need to:
     
 *** Trusted
 Your attention is a precious resource, with millions of internet
-voices competing for it. Telepathyk provides a personal entourage that
+voices competing for it. Subverse provides a personal entourage that
 filters out the voices, leaving you in peace to communicate with
 friends, family, associates and people you admire.
 
-In the Telepathyk protocol, no one can talk to you without first being
+In the Subverse protocol, no one can talk to you without first being
 properly introduced by someone you trust. Spam does not and cannot
 exist. Any low quality content you do receive immediately reduces the
 influence of whoever introduced you to its source, making it less and
@@ -66,15 +66,15 @@ content.
 By using an introduction-based protocol, you always know who you're
 dealing with and how much you can trust them.
 
-In telepathyk's trusted environment, the presentation of content is
+In subverse's trusted environment, the presentation of content is
 controlled by you, not the other party. Every shopping site works
 exactly the same way, so you can get things done and get on with your
 life. You aren't bombarded by flashy branding and ads.
 *** Private
 Current "privacy" messengers send whispers: No one else knows what you
-are saying, but they can see who you're whispering to. Telepathyk gets
+are saying, but they can see who you're whispering to. Subverse gets
 its name from the superpower it gives you: telepathy. While telepathy
-is not possible in the physical world, Telepathyk brings it to the
+is not possible in the physical world, Subverse brings it to the
 digital realm. Your thoughts reach their target and no one knows you
 did anything at all.
 *** Durable
@@ -92,16 +92,16 @@ has several techniques for bypassing firewalls. Since you already have
 complete privacy it is not possible for anyone to block messages based
 on content.
 *** Automated
-Telepathyk is intended as a replacement for the web - it has the
+Subverse is intended as a replacement for the web - it has the
 functionality of both a web server (it can serve your data via an
 API), and a browser (you can consume and view data).
 
 The web is a document-based system originally designed for desktop
-computing. Telepathyk is a message-based system, where content from
+computing. Subverse is a message-based system, where content from
 humans and programs integrate seamlessly.  AI chatbots fit right in
 and actually benefit from the network's authenticated nature.
 *** Serverless
-Because Telepathyk offers strong authentication, privacy, and
+Because Subverse offers strong authentication, privacy, and
 reliability, it eliminates the need for central servers in many use
 cases - denial of service attacks are harder for an attacker to pull
 off, no need to pay CloudFlare to serve your content for you.
@@ -121,7 +121,7 @@ attribute the content to someone. Scripts can be off-the-shelf or
 customized to serve your particular security needs.
 *** Trust
 Trust starts with you. If you trust someone (say, a family member),
-you mark them as such in the telepathyk address book. That tells the
+you mark them as such in the subverse address book. That tells the
 application they're allowed to do things that other people can't -
 they can message you, introduce you to others, etc. Your network
 expands in much the same way it often does in real life: via
@@ -130,20 +130,20 @@ example you can think of Google as an introduction service. Whether
 you trust someone like Google to make introductions is up to you. You
 can revoke that trust at any time.
 *** Privacy
-Underlying Telepathyk's networking is an anonymity network that
+Underlying Subverse's networking is an anonymity network that
 guarantees that no third party can determine what you're saying, or
 who you're talking to, or even if you are talking to anyone at all. It
 also guarantees that no second party (people you talk to) can
 determine your physical location unless you explicitly tell them.
 
-Telepathyk automatically creates new identities when needed. For
+Subverse automatically creates new identities when needed. For
 example, you don't want a search engine to compile a database of
 everything you've ever searched for, so every time you search,
-Telepathyk will use a fresh identity. It's only when you need someone
-to remember you, or be able to reach you later, that telepathyk will
+Subverse will use a fresh identity. It's only when you need someone
+to remember you, or be able to reach you later, that subverse will
 re-use identities.
 
-Telepathyk also encrypts data at rest on your device, and can
+Subverse also encrypts data at rest on your device, and can
 automatically expire old content such that it does not become a
 liability.
 *** Durability
@@ -167,7 +167,7 @@ offline without dropping messages.
 The way duplication is handled is similar to bittorrent in that chunks
 of data are exchanged between peers, and a user seeking to download an
 entire stream can download from multiple peers at once. Where
-Telepathyk differs is that peers who don't care about the content also
+Subverse differs is that peers who don't care about the content also
 participate, and are incentivized by micropayments. They serve as both
 durability (store the content long term) and reliability (can serve
 the content when the creator is offline).
@@ -176,30 +176,30 @@ The internet itself is a powerful censorship resistance tool - it
 automatically routes around censorship. However most people don't use
 it that way, they give all their content to a third party (google,
 facebook) instead of serving it themselves, and that third party can
-easily censor the content. Telepathyk fixes that by making it trivial
+easily censor the content. Subverse fixes that by making it trivial
 to serve your own content.
 
 It goes even further by using [[https::/geti2p.net][i2p]] for networking. Anyone who is upset
 about your content generally doesn't know who or where you are, so
 it's very difficult for them to threaten you.
 
-Telepathyk is completely decentralized, so there is no company for
+Subverse is completely decentralized, so there is no company for
 governments to sue, or server to disconnect. 
 
 *** Automation
 Most functionality in the app is programmable via a very simple
 programming language called [[https://github.com/skyrod-vactai/kcats/blob/master/book-of-kcats.org][kcats]]. In order to automate things in
-telepathyk, you create bots - programs that receive messages and
+subverse, you create bots - programs that receive messages and
 respond to them. You then introduce the bots to your contacts, so they
 can interact with it.
 
 The bot can do things as simple as sharing photos, or as complex as
 running an online store.
 *** Names
-In Telepathyk, all names are local and for human eyes only. Everyone's
+In Subverse, all names are local and for human eyes only. Everyone's
 name in your address book is *your* name for them. The app itself
 doesn't use names, it uses the hash of the person's script to track
-who's who. Like nearly anything else in telepathyk, address book
+who's who. Like nearly anything else in subverse, address book
 entries can be shared, and the receiver can edit it however he
 chooses.
 *** Serverlessness
@@ -213,7 +213,7 @@ If you examine a company, each employee usually doesn't generate that
 much content that they could not serve it from their own device
 (either a workstation or mobile device). All that remains is
 coordinating the communication, which is easily modeled inside
-telepathyk.
+subverse.
 
 The exceptions to this are services that aggregate or process vast
 amounts of data. For example, while likely no Google employee
@@ -665,7 +665,7 @@ life would be like when we've freed ourselves.
 * Design notes
 ** Overview
 *** Messaging
-At the application level, telepathyk will resemble Signal or Whatsapp
+At the application level, subverse will resemble Signal or Whatsapp
 or any other messenger. The main screen will be a list of contacts,
 and clicking on one will go to your conversations with that contact.
 
@@ -1315,7 +1315,7 @@ A stream is particular to several things:
 
 Users interact with the stream concept probably only when sharing
 content, not viewing it. For example, on your mobile phone you'd
-select some photos, "Share", "Telepathyk Stream", "My family
+select some photos, "Share", "Subverse Stream", "My family
 photos". In other words, content that is semantically related (say,
 photos from the same event) might be split up into different streams
 because of different access controls (you might not want to withhold
@@ -1548,7 +1548,7 @@ presented.
 
 The 2nd to last entry is the key's self-identification, if
 any. clicking this brings up a warning "Have you verified in person
-that this key really belongs to Telepathyk? if not, this could be an attacker
+that this key really belongs to Subverse? if not, this could be an attacker
 pretending to be Foo. If Yes, type: VERIFIED to continue
 
 The last entry will be "I know who this is" where you can
@@ -1787,7 +1787,7 @@ Done via phoneblur
 *** DONE Buy domain telepathyk.org (if avail)
 - State "DONE"       from "INPROGRESS" [2019-04-24 Wed 10:50]
 - State "INPROGRESS" from "TODO"       [2019-04-24 Wed 10:49]
-Also got telepathyk.com - namecheap
+Also got telepathtk.com - namecheap
 ** INPROGRESS [#A] Scripting language kcats
 *** DONE Core language functionality
 *** INPROGRESS Testing and bugfixing

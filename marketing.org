@@ -1,4 +1,4 @@
-* Telepathyk
+* Subverse
 ** What is it?
 The rich and famous have their entourage to handle things for
 them. Now you do too.
@@ -29,22 +29,22 @@ them. Now you do too.
 *** Data safety
 All your important private data (your contacts, messages, photos, etc)
 is encrypted and backed up automatically. The only data you have to
-protect outside telepathyk is your master key, a simple code which you
+protect outside subverse is your master key, a simple code which you
 can write on a piece of paper and put somewhere safe. If you lose your
 phone, all you have to do to recover is type the master key into your
 new phone. Your backup will be automatically restored.
 
-Telepathyk keeps your data that need it to remember, and disposes of
+Subverse keeps your data that need it to remember, and disposes of
 toxic waste (your data that is worth much more to your adversaries
 than it is to you).
 *** Infinitely customizable
-You can change anything about how you communicate telepathyk-ly. Do
+You can change anything about how you communicate subverse-ly. Do
 you want to be notified only when messages contain certain words, or
 from certain people, or contain payments? Do you want certain messages
 to trigger automatic reactions, like creating calendar entries or
 sending new messages?
 
-You can do all of that. Telepathyk is powered by a simple programming
+You can do all of that. Subverse is powered by a simple programming
 language that you can use right in the app. Not a programmer? Not a
 problem. You have access to the entire ecosystem of community mods.
 *** First class participation
@@ -54,22 +54,22 @@ posts. There will be no youtube to censor your videos or force in
 advertisements. No shopify or apple store to take a huge cut of your
 hard-earned sales.  Just you and your audience in direct contact.
 
-Telepathyk is information, software. Once you have it, you have the
-all the power it confers, and no one can take it from you. Telepathyk
+Subverse is information, software. Once you have it, you have the
+all the power it confers, and no one can take it from you. Subverse
 has creators, but it is not a company. It can't sell you anything,
 because you already have it.
 ** FAQ
-*** Why should I use telepathyk if none of my friends do?
+*** Why should I use subverse if none of my friends do?
 All music and movies (and all other content) are free. 
 
-Once you install telepathyk, your friends have two reasons to
-join. The free content, plus telepathyk communication with their
+Once you install subverse, your friends have two reasons to
+join. The free content, plus subverse communication with their
 friend (you).
 *** Can I get in trouble for viewing copyrighted content?
 No. At least, the methods authorities use today would be useless
-against you. With telepathyk they have no way to know what content you
+against you. With subverse they have no way to know what content you
 shared or downloaded, or even if you did anything at all. They don't
-know where any particular telepathyk users are, so there's no way to
+know where any particular subverse users are, so there's no way to
 apply their local laws to anyone. They would have to physically seize
 your phone and get it unlocked, which is not something typically done
 in the name of copyright enforcement.
@@ -99,8 +99,8 @@ either turn a blind eye to horrific crimes, or participate in them?
 Would you follow any order? If there are some orders you would
 disobey, if there are some crowds you wouldn't follow, if there are
 some movements you would resist, you have something to hide.
-*** Why does telepathyk sound like a political tool?
-Telepathyk is designed to shield its users from threats of
+*** Why does subverse sound like a political tool?
+Subverse is designed to shield its users from threats of
 violence. There is nothing unethical, or politically extreme, about
 that goal.
 *** Who am I trying to have privacy from?
@@ -113,12 +113,12 @@ There are a lot of adversaries on the internet.
 - People who could use violence against you based on any what they
   discover in your personal data (governments, abusive exes, stalkers,
   kidnappers)
-*** Can anyone monitoring my communications tell if I'm using telepathyk?
+*** Can anyone monitoring my communications tell if I'm using subverse?
 No.
 
 They can tell you're connected to i2p (the anonymizing network
-telepathyk communicates over). They cannot tell if you are using it to
-communicate at all, and they cannot tell if you use telepathyk or even
+subverse communicates over). They cannot tell if you are using it to
+communicate at all, and they cannot tell if you use subverse or even
 have it installed.
 
 There are ways to hide even that you are connected to i2p.
@@ -140,11 +140,11 @@ They can impersonate you until you discover the breach. At that point
 you can "burn" the key so that no one can ever use it in your name
 again, and then start with a new master key.
 *** Why are my old messages gone?
-Telepathyk eventually erases them by default. Any conversation or
+Subverse eventually erases them by default. Any conversation or
 message you want to keep, add it to your vault, and then it's kept
 forever.
 
-The reason telepathyk forgets anything you don't tell it to keep
+The reason subverse forgets anything you don't tell it to keep
 forever, is that your old personal data is often more valuable to your
 adversaries than it is to you, so it's a liability that is better
 destroyed than kept.
