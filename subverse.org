@@ -1309,11 +1309,10 @@ explicit "close" is undecided, I'm not sure if that's actually
 necessary).
 
 A stream is particular to several things:
-+ Your current working auth key
 + An encryption key that allows only authorized people to view the content
 + a set of contents that you wish to send to those people
 
-Users interact with the stream concept probably only when sharing
+Users interact with the stream concept mostly when sharing
 content, not viewing it. For example, on your mobile phone you'd
 select some photos, "Share", "Subverse Stream", "My family
 photos". In other words, content that is semantically related (say,
@@ -1325,20 +1324,34 @@ transmitted and decrypted. Information on how the data should be
 presented may be contained in the stream data (For example, which
 event the photo is from, for grouping purposes when it's displayed)
 
-Do streams need their own i2p destination? Probably not - if you don't
-want to let anyone know two streams are from the same person, use
-different identities (which would necessarily have different
-destinations)
-
 There needs to be some mechanism by which intended recipients of a
-stream are made aware of its existence.
+stream are made aware of its existence, and further that recipients
+have some idea of what the stream contains. How users "accept" a
+stream will probably be configurable - could be either automatic based
+on some kind of priority and/or filter, or manually accepted.
+*** Security
+**** Authentication
+There needs to be some mechanism that prevents relays from altering
+the stream. The contents should all be authenticated so that clients
+know whether they got content from the originator. The originator
+could still fork the content, and it's important that we detect this
+and reject the rest of the stream, since it's very rare that an honest
+originator would cause a fork. Peers that give stream contents that
+decrypt properly and auth properly should be given higher priority.
+***** Merkle tree auth
+Create a merkle tree for all the items (since the stream puts them in
+order). Whenever the sender has time, sign the merkle root and include
+it. That will authenticate all the previous items, including items
+that hadn't been signed (presumably because they were being created
+rapidly). It also fixes the order so that it can't be altered.
 
-The "first contact" will be an i2p destination which presumably will
-authenticate the peer and tell them which streams they have access to
-and give them the keys to decrypt.
-*** As they relate to content
-A stream 
-*** Perfect forward secrecy
+It's also possible to "checkpoint" so that a sender or receiver
+doesn't have to re-process the whole list to calculate a new root. The
+sender would need to calculate the tree state (including where the
+next node of the merkletree goes, and its co-roots), and sign
+that. Then he can pick up from there later, without needing to re-read
+the whole stream.
+**** Perfect forward secrecy
 It would be nice if there was a way to achieve this, as most modern
 message protocols are supporting it.
 
@@ -1347,7 +1360,7 @@ stream design is non-interactive. It would be unfortuate, especially
 in a design where encrypted data is backed up onto other users' disks,
 if keys were compromised much later, that the other users would then
 be able to decrypt the content.
-*** Deniability
+**** Deniability
 It would also be nice if this was possible, but again it depends on
 interactive key exchange.
 
@@ -1774,6 +1787,74 @@ message it should probably be for "their" eyes only (whoever you
 believe your audience is).
 ***** Money
 ***** Media
+** Database and API access
+Given that APIs don't have requests, just arbitrary programs for the
+peer to execute on your behalf, what do databases look like and how do
+we prevent untrusted peers from corrupting our data?
+
+At a high level perhaps we can say that data is only assertions and
+untrusted peers can only claim things, not change our view of the
+truth.
+
+Let's start with an example that has state: a reservation app. Alice
+has a bicycle that she rents out for $5/hr. We want her to have an API
+that allows people to reserve the bike (presumably paying a deposit).
+
+How do we implement this API without reverting to typical
+pre-specified endpoints?
+
+Perhaps a model that fits subverse better would be where everything is
+a "weave" of some set of streams. Each stream consists of pieces of
+data and the 'weave' is a program that reads that data and does things
+with it. The only thing missing then is introductions - that's how an
+application would know to incorporate another stream. Streams with
+invalid data would be ignored. Locally there's a db but users don't
+have any access.
+
+I think this is a good model for subverse apps but not to help build
+subverse - for example how do we make a DHT for sharing key
+revocations? Without that we can't authenticate any content so there's
+no stream sharing, so we can't make a DHT api out of that high level
+construct. 
+
+Back to the reservation app- Alice gets introduced to Bob and
+Charlie. Bob's stream to Alice would contain:
+#+begin_src kcats
+  [[type reservation-request]
+   [resource-id #b64 "abcdabcd"]
+   [start-time 123123123]
+   [end-time 124124124]]
+#+end_src
+
+When Alice sees that she adds this to her reply stream:
+
+#+begin_src kcats
+  [[type invoice]
+   [network lightning]
+   [data #b64 "abcddefghigh..."]]
+#+end_src
+
+Bob sees this and pays the invoice via lightning. If he does it within
+the required time he gets the bike reservation and alice updates her
+local db to put bob's id for the time he requested. If he doesn't pay
+or there's anything else wrong with Bob's request Alice's app just
+ignores it.
+
+On success Alice replies:
+
+#+begin_src kcats
+  [[type reservation]
+   [resource-id #b64 "abcdabcd"]
+   [start-time 123123123]
+   [end-time 124124124]]
+#+end_src
+(or perhaps she doesn't need to show all those fields again, Bob could
+put an id on his request and Alice could just refer to it). Note also
+that one of the streams Alice's app must consume is from her local
+lightning node, it needs to stream which invoices have been paid.
+
+When Bob shows up to collect the bike, he need only identify himself
+and Alice's app can see it's his reserve time and release the bike.
 * Roadmap
 ** DONE Get socially connected
 *** CANCELED Get a bitcoin vps
@@ -1799,12 +1880,130 @@ Also got telepathtk.com - namecheap
 *** INPROGRESS Example scripts
 - State "INPROGRESS" from "TODO"       [2023-10-02 Mon 18:11]
 ** INPROGRESS Durability
+*** TODO Stream data format design
+**** Discussion
+While looking into how to compress streams (perhaps using lz4 or
+similar), I started to think more about what a stream should consist
+of.  I think it should be a homogenous list.
+
+Here's the rationale: at least when it comes to compression, the
+homogenous list lets us compress in a content-aware way - if it's a
+list of jpegs, applying compression is pointless. But if it's a list
+of text messages, we can probably reduce the size by 50% or more.
+
+We can make a homogenous list of substream ids, in order to group
+content.
+
+Note that the purpose of streams is NOT to organize the data. It's
+just to transport it to the correct place. The organization is done at
+the other end, and the metadata needed to organize it is contained in
+the stream. So basically the stream data is a bag of facts, and it's
+handed off to someone and it's their job to dump it out and sort out
+what is related to what. Perhaps the stream is a bunch of
+messages. Each message object needs a "in-reply-to" field to determine
+where it goes in a conversation. Of course, in practice items will be
+in chronological order but recipients shouldn't rely on it.
+
+Here's a mockup of Alice's side of a conversation:
+The top level stream object meta:
+#+begin_src kcats
+  [[type stream]
+   [id #b64 "aaaa"]
+   [item-type substream]
+   [name "book club"]
+   [keyhash #b64 "bbbb"]]
+#+end_src
+
+And the actual byte stream
+#+begin_src kcats 
+  [[id #b64 "xxxx"]
+   [name "messages"]
+   [item-type message]
+   [decrypt-with #b64 "yyyy"]]
+  [[id #b64 "zzzz"]
+   [name "images"]
+   [item-type image]
+   [decrypt-with #b64 "wwww"]]
+#+end_src
+
+Now the =messages= substream (skipping over the meta here)
+#+begin_src kcats
+  [[in-reply-to []]
+   [body [p "Hi everyone, it's Alice! Welcome!"]]
+   [signed #b64 "siga"]]
+  [[in-reply-to #b64 "bxyz"]
+   [body [p "I'm glad you asked, Bob. Here's the first book"]]
+   [signed #b64 "sigb"]]
+  [[in-reply-to #b64 "xxyz"]
+   [body [p "All About Eels" [img #b64 "ixyz"]]]
+   [signed #b64 "sigc"]]
+#+end_src
+**** TODO Questions
+***** Are signatures required on each item in the stream?
+One way to handle this is to use merkle trees. Imagine I am creating a
+stream of messages, and I can either create them slowly or quickly. I
+can handle both cases:
+
+
+*** 
 ** TODO p2p protocol
 *** TODO Messages for exchanging identities, signed and encrypted content
 *** TODO Distributed Hash Table for network locations, stream seeding peers etc
+**** Overview
+The DHT will be a peer discovery mechanism for authenticated
+content. The DHT itself will not do any authentication. In order to do
+introductions we have each party create their "public" stream. This
+contains several types of information:
+
+
++ Their diffie-hellman public key
++ Any revocations of keys (either signing or DH)
++ Public content in the form of sub-streams
+  
+ Note what isn't included because it's not needed:
+
++ Their script (they'll send it the first time they need you to
+  authenticate them)
++ Their network address (you don't need to know and don't care)
+
+ When Alice and Bob are introduced (either self-introduced, or by a
+  third party), here's the sequence of events:
+
++ Alice and Bob have each other's IDs, =a= and =b= (the hashes of their
+  scripts)
++ Alice queries the DHT for Bob's ID =b=, which is the same as the ID
+  for his "public" stream. She receives some network addresses of
+  nodes that have Bob's public stream data.
++ She downloads the whole stream from those nodes and finds his
+    latest DH key.
++ She calculates their shared secret =k= from her DH key and Bob's.
++ She calculates the ID of the message stream from Bob to her, =ba= as H(b|a|s)
++ She then queries the DHT for =ba=, and receives the encrypted stream.
++ She then decrypts the stream using key =s=.
++ The stream presumably contains message objects, which then she
+  authenticates and stores in her local db.
+
+ Bob does the same to recieve Alice's messages.
+
+**** What are destinations?
+Are they pubkeys or IP addresses? I think they're really pubkeys -
+they have nothing to do with physical locations.
+
+Clearly each ID (script hash) is going to be using more than one
+destination over time (due to rolling keys), and so we do need to
+publish what the 'latest' one is, because there's no other way for
+anyone to know.
+
 ** TODO content sharing p2p protocol
 based on bittorrent? similar to zeronet.io.
 ** TODO i2p(d) integration
 *** Create destinations based on identity
 ** TODO Bot creation functionality
 ** TODO mobile UI
+** TODO Simple authenticated messenger
+Create a kcats api server that accepts nothing but authenticated
+messages, and prints them to the console along with who sent them.
+
+#+begin_src kcats
+
+#+end_src
