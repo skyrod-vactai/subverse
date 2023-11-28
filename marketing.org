@@ -1,16 +1,100 @@
 * Subverse
 ** What is it?
-The rich and famous have their entourage to handle things for
-them. Now you do too.
+It's a replacement for the web, with a communication model that
+resembles how we communicate in real life, superior privacy,
+authentication, data durability, programmability, and censorship
+resistance.
 
-+ Handle social engagements according to your wishes: Strangers can't
-  start talking to you without a trusted member of your entourage
-  vetting them first
-+ Arrange your calendar according to your wishes
-+ Notify you of important happenings, according to your wishes
-+ Handle your finances according to your wishes
-+ Keep your private details private (who you associate with, what you
-  talk about)
+Most people don't think much about the web's limitations, even though
+they waste time every day dealing with its design problems. Over the
+years, how many accounts on different websites have you created? How
+many times have you filled in the exact same information into slightly
+different forms? How many different passwords do you manage?  How many
+times have you had to 'verify your email address'? Type in 2-factor
+codes?  'Prove you are human'? Searched through menus and still
+couldn't find what you want? Scrolled through endless garbage content
+and propaganda looking for just one high quality post? Gone back to a
+website only to find that it forgot everything you did before?
+Followed a dead link? Got phished? Gotten creepy ads that clearly
+indicate you're being spied on? Lost data moving to a new device?
+
+The list of frustrations goes on and on, yet we assume all this is
+somehow an intrinsic part of modern computing. It's not! All these
+problems have been solved individually, but no one has put all the
+pieces together into one protocol - until now.
+
+The first thing Subverse tackled is the communication model. Linked
+documents are good for some purposes, but it's not a good fit for
+general communication. And now AI and LLMs threaten to make the
+"linked document" model completely obsolete. Conversations are a much
+better way to capture the typical back-and-forth of human
+communication.
+
+The next thing Subverse tackled is passwords. In the Subverse, your
+whole online life is protected by a single secret key that you write
+down and put somewhere safe. That secret key is used to authorize new
+secret keys (which don't have to be so carefully guarded), and those
+live on your mobile device. You never type a password in subverse,
+it's all done in the background. Your mobile device is in charge of
+making sure it's you operating it, and it does an acceptable job.
+
+After that, Subverse tackled authentication. Everything you see in
+Subverse is authentic - you don't see it unless it has cryptographic
+proof of who sent it. You never need to create an account, since
+everyone already knows who sent what. You know content is authentic
+not by who gave it to you, but by the cryptographic proof that comes
+with it. This opens up a whole new world, where it's easy to
+distribute your own content. You don't need an expensive server, or
+cloudflare. You can have a million followers, and still distribute
+content efficiently from your phone, using the same swarm technology
+as bittorrent.
+
+Following that, Subverse adds privacy. It's not just that prying eyes
+can't read your messages. They can't even tell who you're talking to,
+or even if you are talking to anyone at all.
+
+Following that, Subverse locks out spammers and scammers. No one can
+send you anything unless you're first introduced by someone you
+already trust. This enforces one of the main principles, that your
+time and attention are valuable.
+
+After that Subverse saves all your data. It's all encrypted using your
+secret key, and distributed via the swarm. If you get a new phone the
+key is all you need to restore all your data.
+
+Beyond that, Subverse is highly programmable. Instead of making a
+website and having to worry about making pretty documents, you just
+make chatbots. You choose from a library of chat functionality - you
+don't need to reinvent shopping carts or Frequenty Asked
+Questions. Subverse is AI ready, if you have an LLM trained on your
+content, you just plug it in. Due to the introduction-based nature of
+Subverse, you may have many chatbots in your organization just to make
+things easier for your users: maybe you have a sales bot who
+introduces you to a payment bot, a shipping bot, and a support bot. If
+your user has trouble with shipping later, he can just return directly
+to his conversation with shipping bot, and it will already have all
+the context it needs to help.
+
+Finally, Subverse is censorship resistant.  You cannot be
+"de-platformed", because there is no platform. 
+** Principles
+*** Time has value
+Your time and attention are valuable. No one should be able to steal
+them, by putting unwanted content in front of you.
+*** Information has value
+The information you create (your content) has value, and prying eyes
+should not be able to steal it from you.
+*** Intellectual property is not a real thing
+Circulating information does not have an owner. Once you tell a secret
+(any content only you know because you created it - music,
+photography, science), you don't control it anymore.
+
+This principle may seem to conflict with "Information has value" but
+they are just two sides of the same coin: rights and
+responsibility. You have the right to your secret information, but you
+also have the responsibility to choose carefully who you reveal it to,
+and under what circumstances, because once you do, they can do
+whatever they want with it.
 ** Dangers of inferior communication tools
 + [[https://www.msn.com/en-us/news/crime/facebook-handed-over-a-teen-s-dms-to-police-who-then-arrested-her-for-having-an-abortion/ar-AA10usV9][Facebook handed over a teen’s DMs to police, who then arrested her for having an abortion]]
 + [[https://edition.cnn.com/2021/05/08/media/trump-doj-reporter-washington-post/index.html][Trump’s DOJ secretly obtained phone records of Washington Post reporters]]
@@ -25,7 +109,8 @@ them. Now you do too.
 + [[https://www.theguardian.com/world/2023/jul/05/french-government-should-control-social-media-during-unrest-macron-says][Macron accused of authoritarianism after threat to cut off social media]]
 + [[https://www.wired.com/story/cuba-social-media-blackout/][Cuba’s Social Media Blackout Reflects an Alarming New Normal]]
 + [[https://www.businessinsider.com/saudi-woman-gets-30-years-prison-criticizing-neom-megacity-twitter-2023-6?op=1][A Saudi woman was given 30 years in prison for criticizing the Neom megacity project on Twitter]]
-** More Features
++ [[https://www.cnbc.com/2023/10/08/how-one-retired-woman-lost-her-life-savings-in-a-common-elder-fraud-scheme.html][How this 77-year-old widow lost $661,000 in a common tech scam: ‘I realized I had been defrauded of everything’]]
+** More on Features
 *** Data safety
 All your important private data (your contacts, messages, photos, etc)
 is encrypted and backed up automatically. The only data you have to
