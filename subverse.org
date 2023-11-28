@@ -1033,14 +1033,16 @@ should. Let's try it
 
 #+begin_src kcats
   ;; take a hash, script (list) and args (list) => message or nothing
-  [[authenticate [[[[emit bytes hash] dip =]
+  [[hashed [emit bytes hash]]
+   [authenticate [[[[hashed] dip =]
                    [drop functional [inject] lingo first] ;; use functional before [inject] to turn off debug mode
                    [drop drop []] if]
                   [[]] recover]]
-   [make-simple-script [[secret] unassign [first] sort wrap [sink verify] join]]
-   [delegated-script [[secret] unassign [first] sort
+   [scrub-key [[secret] unassign [first] sort]]
+   [make-simple-script [scrub-key wrap [sink verify] join]]
+   [delegated-script [scrub-key
                       [sink ;; cssig cs pk args
-                       [emit bytes hash] [shield dip] decorated ;; css csh cs pk args
+                       [hashed] [shield dip] decorated ;; css csh cs pk args
                        float ;; cs css csh pk args
                        [verify] dive ;; csh cs args
                        [authenticate] bail] swap prepend]]]
@@ -1050,7 +1052,7 @@ should. Let's try it
    swap
    ;; 76 put ;; altering the message after signing, should fail to auth
    pair swap
-   make-simple-script [emit bytes hash] shield ;; csh cs
+   make-simple-script [hashed] shield ;; csh cs
    ;;["mallory" put] dip ;; alter the child script after signing, should not auth anymore 
    "master-key" bytes key swap [sign] shielddown ;; sig pk
 
@@ -1058,10 +1060,8 @@ should. Let's try it
    delegated-script ;; ps cssig cs [msig m]
    [triplet reverse] dip
    ;; add the parent script hash on top
-   [emit bytes hash] shield
-   authenticate [string] bail
-  ]
-
+   [hashed] shield
+   authenticate [string] bail]
   let
 #+end_src
 
