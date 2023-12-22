@@ -1434,7 +1434,127 @@ then proceeds to fetch all those streams' contents (which he can
 decrypt).
 ** Persistence
 Locally a database that we can treat as a stream would be nice (so
-that we can backup our encrypted database to other users). 
+that we can backup our encrypted database to other users).
+*** Graph db of attributes design
+**** Overview
+The idea here is to ignore identity in the database and make that the
+responsibility of the client. The database only links attributes, and
+has nothing to say about whether a given entity is the "same" entity
+as another. It only says "something has both the color brown and the
+height 1.5m". What attributes are sufficient to establish identity is
+not part of the database. It's just a graph connecting attribute/value
+pairs.
+**** Attribute naming problem
+There are some problems to be considered. For example, let's say a
+contact's address is =1 Main St.= And let's say we also want data about
+the house located at that address. Both the house and person have an
+address, but they don't really mean quite the same thing - the
+person's address can change but the house's really can't. The house is
+always at that address, the person can be located elsewhere but tends
+to return to that spot often. Keeping in mind there's no entities in
+the db, only linked attributes, how do we represent these
+relationships? In general we will do joins on person/house via an
+address field, regardless of whether those fields have the same name
+on both objects.
+
+I suppose one way is to just ignore the semantic difference between a
+person's =address= and a house's =address=.
+
+However it does seem like a good idea to choose attribute names
+carefully, at the very least to have conventions about which attribute
+names are used to represent which pieces of data. For example, is the
+address of a house its =address= or =location=? This is starting to go off
+into the area of schema consensus. We could have schema declarations
+but that would only allow you to know whether a program and data are
+compatible, it would do very little to actually assure any sort of
+compatibility.
+
+It might be nice to have at least a set of attributes and what they
+should be used for. For example:
+
++ created-at :: The timestamp at which the given entity started to
+  exist (for people, their birthdate. For manmade objects, their date
+  of manufacture or construction,
++ street-address :: The number and street where a building or land is
+  located.
+**** Attribute atomicity problem
+Should street addresses be one attribute or several?
+**** Join problem
+It's clear to me how to find a book's author's birthdate - the =author=
+attribute of the book will equal the =name= attribute of the person,
+then go to the =created-at= attribute from there.
+
+What about when the primary key is more than one attribute (for
+example, when the street address consists of
+number/street/city/state/country/zip)? It is possible to just include
+multiple attributes in the join query. But it gets complicated when we
+don't know whether a given person lives in a country with states or
+provinces, so we don't even know whether their address will have one
+attribute or the other. Queries will have to be carefully designed to
+take these quirks into account.
+
+If house number is a separate attribute, it might be possible to query
+for other things with that number that have nothing to do with street
+addresses. I don't know that's necessarily bad, it's pretty easy to
+narrow it further with just one other attribute.
+
+The semantics are still weird, though. If we make street addresses 6
+attributes (number/street/city/state/zip/country), does Alice actually
+have an attribute =number = 123= herself?  It would have to be
+=home-street-number= or something. She might have a business address or
+even more than one home address. Without some kind of key (to an
+entity), this gets difficult. If we just link two sets of address
+attributes to Alice, how do we know which are which (we might mix up
+which house number goes with which street). Not being able to refer to
+entities directly in this schema may prove too difficult to
+overcome. We intend for the address of her house and the address of
+her mother's house to be the same "thing" but we're deliberately not
+saying whether anything is the "same thing" - they just share
+attributes.
+
+How do we say "Alice's home's state"? Is this different from 1984's
+author's birthdate? Let's map it out a bit
+
+| AttrA  |  ValA | AttrB         | ValB            |
+|--------+-------+---------------+-----------------|
+| name   | Alice | born          | 1970            |
+| name   | Alice | height        | 160             |
+| name   | Alice | home          | [-80.01, 31.12] |
+| number |   123 | street        | Main St         |
+| number |   123 | city          | Springfield     |
+| number |   123 | state         | NT              |
+| number |   123 | country       | USA             |
+| number |   123 | location      | [-80.01, 31.12] |
+
+Here, we do need some kind of link between the "house" entity and
+"Alice" - in this case from the =home= to =location=. However it's not
+clear this kind of trick will always work, but in theory any value
+will work, even if you don't know the location. As long as you are
+sure that's alice's address, you can insert any unique location and be
+able to query her address this way.
+**** Metadata
+Can we have attributes of attributes?
+
+| AttrA     | ValA       | AttrB       | ValB                                                                                                                         |
+|-----------+------------+-------------+------------------------------------------------------------------------------------------------------------------------------|
+| attribute | name       | description | "The way humans identify the given entity, not necessarily unique"                                                           |
+| attribute | name       | encoding    | string                                                                                                                       |
+| attribute | created-at | description | "The time that an entity was created, born, or built"                                                                        |
+| attribute | created-at | encoding    | timestamp                                                                                                                    |
+| attribute | scripthash | description | "The hash of the identity verification script used to identify a given person, organization or automaton. Should be unique." |
+| attribute | scripthash | encoding    | bytes                                                                                                                        |
+
+Can we specify relationships like how a book and author are related?
+(author <-> name) - This might be difficult, esp the name. When we
+have unique identifiers (eg =scripthash=), we should use them, but we won't always know
+which one it will be.
+| AttrA     | ValA     | AttrB     | ValB    |
+|-----------+----------+-----------+---------|
+| attribute | name     | attribute | author  |
+| attribute | name     | attribute | CEO     |
+| attribute | name     | attribute | mother  |
+| attribute | location | attribute | home    |
+**** 
 ** Networking
 
 *** PK -> network address (IP) lookup
@@ -1976,7 +2096,7 @@ can handle both cases:
 ** TODO p2p protocol
 *** TODO Messages for exchanging identities, signed and encrypted content
 *** TODO Distributed Hash Table for network locations, stream seeding peers etc
-**** Overview
+**** Introductions overview
 The DHT will be a peer discovery mechanism for authenticated
 content. The DHT itself will not do any authentication. In order to do
 introductions we have each party create their "public" stream. This
@@ -2011,6 +2131,30 @@ contains several types of information:
   authenticates and stores in her local db.
 
  Bob does the same to recieve Alice's messages.
+**** Authentication overview
+When we execute a script, we'll need to know whether that script is
+revoked before we can use it to authenticate. The script should have a
+stream associated with it that contains any revocation of it or other
+public info. Note that scripts can call other scripts, so this
+procedure needs to be done for each level of delegation.
+
+We do the following:
+
++ If we don't already have peers with the stream who can update us,
+  search the DHT for h(s) - the hash of the script. THat should return
+  peers we can contact to get the stream.
++ If the stream contains a revocation this script is not usable for
+  authentication and whatever message relies on it as part of its
+  proof, is not authentic.
+***** Encryption
+A privacy improvement on this might be that instead of putting h(s) in
+the DHT, we put Enc(h(s)). The password to decrypt is only distributed
+when being introduced to somoene who will use s. This prevents the DHT
+node from knowing who you're asking about. The data stream is also
+encrypted with the same key. However using i2p client tunnels to do
+this will also help even when the node knows the target and has the
+password - they will know someone is asking about their friend, but
+they won't know who is asking.
 
 **** What are destinations?
 Are they pubkeys or IP addresses? I think they're really pubkeys -
