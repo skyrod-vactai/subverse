@@ -30,32 +30,37 @@
     (let ((script (json-encode query)))
       (format "{\"script\": %s, \"params\": {}}" script)))
 
-  (require 'url)
-
-  (defun cozodb-send-request (request)
-    "Send REQUEST to the CozoDB server and return the response."
-    (let* ((url-request-method "POST")
-           (url-request-extra-headers '(("Content-Type" . "application/json")))
-           (url-request-data request)
-           (response-buffer (url-retrieve-synchronously (format "%stext-query" cozodb-server-url))))
-
-      (with-current-buffer response-buffer
-        (message "Response: %s" (buffer-string))
-        (goto-char url-http-end-of-headers)
-        (delete-region (point-min) (point))
-        (json-parse-buffer :object-type 'alist))))
-
+  (use-package request)
+  (require 'request)
 
   (defun vec-of-vecs-to-list-of-lists (vec)
     "Convert a vector of vectors VEC to a list of lists."
     (mapcar (lambda (inner-vec) (append inner-vec nil)) ; Convert each inner vector to a list
-            (append vec nil)))                         ; Convert the outer vector to a list
+            (append vec nil)))
+
+  (defun cozodb-send-request (request-body)
+    "Send REQUEST-BODY to the CozoDB server synchronously and handle response."
+    (let ((response (request (format "%stext-query" cozodb-server-url)
+                             :type "POST"
+                             :headers '(("Content-Type" . "application/json"))
+                             :data request-body
+                             :parser 'json-read
+                             :sync t)))
+      (if (= (request-response-status-code response) 200)
+          ;; Success: parse and return the response
+          (let ((success-response (request-response-data response)))
+            (message "Success in %ss" (cdr (assoc 'took success-response)))
+            (vec-of-vecs-to-list-of-lists (cdr (assoc 'rows success-response))))
+        ;; Error: return the error response as elisp data
+        (let ((error-response (request-response-data response)))
+          (message "Error: %s" error-response)
+          (cdr (assoc 'display error-response)))))) 
 
   ;; Function to send query to CozoDB HTTP API
   (defun cozodb-send-query (query)
     ;; Escape query, create JSON object, send HTTP POST request
     ;; Return response
-    (vec-of-vecs-to-list-of-lists (cdr (assoc 'rows (cozodb-send-request (cozodb-prepare-request query))))))
+    (cozodb-send-request (cozodb-prepare-request query)))
 
 
   ;; Add cozodb to Org Babel languages
