@@ -1,0 +1,65 @@
+* Cozo db
+#+begin_src emacs-lisp
+  ;; Define cozodb-mode with syntax highlighting
+  (define-derived-mode cozodb-mode prog-mode "CozoDB"
+    (setq font-lock-defaults '((cozodb-font-lock-keywords))))
+
+  (defconst cozodb-font-lock-keywords
+        `(("\\[\\|\\]" 0 'kcats-brackets)
+          (";;.*" 0 'font-lock-comment-face)
+          (,(regexp-opt '("Constant")  'words) . (0 font-lock-builtin-face))
+          (,(regexp-opt '("true" "false" "null") 'words) . (0 font-lock-constant-face))
+          (,(regexp-opt '("\\:=" ":replace" ":create" ":order" ":offset" ":limit") 'words) . (0 font-lock-keyword-face))
+          (,(regexp-opt '() 'words) . (0 font-lock-function-name-face))
+          (,(regexp-opt '() 'words) . '(0 font-lock-preprocessor-face))
+          ("#?\"" 0 'double-quote prepend)))
+
+  ;; Function to execute cozodb source block in Org mode
+  (defun org-babel-execute:cozodb (body params)
+    (cozodb-send-query body))
+
+  (defcustom cozodb-server-url "http://127.0.0.1:3000/"
+    "URL of the CozoDB server."
+    :type 'string
+    :group 'cozodb)
+
+  (require 'json)
+
+  (defun cozodb-prepare-request (query)
+    "Prepare the CozoDB request from QUERY."
+    (let ((script (json-encode query)))
+      (format "{\"script\": %s, \"params\": {}}" script)))
+
+  (require 'url)
+
+  (defun cozodb-send-request (request)
+    "Send REQUEST to the CozoDB server and return the response."
+    (let* ((url-request-method "POST")
+           (url-request-extra-headers '(("Content-Type" . "application/json")))
+           (url-request-data request)
+           (response-buffer (url-retrieve-synchronously (format "%stext-query" cozodb-server-url))))
+
+      (with-current-buffer response-buffer
+        (message "Response: %s" (buffer-string))
+        (goto-char url-http-end-of-headers)
+        (delete-region (point-min) (point))
+        (json-parse-buffer :object-type 'alist))))
+
+
+  (defun vec-of-vecs-to-list-of-lists (vec)
+    "Convert a vector of vectors VEC to a list of lists."
+    (mapcar (lambda (inner-vec) (append inner-vec nil)) ; Convert each inner vector to a list
+            (append vec nil)))                         ; Convert the outer vector to a list
+
+  ;; Function to send query to CozoDB HTTP API
+  (defun cozodb-send-query (query)
+    ;; Escape query, create JSON object, send HTTP POST request
+    ;; Return response
+    (vec-of-vecs-to-list-of-lists (cdr (assoc 'rows (cozodb-send-request (cozodb-prepare-request query))))))
+
+
+  ;; Add cozodb to Org Babel languages
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((cozodb . t)))
+#+end_src
