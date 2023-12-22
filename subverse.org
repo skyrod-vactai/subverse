@@ -1286,18 +1286,45 @@ and I want to know which peers have it.
   plain content.
 + Should peer values be identities, or just destinations? Maybe we
   don't care *who* it is as long as they have the content.
+*** Can we get away with only storing peers in the DHT?
+To avoid having the DHT caring about the content (for example,
+requiring Alice to sign her own network location updates, and the DHT
+to verify it before overwriting an entry), perhaps the DHT can only
+point to peers and some other layer can be tasked with validating and
+otherwise working with that content.
+
+How could we implement revocations in this manner? The DHT would only
+point a user toward someone who might have the revocation. There's
+probably several ways of implementing that:
+
++ The hash of the given script would be the stream ID of several messages:
+  + the script itself
+  + revocations of inner keys
+  + other public messages relevant to that key?
 *** Implementation
-The DHT will hold several types of data:
-+ Key revocations, meaning, if you find a valid revocation for an
-  identity, you should no longer trust any messages from that
-  identity. Key = identity, a hash. Value = revocation + valid sig
-+ Peers for a given stream id. Key = stream id, value = identity
-+ Locations on the network. Key = identity, value = destination
+The DHT will hold only peer data.
 
+The keys will be hashes, and the values will be network locations.
 
+The design for actual data exchange will work as described in
+[[Authentication overview]]
 
-  
+Let's start with basic functions. We have =xor= already. What else is
+needed in Kademlia?
 
+#+begin_src kcats
+  [[kbucket [bits [[zero?] catcher] assemble count]]]
+  ["foo" hash
+   "quux" hash
+   xor kbucket]
+   let
+
+#+end_src
+
+#+RESULTS:
+#+begin_src kcats
+2
+#+end_src
 
 ** Streams
 *** Overview
