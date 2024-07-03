@@ -72,16 +72,16 @@ exactly the same way, so you can get things done and get on with your
 life. You aren't bombarded by flashy branding and ads.
 *** Private
 Current "privacy" messengers send whispers: No one else knows what you
-are saying, but they can see who you're whispering to. Subverse gets
-its name from the superpower it gives you: telepathy. While telepathy
-is not possible in the physical world, Subverse brings it to the
-digital realm. Your thoughts reach their target and no one knows you
-did anything at all.
+are saying, but they can see who you're whispering to. Subverse gives
+you a new superpower: telepathy. While telepathy is not possible in
+the physical world, Subverse brings it to the digital realm. Your
+thoughts reach their target and no observer knows you did anything at
+all.
 *** Durable
 Your private data is treated as a valuable resource. It is encrypted
 and replicated on the network, such that if you lose access to your
 device, you can pick up right where you left off on a new device. All
-you need is your secret key.
+you need is your key.
 *** Reliable
 If you go offline, other peers will collect data being sent to you (in
 encrypted form) and deliver it when you are back online. Messages will
@@ -1183,7 +1183,7 @@ about the security:
 #+BEGIN_QUOTE
 Now, there is one clever way we can go even further: outsourceable
 ultra-expensive KDFs. The idea is to come up with a function which is
-extremely expensive to compute (eg. 240 computational steps), but
+extremely expensive to compute (eg. 2^40 computational steps), but
 which can be computed in some way without giving the entity computing
 the function access to the output. The cleanest, but most
 cryptographically complicated, way of doing this is to have a function
@@ -1515,6 +1515,7 @@ attributes.
 How do we say "Alice's home's state"? Is this different from 1984's
 author's birthdate? Let's map it out a bit
 
+
 | AttrA  |  ValA | AttrB         | ValB            |
 |--------+-------+---------------+-----------------|
 | name   | Alice | born          | 1970            |
@@ -1532,6 +1533,122 @@ clear this kind of trick will always work, but in theory any value
 will work, even if you don't know the location. As long as you are
 sure that's alice's address, you can insert any unique location and be
 able to query her address this way.
+
+While it's certainly possible to include id attributes to facilitate
+linking, the question is whether we want to use that in an
+attribute-only database.
+
+Can we really get all the data we want just from attributes without
+referring to entities? If we want "the books titles written by
+orwell", what is 'orwell'? It could be a string (his name), but maybe
+that's not enough for uniqueness. Maybe it's
+
+#+begin_src json
+  {:name "George Orwell", dob: "1/1/1905"} 
+#+end_src
+
+So then when we want to refer to a book's author, we could theoretically do:
+
+#+begin_src kcats
+  [["name" "1984" "author-name" "George Orwell"]
+   ["name" "1984" "author-created-at" "1/1/1905"]]
+#+end_src
+
+We could perhaps even namespace the keys
+#+begin_src kcats
+  [["name" "1984" "author.name" "George Orwell"]
+   ["name" "1984" "author.created-at" "1/1/1905"]]
+#+end_src
+
+Ultimately we need to reach all the attributes of Orwell just given
+the string "1984" and knowing which attributes lead there, even if
+there's more than one potential match for "Orwell". How do we
+differentiate "the orwell who wrote 1984" from other Orwells?
+
+When we have explicit entities, we can point to one. If we don't, are
+we doomed to adding every attribute from every downstream link, eg
+"author.address.zipcode"?
+
+It seems like the attribute linking model works well when every link
+between distinct items is just a single link. But when multiple links
+are required it gets ugly fast. However maybe it's still tractable:
+
+#+begin_src kcats
+  [["name" "1984" "author.name" "George Orwell"]
+   ["name" "1984" "author.created-at" "1/1/1905"]
+   ["name" "George Orwell" "zip" "11111"]
+   ["created-at" "1/1/1905" "zip" "11111"]
+   ["name" "George Orwell" "created-at" "1/1/1905"]
+  ]
+#+end_src
+
+But this could potentially fail too - if we wanted to find out "author
+of 1984's zip code" in theory we could write a query that would only
+match a zip that was pointed to by both attributes. However, there
+could still be another thing in the db (say a cat) whose name is
+"George Orwell" and located in zip 11111, and other thing created
+1/1/1905 that is also located in zip 11111 (say, a human named "Bob
+Parker"). Now, with that last row, we could rule out both of those
+imposters because they would not have that matching row. But we'd need
+to ensure we included that relation in our query.
+
+It gets increasingly difficult though, as the primary key gets to be
+more and more attributes. What if the personhood pk was name/birthday/cityofbirth?
+
+#+begin_src kcats
+  [["name" "1984" "author.name" "George Orwell"]
+   ["name" "1984" "author.created-at" "1/1/1905"]
+   ["name" "1984" "author.created-city" "New York"]
+
+   ["name" "George Orwell" "zip" "11111"]
+   ["created-at" "1/1/1905" "zip" "11111"]
+   ["created-city" "New York" "zip" "11111"]
+   ["name" "George Orwell" "created-at" "1/1/1905"]
+   ["name" "George Orwell" "created-city" "New York"]
+   ["created-at" "1/1/1905", "created-city" "New York"]
+  ]
+#+end_src
+
+If we just left it there as the first 7 rows, there could still be
+other distinct entities who all live in zip 11111 that aren't who
+we're really looking for. We may need the 8th and 9th rows too, so
+this seems to create an exponential explosion of required links when
+primary keys are multiple attributes.
+
+However admittedly we would not have to decide up front how many
+attributes are needed to uniquely identify a person. We could just use
+as many as are available.
+
+One solution is to just use uuids or similar, either as an id
+attribute or as an entity column. I'm somewhat partial to id attribute
+right now, because only objects whose pk isn't one of its attributes
+would need it. For example, the coordinates of a city. We could just
+as easily use it as the entity column, but the queries would look a
+bit nicer with it as an id attribute.
+Either this
+
+| entity        | attr  | val         |
+|---------------+-------+-------------|
+| uuid1         | name  | Bob         |
+| uuid1         | email | bob@bob.com |
+| 30.12, -66.23 | name  | Foo City    |
+
+vs
+
+| a1          | v1            | a2    | v2          |
+|-------------+---------------+-------+-------------|
+| id          | uuid1         | name  | Bob         |
+| id          | uuid1         | email | bob@bob.com |
+| coordinates | 30.12, -66.23 | name  | Foo City    |
+
+The latter does repeat the =id= field name a lot, but it also is more
+specific about naming the coordinates attribute. The latter might make
+querying slower though. Typical querying of entites with multiple PK
+attributes would go something like: pk-attrs -> uuids -> other
+attrs. To make lookups fast, should probably have indices for all the
+cols. Will have to look into how cozo handles large
+values. https://docs.cozodb.org/en/latest/stored.html#storing-large-values
+
 **** Metadata
 Can we have attributes of attributes?
 
@@ -2012,10 +2129,16 @@ and Alice's app can see it's his reserve time and release the bike.
 Done via phoneblur
 *** DONE Register twitter
 - State "DONE"       from              [2022-05-15 Sun 09:04]
-*** DONE Buy domain telepathyk.org (if avail)
+*** INPROGRESS Buy domain telepathyk.org (if avail)
+- State "INPROGRESS" from "DONE"       [2024-04-02 Tue 09:16] \\
+  changing the project name
 - State "DONE"       from "INPROGRESS" [2019-04-24 Wed 10:50]
 - State "INPROGRESS" from "TODO"       [2019-04-24 Wed 10:49]
-Also got telepathtk.com - namecheap
+Also got telepathyk.com - namecheap
+
+Let's see if we can get a domain for "subverse" - obviously
+"subverse.com" is too expensive but some alternate spelling or tld might
+work. 
 ** INPROGRESS [#A] Scripting language kcats
 *** DONE Core language functionality
 *** INPROGRESS Testing and bugfixing
