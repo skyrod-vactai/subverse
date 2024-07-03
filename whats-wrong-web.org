@@ -1,0 +1,111 @@
+* The web is broken and we can do better!
+** Publishing your content is too difficult and expensive
+*** The problem
+ Put simply, almost no one can publish their own content on the web
+ without very significant and costly help.
+
+ Sure, you can publish your blog on a blogging platform. But then
+ you're not really publishing it. The platform owner is publishing
+ it. That is, if they allow you. They may decide tomorrow that your
+ ideas are dangerous, and start censoring your content. This was never
+ how the web was supposed to work.
+
+ Sure, you can run a website on your own server. That is, if you have
+ server hardware, know how to install a webserver, how format your
+ content in html and css (or whatever equally arcane framework built
+ on top of those things, how to authenticate your content, how to
+ resist DOS attacks, etc. The web as originally conceived, solves none
+ of these things. A bunch of stuff built on top of the web doesn't
+ solve it either. It is just more of the same: complexity that almost
+ no one can manage. No one specifically wants to build a website - a
+ nearly endless series of hurdles to be cleared. They want to publish
+ content.
+*** The solution
+Subverse allows you to publish your content directly, from your
+smartphone if you like. Share photos, stories, music, anything you
+like. You don't need special programming knowledge. You also don't
+have to have a server device that remains online all the time.
+** Unreliable identity
+*** The problem
+When you visit a site, such as your bank, are you sure you spelled the
+domain name exactly correct? If you didn't, you might be visiting a
+cybersquatting imposter that steals your banking credentials and all your
+money.
+*** The solution
+In Subverse, phishing and cybersquatting are not possible because
+there is no universal name system (which on the web is done by
+DNS). All identification is by public key. There are no names in the
+subverse protocol, but you can add your own personal names to keys in
+your own Contacts database, so that you can refer to people by
+name. But it's your name for them, not theirs.
+** Account and password fatigue
+*** The problem
+The web has no built-in authentication - every website makes you
+create an account and each one has its own way of identifiying
+you. It's maddening! It goes something like this: "Type in my email,
+type in my password, oh I guess I forgot my password, reset the
+password, go to my email, click the link, type a new password, oh i
+have to set up two factor auth, where is my phone, I just want to get
+this done, why isn't the text arriving, oh finally after 5 minutes,
+type in my email again, type in my password again". And creating new
+accounts is just as much of a pain as logging in - you have to
+manually type in the same information hundreds of times.
+*** The solution
+Authentication is built-in to the Subverse protocol and you don't have
+to think about it. The businesses you talk to know who you are
+immediately. There is no login page, you just get straight down to
+business. Data like your home address, phone number etc are exchanged
+automatically with trusted parties. When you buy something online,
+even from a merchant you've never used before, you just choose the
+item and and buy it. That's it. No typing in credit card numbers or
+expiration dates or addresses.
+** Broken links
+*** The problem
+You've been searching for an answer to an obscure question, and you've
+found where the answer is, you just have to click this link! Uh oh,
+the website that had your answer is gone and now it is a porn site.
+*** The solution
+Content on Subverse is authenticated and distrubuted, so that whoever
+came up with the content you need doesn't have to stay around
+forever. Anyone else can host a copy of it and you can find it easily
+and still be sure it's authentic. That doesn't guarantee that all
+content ever created will be accessible forever, but it goes a lot
+further than the web does.
+** Frequent bouts of forgetfulness
+*** The problem
+You are doing something on a website and you turn away for a few
+minutes to do something else. You come back and you're back at the
+login screen. You log back in and where is all the stuff you were
+doing? Good luck finding it, hopefully you remember where in the menu
+system that was. Hopefully the site doesn't make you start all over,
+but often that's exactly what they do.
+*** The solution
+Subverse is conversation based, so you and the other party both know
+where you left off. You can continue a conversation 10 seconds later
+or 10 years later and it will work exactly the same. 
+** Linked documents are not how humans interact
+*** The problem
+Humans talk in a back and forth conversation. The web is a series of
+linked documents. How do humans use a series of linked documents to
+communicate? Poorly. It's a square peg in a round hole.
+
+The web is nice for documentation, but it's terrible for interaction.
+*** The solution
+Subverse is a message-based protocol. On the surface it looks like
+WhatsApp or other messenger apps, but it's secure, programmable, and
+supports rich content. 
+** No automation
+*** The problem
+On the web, how many times do you have to go through the exact same
+procedure? Creating accounts, checking out to complete a purchase,
+filling out a form, paying bills, etc.
+*** The solution
+Some browsers have gotten a bit better helping you fill in forms
+(typically just your address/phone/email). But what about the rest?
+
+What if you had an autonomous agent that did all these repetitive
+tasks for you? What if it auto-responded to requests for form filling?
+What if it knew how to navigate from your cart to completed purchase?
+What if it knew how to pay your bills and even when to bother you with
+something that looked anomalous? Subverse makes this not only possible
+but relatively simple.
