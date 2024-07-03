@@ -15,8 +15,9 @@ codes?  'Prove you are human'? Searched through menus and still
 couldn't find what you want? Scrolled through endless garbage content
 and propaganda looking for just one high quality post? Gone back to a
 website only to find that it forgot everything you did before?
-Followed a dead link? Got phished? Gotten creepy ads that clearly
-indicate you're being spied on? Lost data moving to a new device?
+Clicked a dead link (or worse a domain that got bought by a porn
+site)? Got phished? Gotten creepy ads that clearly indicate you're
+being spied on? Lost data moving to a new device?
 
 The list of frustrations goes on and on, yet we assume all this is
 somehow an intrinsic part of modern computing. It's not! All these
@@ -35,8 +36,8 @@ whole online life is protected by a single secret key that you write
 down and put somewhere safe. That secret key is used to authorize new
 secret keys (which don't have to be so carefully guarded), and those
 live on your mobile device. You never type a password in subverse,
-it's all done in the background. Your mobile device is in charge of
-making sure it's you operating it, and it does an acceptable job.
+it's all done automatically. Your mobile device is in charge of making
+sure it's you operating it, and modern smartphones do this quite well.
 
 After that, Subverse tackled authentication. Everything you see in
 Subverse is authentic - you don't see it unless it has cryptographic
@@ -59,8 +60,8 @@ already trust. This enforces one of the main principles, that your
 time and attention are valuable.
 
 After that Subverse saves all your data. It's all encrypted using your
-secret key, and distributed via the swarm. If you get a new phone the
-key is all you need to restore all your data.
+secret key, and distributed via the swarm. If you get a new phone,
+your secret key is all you need to restore all your data.
 
 Beyond that, Subverse is highly programmable. Instead of making a
 website and having to worry about making pretty documents, you just
@@ -87,7 +88,7 @@ should not be able to steal it from you.
 *** Intellectual property is not a real thing
 Circulating information does not have an owner. Once you tell a secret
 (any content only you know because you created it - music,
-photography, science), you don't control it anymore.
+photography, science), you don't own it anymore.
 
 This principle may seem to conflict with "Information has value" but
 they are just two sides of the same coin: rights and
@@ -160,34 +161,52 @@ your phone and get it unlocked, which is not something typically done
 in the name of copyright enforcement.
 *** Why should I care about privacy, when I have nothing to hide?
 What you probably mean is "I have nothing to be ashamed of", which is
-not the same as "I have nothing to hide".
+not the same as "I have nothing to hide". You have plenty to hide. To
+demonstrate, just answer these questions:
 
-+ Do you want every registered sex offender in your city to have your
++ Do you want every registered sex offender in your city to be given your
   child's photo and your address?
 
-+ Do you want your employer and co-workers to have access to all your
-  personal financial transactions, and net worth?
++ Do you want your co-workers to be given a list of your assets and
+  salary history?
   
-+ Do you want your entire neighborhood to know where you keep your
-  valuables, or what you do in your bedroom?
++ Do you want your entire neighborhood to be told where in your house
+  you keep your valuables?
 
-You need privacy. Just because you don't directly give this
-information to the people you don't want to have it, doesn't mean they
-won't get it. If you leak information on the internet, anyone can
-potentially get it. The only way to guarantee your data doesn't fall
-into the wrong hands is to keep it private.
++ Do you want your extended family to be shown what you and your partner
+  do in your bedroom?
 
-Finally, "I have nothing to hide" means "I will always comply".
++ On job interview, would you be comfortable turning over your personal
+  web browsing history?
+  
++ Do you want your family members to be told the worst things you've
+  said about them behind their backs?
 
-What would you do if authoritarians came to power, and ordered you to
-either turn a blind eye to horrific crimes, or participate in them?
-Would you follow any order? If there are some orders you would
-disobey, if there are some crowds you wouldn't follow, if there are
-some movements you would resist, you have something to hide.
++ Do you want your stalker to be given your location data?
+
++ Do you want the government to be told the most controversial
+  political opinions you've ever held?
+
++ Do you want the local police to be informed of every legal infraction
+  you've ever committed?
+  
+If you answered "no" to any of these questions, you have something to
+hide, and there's nothing wrong with that.
+
+It's not just facts that you need to hide from certain
+people. Revealing your intentions can be dangerous as well. "I have
+nothing to hide" means "I will always comply". What would you do if
+authoritarians came to power, and ordered you to either turn a blind
+eye to horrific crimes, or participate in them?  Would you follow any
+order? If there are some orders you would disobey, if there are some
+crowds you wouldn't follow, if there are some movements you would
+resist, you have something to hide.
 *** Why does subverse sound like a political tool?
 Subverse is designed to shield its users from threats of
 violence. There is nothing unethical, or politically extreme, about
 that goal.
+
+Subverse is for anyone.
 *** Who am I trying to have privacy from?
 There are a lot of adversaries on the internet.
 
@@ -224,12 +243,4 @@ end of the world. You can start over with a new one.
 They can impersonate you until you discover the breach. At that point
 you can "burn" the key so that no one can ever use it in your name
 again, and then start with a new master key.
-*** Why are my old messages gone?
-Subverse eventually erases them by default. Any conversation or
-message you want to keep, add it to your vault, and then it's kept
-forever.
 
-The reason subverse forgets anything you don't tell it to keep
-forever, is that your old personal data is often more valuable to your
-adversaries than it is to you, so it's a liability that is better
-destroyed than kept.
