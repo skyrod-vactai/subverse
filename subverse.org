@@ -1432,6 +1432,19 @@ streams roots. Each encrypted with a key that also decrypts the
 content. A user downloads the list, sees which ones he can decrypt and
 then proceeds to fetch all those streams' contents (which he can
 decrypt).
+** Privacy
+*** Metadata privacy
+Is i2p or tor strictly necessary here?
+
+There might be a better protocol for subverse's stream model. There
+might be a way to combine the requirements for data duplication and
+data mixing.
+
+A feature like bitcoin's dandelion can hide the original source of a
+stream, and the nodes in the "stem" could also cache data (but they
+would have to pretend not to have it for some short period of time).
+
+
 ** Persistence
 Locally a database that we can treat as a stream would be nice (so
 that we can backup our encrypted database to other users).
