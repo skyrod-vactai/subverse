@@ -7,8 +7,8 @@
  Sure, you can publish your blog on a blogging platform. But then
  you're not really publishing it. The platform owner is publishing
  it. That is, if they allow you. They may decide tomorrow that your
- ideas are dangerous, and start censoring your content. This was never
- how the web was supposed to work.
+ content is bad for their business, and start censoring you. This was
+ never how the web was supposed to work.
 
  Sure, you can run a website on your own server. That is, if you have
  server hardware, know how to install a webserver, how format your
@@ -49,11 +49,11 @@ have to set up two factor auth, where is my phone, I just want to get
 this done, why isn't the text arriving, oh finally after 5 minutes,
 type in my email again, type in my password again". And creating new
 accounts is just as much of a pain as logging in - you have to
-manually type in the same information hundreds of times.
+manually type in the same information over and over.
 *** The solution
 Authentication is built-in to the Subverse protocol and you don't have
-to think about it. The businesses you talk to know who you are
-immediately. There is no login page, you just get straight down to
+to think about it. The businesses you talked to before, know you when
+you talk to them later. There is no login page, you just get straight down to
 business. Data like your home address, phone number etc are exchanged
 automatically with trusted parties. When you buy something online,
 even from a merchant you've never used before, you just choose the
@@ -81,7 +81,7 @@ system that was. Hopefully the site doesn't make you start all over,
 but often that's exactly what they do.
 *** The solution
 Subverse is conversation based, so you and the other party both know
-where you left off. You can continue a conversation 10 seconds later
+where you left off. You can continue a conversation 10 minutes later
 or 10 years later and it will work exactly the same. 
 ** Linked documents are not how humans interact
 *** The problem
@@ -94,7 +94,7 @@ The web is nice for documentation, but it's terrible for interaction.
 Subverse is a message-based protocol. On the surface it looks like
 WhatsApp or other messenger apps, but it's secure, programmable, and
 supports rich content. 
-** No automation
+** Manual identification
 *** The problem
 On the web, how many times do you have to go through the exact same
 procedure? Creating accounts, checking out to complete a purchase,
@@ -109,3 +109,17 @@ What if it knew how to navigate from your cart to completed purchase?
 What if it knew how to pay your bills and even when to bother you with
 something that looked anomalous? Subverse makes this not only possible
 but relatively simple.
+** Data you need is locked away
+The web only has data available to your eyes, not an automated agent
+acting on your behalf. In Subverse all presentation is done locally -
+the store doesn't get to decide how they look to you. So all they can
+do is send you the data of their catalog. Subverse presents it.
+
+What makes this powerful is that when companies can't silo their data,
+you are empowered: imagine being able to say "buy me this widget from
+any retailed i previously trusted, whichever is cheapest, and
+automatically share my shipping info and pay for it". Then subverse
+can gather the data and execute the plan without having to be
+specially programmed to understand each retailer's website separately
+(and then consequently breaking with any tiny change they make to
+their site.)
