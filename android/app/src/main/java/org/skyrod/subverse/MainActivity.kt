@@ -14,13 +14,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.skyrod.subverse.ui.theme.SubverseTheme
+import android.util.Log
 
 class MainActivity : ComponentActivity() {
+    private lateinit var cache: Cache
     init {
         System.loadLibrary("kcats")
     }
-    private external fun new_kcats_env(): Long
-    private external fun eval_kcats_env(env: Long, program: String): String
+    private external fun kcatsNew(cachePath: String, dbFile: String): Long
+    private external fun kcatsEval(env: Long, program: String): String
 
     private var interpreterPtr: Long = 0
 
@@ -34,8 +36,16 @@ class MainActivity : ComponentActivity() {
         val sendButton = findViewById<Button>(R.id.sendButton)
         val outputEditText = findViewById<EditText>(R.id.outputEditText)
 
+        cache = Cache(applicationContext)
+
+        cache.init()
+        val cachePath = cache.getPath().canonicalPath
+        val dbPath = applicationContext.getDatabasePath("subverse.db").canonicalPath
+        Log.d("init" , "Initializing cache at $cachePath")
+        Log.d("init", "Initializing database at $dbPath")
         // Initialize the interpreter environment
-        interpreterPtr = new_kcats_env()
+
+        interpreterPtr = kcatsNew(cachePath, dbPath)
 
         sendButton.setOnClickListener {
 
@@ -43,8 +53,9 @@ class MainActivity : ComponentActivity() {
 
             // Ensure the environment is set up properly
             if (interpreterPtr != 0L) {
-                val result = eval_kcats_env(interpreterPtr, inputCode)
+                val result = kcatsEval(interpreterPtr, inputCode)
                 outputEditText.setText(result)
+                inputEditText.setText("")
             } else {
                 outputEditText.setText("Error: Environment not initialized.")
             }
