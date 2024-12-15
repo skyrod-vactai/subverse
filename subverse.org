@@ -2,34 +2,46 @@
 #+TODO: TODO(t) INPROGRESS(i@/!) | DONE(d!) CANCELED(c@)
 * Introducing Subverse
 ** Advancing Sovereign Communication
-Subverse is communication software designed to empower users by
-providing agency, control, and customizability over their online
-interactions. This tool addresses the need for communication
-sovereignty in an age of spam, authentication fatigue, propaganda, 
-data breaches, leaks, and censorship. Users can easily manage their
-relationships, ensuring private, programmable, reliable, and seamless
-communication.
+Imagine digital communication that just works - no passwords to lose,
+no accounts to create, no spam to filter, no data loss to recover
+from, and no servers to maintain. That's Subverse: a revolutionary
+protocol that strips away decades of internet complexity to let you
+focus on what matters - genuine communication and connection.
 
-With Subverse, you decide who makes high value content. Enjoy the
-peace without spammers, shills, bots, and useless social media
-posts. The software bypasses censorship, allowing free and open
-messaging. Automation and customizability are at the core of
-Subverse, offering a user-friendly programming interface and the
-ability to build and share apps as easily as any other content.
+In an era of phishing, fakes, and digital impersonation, Subverse
+brings cryptographic certainty to every interaction. You always know
+exactly who you're dealing with, whether it's your family member, your
+favorite store, or an AI assistant. This fundamental authenticity
+eliminates entire categories of internet problems that we've simply
+learned to live with.
 
-Featuring telepathy-level privacy, Subverse treats information as
-the valuable commodity it is, ensuring no outside observer can detect
-if, when, or with whom a user is communicating. By adopting
-Subverse, users will experience enhanced privacy, freedom, and
-adaptability in their online communication, giving them a distinct
-advantage in the digital world.
+What makes Subverse different:
+
++ Bulletproof Authentication :: Cryptographic identity means no more
+  phishing, impersonation, or fraud. You always know exactly who
+  created any piece of content.
++ Network-Level Privacy :: Your communications are truly private - no
+  data or metadata leaks to third parties. Even the fact that you're
+  communicating remains hidden.  Always-On Reliability: Your valuable
+  data persists securely across the network. Access your content from
+  any device, anytime - even if the original source goes offline.
++ Effortless Automation :: Build and share automated workflows as
+   easily as sending messages. Create bots, stores, or entire
+   applications without wrestling with servers or APIs.
+
+Subverse isn't just another messaging app - it's a complete
+reimagining of how digital communication should work. By solving
+authentication, privacy, reliability, and programmability at the
+protocol level, it creates a foundation for genuine, efficient, and
+trustworthy online interaction.
+
+This is communication software that truly serves you.
 * Overview
 ** Goals
 + Users communicate with privacy and trust
 + Users control their own content
 + Users can program and share their own applications on the platform
-+ Users can automate interactions via chatbots that act on
-  their behalf (and speak either programmable API or natural language)
++ Users can automate interactions
 + Users are freed from central control, by pushing functionality to
   the edges
 ** Properties
@@ -48,7 +60,7 @@ In subverse, you will never need to:
 + Verify your email address
 + Enter a username or password
 + Prove you are human
-+ Enter a bank account or credit card number
++ Enter your address or bank account or credit card number
     
 *** Trusted
 Your attention is a precious resource, with millions of internet
