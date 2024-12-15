@@ -22,18 +22,21 @@ What makes Subverse different:
   created any piece of content.
 + Network-Level Privacy :: Your communications are truly private - no
   data or metadata leaks to third parties. Even the fact that you're
-  communicating remains hidden.  Always-On Reliability: Your valuable
-  data persists securely across the network. Access your content from
-  any device, anytime - even if the original source goes offline.
+  communicating remains hidden.
++ Built-in reliability :: Your valuable data persists securely across
+  the network. Access your content from any device, anytime - even if
+  the original source goes offline.
 + Effortless Automation :: Build and share automated workflows as
    easily as sending messages. Create bots, stores, or entire
-   applications without wrestling with servers or APIs.
+   applications without wrestling with infrastructure. 
 
 Subverse isn't just another messaging app - it's a complete
 reimagining of how digital communication should work. By solving
-authentication, privacy, reliability, and programmability at the
-protocol level, it creates a foundation for genuine, efficient, and
-trustworthy online interaction.
+authentication, privacy, reliability, programmability, and scalability
+at the protocol level, it creates a foundation for genuine, efficient,
+and trustworthy online interaction. Your business can serve millions
+without the traditional overhead of content delivery networks and
+server farms.
 
 This is communication software that truly serves you.
 * Overview
