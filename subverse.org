@@ -1,44 +1,55 @@
 #+PROPERTY: header-args:kcats :noweb yes :results code :exports both
 #+TODO: TODO(t) INPROGRESS(i@/!) | DONE(d!) CANCELED(c@)
-* Introducing Subverse
-** Advancing Sovereign Communication
-Imagine digital communication that just works - no passwords to lose,
-no accounts to create, no spam to filter, no data loss to recover
-from, and no servers to maintain. That's Subverse: a revolutionary
-protocol that strips away decades of internet complexity to let you
-focus on what matters - genuine communication and connection.
+* Subverse
+** Introducing Sovereign Communication
+The bad news is that the Information Wars have already started, and
+we're losing. We live in a schizophrenic nightmare digital world where
+phantom voices drown out authenticity and truth. No wonder we feel
+like we're going crazy. Armies of bots create fake social media
+accounts to manufacture false consensus. Corporations vacuum up our
+personal data, then turn it against us to manipulate our behavior with
+targeted propaganda. Invisible hostile actors wage massive deception
+campaigns to get us to serve their interests instead of our own.
 
-In an era of phishing, fakes, and digital impersonation, Subverse
-brings cryptographic certainty to every interaction. You always know
-exactly who you're dealing with, whether it's your family member, your
-favorite store, or an AI assistant. This fundamental authenticity
-eliminates entire categories of internet problems that we've simply
-learned to live with.
+At the same time we're being bombarded with misinformation, we're also
+being drained of time and energy at a time when we most need clarity
+and control: "Create an account. Wait for email confirmation. Change
+your password. Wait for a text message. Type in a code. Prove you're
+not a robot. Enter your mailing address. Again. Watch this ad. Session
+expired, start over. Log in again. Accept these tracking cookies. Find
+the menu item. Update your payment information. Enter your credit card
+number. Again. Download the app. Log in again."
+
+We're inundated with these useless tasks. They accumulated so slowly,
+we never noticed they are completely unnecessary, a distraction. 
+
+The good news is we can defend ourselves. Subverse is an internet
+protocol that strips away decades of exploitative infrastructure to
+return control where it belongs - with you.
 
 What makes Subverse different:
 
-+ Bulletproof Authentication :: Cryptographic identity means no more
-  phishing, impersonation, or fraud. You always know exactly who
-  created any piece of content.
++ Programmable Authentication :: Cryptographic identity means no more
+  phishing, or impersonation. All content is cryptographically signed
+  by its originator.
 + Network-Level Privacy :: Your communications are truly private - no
   data or metadata leaks to third parties. Even the fact that you're
-  communicating remains hidden.
+  communicating at all, remains hidden.
 + Built-in reliability :: Your valuable data persists securely across
-  the network. Access your content from any device, anytime - even if
-  the original source goes offline.
-+ Effortless Automation :: Build and share automated workflows as
+  the network.
++ Automation :: Build and share automated workflows as
    easily as sending messages. Create bots, stores, or entire
-   applications without wrestling with infrastructure. 
+   applications without wrestling with infrastructure.
++ Scalability :: Handle millions of requests with ease, run a large
+  business from a mobile device with no infrastructure costs.
 
 Subverse isn't just another messaging app - it's a complete
-reimagining of how digital communication should work. By solving
-authentication, privacy, reliability, programmability, and scalability
-at the protocol level, it creates a foundation for genuine, efficient,
-and trustworthy online interaction. Your business can serve millions
-without the traditional overhead of content delivery networks and
-server farms.
+reimagining of digital communication. By handling authentication,
+privacy, reliability, programmability, and scalability at the protocol
+level, it creates a foundation for genuine, efficient, and trustworthy
+online interaction.
 
-This is communication software that truly serves you.
+Subverse is communication software that serves you.
 * Overview
 ** Goals
 + Users communicate with privacy and trust
@@ -135,15 +146,14 @@ to unlock it. This allows users to prove who created given content and
 attribute the content to someone. Scripts can be off-the-shelf or
 customized to serve your particular security needs.
 *** Trust
-Trust starts with you. If you trust someone (say, a family member),
-you mark them as such in the subverse address book. That tells the
-application they're allowed to do things that other people can't -
-they can message you, introduce you to others, etc. Your network
-expands in much the same way it often does in real life: via
-introductions. Introductions don't have to be person to person - for
-example you can think of Google as an introduction service. Whether
-you trust someone like Google to make introductions is up to you. You
-can revoke that trust at any time.
+Trust starts with you. If you trust someone in Subverse, that allows
+them to do things that other people can't: they can message you,
+introduce you to others, etc, depending on the level of trust. Your
+network expands just as in real life: via introductions. Introductions
+don't have to be person to person - for example you can think of
+Google as an introduction service. Whether you trust someone like
+Google to make introductions is up to you. You can revoke that trust
+at any time.
 *** Privacy
 Underlying Subverse's networking is an anonymity network that
 guarantees that no third party can determine what you're saying, or
@@ -154,9 +164,9 @@ determine your physical location unless you explicitly tell them.
 Subverse automatically creates new identities when needed. For
 example, you don't want a search engine to compile a database of
 everything you've ever searched for, so every time you search,
-Subverse will use a fresh identity. It's only when you need someone
-to remember you, or be able to reach you later, that subverse will
-re-use identities.
+Subverse will use a fresh identity. It's only when you need someone to
+remember you, or be able to reach you later, that subverse will re-use
+identities.
 
 Subverse also encrypts data at rest on your device, and can
 automatically expire old content such that it does not become a
@@ -166,14 +176,14 @@ All content you create becomes part of an encrypted "stream", which is
 similar to a bittorrent file share, but content can be added over time
 and cannot be deleted. Other users participate as peers in the data
 sharing. Some users have the decryption key (the people who you want
-to be able to read the messages), and some don't (they hold the
+to be able to read the content), and some don't (they hold the
 encrypted data as a backup in case anyone needs it later, but they
 cannot read it themselves).
 
 Every part of the app is streamed, even those where the only person
 with the key is you - your address book, app configuration, message
-history, file attachments, etc. If you lose your phone you can restore
-everything from the network.
+history, file attachments, etc. If you lose your phone, you can
+restore everything from the network onto a new phone.
 *** Reliability
 Since all data in the system is duplicated in the network, message
 senders can go offline without delaying delivery. Receivers can go
@@ -181,8 +191,8 @@ offline without dropping messages.
 
 The way duplication is handled is similar to bittorrent in that chunks
 of data are exchanged between peers, and a user seeking to download an
-entire stream can download from multiple peers at once. Where
-Subverse differs is that peers who don't care about the content also
+entire stream can download from multiple peers at once. Where Subverse
+differs is that peers who don't care about the content also
 participate, and are incentivized by micropayments. They serve as both
 durability (store the content long term) and reliability (can serve
 the content when the creator is offline).
@@ -204,9 +214,8 @@ governments to sue, or server to disconnect.
 *** Automation
 Most functionality in the app is programmable via a very simple
 programming language called [[https://github.com/skyrod-vactai/kcats/blob/master/book-of-kcats.org][kcats]]. In order to automate things in
-subverse, you create bots - programs that receive messages and
-respond to them. You then introduce the bots to your contacts, so they
-can interact with it.
+subverse, you create bots - programs that take some streams as input
+and output other streams. 
 
 The bot can do things as simple as sharing photos, or as complex as
 running an online store.
@@ -2329,3 +2338,13 @@ messages, and prints them to the console along with who sent them.
 #+begin_src kcats
 
 #+end_src
+** TODO Example Apps
+*** Aggregation
+RSS is dead but a similar replacement could be done quite simply in
+subverse. If you want a feed composed of several sources, it's a very
+simple mechanism to combine them and display them in some ordering
+(probably chronological.
+*** Activity-specific apps
+Often these are just glorified messengers with a bit of
+activity-specific logic. For example, sports apps have builtin
+concepts of teams.
