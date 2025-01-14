@@ -32,4 +32,8 @@
 
     <!-- Permission to access the network (internet) -->
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- If you need to check network state -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 </manifest>
