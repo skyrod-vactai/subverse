@@ -1,5 +1,6 @@
 [versions]
 agp = "8.7.1"
+editor = "0.23.5"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -10,9 +11,16 @@ activityCompose = "1.9.3"
 composeBom = "2024.10.00"
 protobufGradlePlugin = "0.9.1"
 protobufKotlin = "3.22.0"
+recyclerview = "1.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+editor-bom = { group = "io.github.Rosemoe.sora-editor", name = "bom", version.ref = "editor" }
+
+# Core Sora Editor module
+editor = { group = "io.github.Rosemoe.sora-editor", name = "editor", version.ref = "editor" }
+
+#editor = { module = "io.github.Rosemoe.sora-editor:editor", version.ref = "editor" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -28,6 +36,7 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 protobuf-gradle-plugin = { module = "com.google.protobuf:protobuf-gradle-plugin", version.ref = "protobufGradlePlugin" }
 protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version.ref = "protobufKotlin" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

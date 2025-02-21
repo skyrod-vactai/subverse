@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "org.skyrod.subverse"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "org.skyrod.subverse"
@@ -59,6 +59,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.editor)
+    implementation(libs.androidx.recyclerview)
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -66,6 +70,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
 }
 
 // Add to your app's build.gradle.kts
@@ -108,11 +113,11 @@ tasks.register("buildKcatsLib") {
 
         // Copy the compiled libraries
         copy {
-            from("${homeDir}/.cargo/target/aarch64-linux-android/release/libkcats.so")
+            from("${kcatsProjectPath}/target/aarch64-linux-android/release/libkcats.so")
             into(arm64Dir)
         }
         copy {
-            from("${homeDir}/.cargo/target/x86_64-linux-android/release/libkcats.so")
+            from("${kcatsProjectPath}/target/x86_64-linux-android/release/libkcats.so")
             into(x86_64Dir)
         }
 
