@@ -32,11 +32,14 @@ What makes Subverse different:
 + Programmable Authentication :: Cryptographic identity means no more
   phishing, or impersonation. All content is cryptographically signed
   by its originator.
-+ Network-Level Privacy :: Your communications are truly private - no
-  data or metadata leaks to third parties. Even the fact that you're
-  communicating at all, remains hidden.
++ Information Control :: Information is money. The status quo steals
+  it from you. Your network location, your address, your contact list.
+  In Subverse, everything is on a need-to-know basis, and it's
+  shocking how little the corporations you deal with actually need to
+  know. Subverse smashes data silos, and keeps your valuable data with
+  you.
 + Built-in reliability :: Your valuable data persists securely across
-  the network.
+  the network. Others store it but only you can read it.
 + Automation :: Build and share automated workflows as
    easily as sending messages. Create bots, stores, or entire
    applications without wrestling with infrastructure.
