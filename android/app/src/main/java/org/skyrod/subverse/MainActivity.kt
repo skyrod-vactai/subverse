@@ -1,5 +1,6 @@
 package org.skyrod.subverse
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,11 +29,16 @@ import androidx.compose.ui.unit.dp
 import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material.icons.twotone.PlayArrow
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.LocalContentColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
@@ -97,14 +103,21 @@ fun MainScreen(onEvaluate: (String) -> String) {
                                 onEvaluate(input)
                             }
                             output = result
-                            history = history + input
+                            if (! history.contains(input)) {
+                                history = history + input
+                            }
+
                             input = ""
                         }
                     }
                 },
                 modifier = Modifier.imePadding()
             ) {
-                Icon(Icons.TwoTone.PlayArrow, contentDescription = "Execute")
+                Icon(
+                    Icons.AutoMirrored.Filled.Send,
+                    contentDescription = "Execute",
+                    tint = androidx.compose.ui.graphics.Color.Black
+                )
             }
         }
     ) { padding ->
@@ -113,12 +126,13 @@ fun MainScreen(onEvaluate: (String) -> String) {
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            // Rest of the UI remains the same
             LazyColumn(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(1.dp) // Add small spacing between items
+                    .fillMaxWidth()
+                    .defaultMinSize(minHeight = 200.dp),
+
+                verticalArrangement = Arrangement.spacedBy(2.dp) // Add small spacing between items
             ) {
                 items(history) { item ->
                     Card(
@@ -132,7 +146,8 @@ fun MainScreen(onEvaluate: (String) -> String) {
                             modifier = Modifier
                                 .clickable { input += item }
                                 .padding(horizontal = 16.dp, vertical = 8.dp)
-                                 .fillMaxWidth()
+                                .fillMaxWidth()
+
                         )
                     }
                 }
@@ -152,7 +167,8 @@ fun MainScreen(onEvaluate: (String) -> String) {
                 onValueChange = { },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(8.dp)
+                    .heightIn(max = 600.dp),
                 label = { Text("Output") },
                 readOnly = true
             )
