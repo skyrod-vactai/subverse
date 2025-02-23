@@ -26,11 +26,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import android.util.Log
-import kotlinx.coroutines.CoroutineScope
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.twotone.PlayArrow
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
@@ -96,9 +101,10 @@ fun MainScreen(onEvaluate: (String) -> String) {
                             input = ""
                         }
                     }
-                }
+                },
+                modifier = Modifier.imePadding()
             ) {
-                Icon(Icons.Default.Send, contentDescription = "Send")
+                Icon(Icons.TwoTone.PlayArrow, contentDescription = "Execute")
             }
         }
     ) { padding ->
@@ -111,16 +117,24 @@ fun MainScreen(onEvaluate: (String) -> String) {
             LazyColumn(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(1.dp) // Add small spacing between items
             ) {
                 items(history) { item ->
-                    Text(
-                        text = item,
+                    Card(
                         modifier = Modifier
-                            .clickable { input += item }
-                            .padding(16.dp)
                             .fillMaxWidth()
-                    )
+                            .padding(horizontal = 8.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+                    ) {
+                        Text(
+                            text = item,
+                            modifier = Modifier
+                                .clickable { input += item }
+                                .padding(horizontal = 16.dp, vertical = 8.dp)
+                                 .fillMaxWidth()
+                        )
+                    }
                 }
             }
 
@@ -129,7 +143,7 @@ fun MainScreen(onEvaluate: (String) -> String) {
                 onValueChange = { input = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(8.dp),
                 label = { Text("Enter code") }
             )
 
@@ -138,7 +152,7 @@ fun MainScreen(onEvaluate: (String) -> String) {
                 onValueChange = { },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(8.dp),
                 label = { Text("Output") },
                 readOnly = true
             )

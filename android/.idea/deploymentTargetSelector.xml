@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="subverse">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-02-21T22:52:07.755160882Z">
+        <DropdownSelection timestamp="2025-02-22T18:14:49.105178160Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=28051FDH300LZ9" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/home/jweiss/.android/avd/Medium_Phone.avd" />
             </handle>
           </Target>
         </DropdownSelection>

@@ -70,7 +70,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.editor)
-    implementation(libs.androidx.recyclerview)
+    //implementation(libs.androidx.recyclerview)
 
 
     testImplementation(libs.junit)
