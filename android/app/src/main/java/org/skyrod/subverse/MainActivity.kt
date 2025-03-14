@@ -1,49 +1,56 @@
 package org.skyrod.subverse
 
-import android.graphics.Color
+
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import android.util.Log
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.outlined.PlayArrow
-import androidx.compose.material.icons.twotone.PlayArrow
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.LocalContentColor
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
 
 class MainActivity : ComponentActivity() {
     private lateinit var cache: Cache
@@ -92,11 +99,19 @@ fun MainScreen(onEvaluate: (String) -> String) {
     var output by remember { mutableStateOf("") }
     var history by remember { mutableStateOf(listOf<String>()) }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val historyStorage = remember { HistoryStorage(context) }
+
+    // Load history when screen starts
+    LaunchedEffect(Unit) {
+        history = historyStorage.loadHistory()
+    }
 
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
+                    input = input.trim()
                     if (input.isNotEmpty()) {
                         scope.launch {
                             val result = withContext(Dispatchers.IO) {
@@ -105,6 +120,7 @@ fun MainScreen(onEvaluate: (String) -> String) {
                             output = result
                             if (! history.contains(input)) {
                                 history = history + input
+                                historyStorage.saveHistory(history)
                             }
 
                             input = ""
@@ -126,29 +142,53 @@ fun MainScreen(onEvaluate: (String) -> String) {
                 .fillMaxSize()
                 .padding(padding)
         ) {
+
             LazyColumn(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxWidth()
-                    .defaultMinSize(minHeight = 200.dp),
-
-                verticalArrangement = Arrangement.spacedBy(2.dp) // Add small spacing between items
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(2.dp)
             ) {
                 items(history) { item ->
+                    //val scope = rememberCoroutineScope()  // Moved inside the composable
+
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 8.dp),
                         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
                     ) {
-                        Text(
-                            text = item,
+                        Row(
                             modifier = Modifier
-                                .clickable { input += item }
-                                .padding(horizontal = 16.dp, vertical = 8.dp)
                                 .fillMaxWidth()
-
-                        )
+                                .padding(horizontal = 3.dp, vertical = 0.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = item,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .clickable { input += " $item" }
+                                    .padding(end = 8.dp)
+                            )
+                            IconButton(
+                                onClick = {
+                                    scope.launch {
+                                        val newHistory = history.filter { it.trim() != item.trim() }
+                                        history = newHistory
+                                        historyStorage.saveHistory(newHistory)
+                                    }
+                                }
+                            ) {
+                                Icon(
+                                    Icons.Default.Clear,
+                                    contentDescription = "Delete item",
+                                    tint = MaterialTheme.colorScheme.error,
+                                    //modifier = Modifier.padding(all = 1.dp).size(10.dp)
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -174,4 +214,38 @@ fun MainScreen(onEvaluate: (String) -> String) {
             )
         }
     }
+}
+
+
+class HistoryStorage(private val context: Context) {
+    companion object {
+        private val Context.dataStore by preferencesDataStore(name = "history")
+    }
+
+    private val historyKey = stringPreferencesKey("history_list")
+    suspend fun saveHistory(history: List<String>) {
+        try {
+            val value = history.joinToString(",")
+            Log.d("HistoryStorage", "Saving history: $value")
+            context.dataStore.edit { preferences ->
+                preferences[historyKey] = value
+            }
+        } catch (e: Exception) {
+            Log.e("HistoryStorage", "Error saving history", e)
+        }
+    }
+
+    suspend fun loadHistory(): List<String> {
+        return try {
+            context.dataStore.data.map { preferences ->
+                val value = preferences[historyKey]
+                Log.d("HistoryStorage", "Loaded history: $value")
+                value?.split(",")?.filter { it.isNotEmpty() } ?: emptyList()
+            }.first()
+        } catch (e: Exception) {
+            Log.e("HistoryStorage", "Error loading history", e)
+            emptyList()
+        }
+    }
+
 }
