@@ -2159,6 +2159,74 @@ lightning node, it needs to stream which invoices have been paid.
 
 When Bob shows up to collect the bike, he need only identify himself
 and Alice's app can see it's his reserve time and release the bike.
+** Trust
+Previously I'd run into the problem of defining "trust". I trust Bob,
+but to do what? It's not a one dimensional.
+
+An idea I just had is that maybe script can determine what trust
+means. Perhaps part of the lock is a value that describes what action
+is being taken. But that what makes a key work in that lock but not an
+otherwise identical lock (with a different action)?
+
+And who defines the actions?
+
+Let's go through a scenario with some arbitrary action: modify a
+contact whose address in France.
+
+perhaps since we already have templating we could define a program
+template and then later figure out if the action matches that template?
+
+That would involve a destructuring 'match' in kcats which currently
+does not exist, but writing one should not be terribly difficult.
+
+So let's say it existed. What would the lock look like?
+
+#+begin_src kcats
+  ;; a program should fit this template
+  [[] ;; db query
+
+  ]
+#+end_src
+
+wait. The overall design of subverse is composition of immutable
+streams so I'm not sure a permission system applies. The db is
+immutable, essentially, no one updates anything really.
+
+But we do need to essentially give permission to message us. Are we
+really giving permission or just changing our db query? I guess you
+can think of it either way.
+
+What if we wanted a deeper permission, like parental control? I'm
+guessing the only way to do parental control is to have the kid's
+master key controlled by the parent. Then the parent delegates to the
+kid's key but it's revokable. But how would the parent say, deny the
+kid permission to receive messages from anyone new?
+
+What does the permission to talk look like? Being in the address book
+is a close proxy i guess, so we could make the address book actually a
+stream from the parent. Or even the whole public key stream that is
+the root of all the other streams for the kid. Then when the kid turns
+18 or whatever age, the parent just gives the kid the keys and that's
+it. Protecting keys from someone who lives in your house might be
+tricky though.
+
+I don't think i've got a very good handle on what the mechanism is. I
+think it's clear the pk root stream is the basis for what keys are
+revoked and what streams we download. I'm thinking of something
+Model/View/Controller like. But instead it's Source
+Streams/Weaver/Output Streams. And then what, we just make the UI a
+list of output streams? That doesn't address permissions though,
+because you can always just pick an arbitrary output stream and bypass
+eveything.
+
+Maybe there needs to be a concept of a root program too, and maybe it
+selects streams or something. I think this is probably the way to go,
+a root program that authenticates other programs. Make sure to
+implement revocation as well, probably (in the case of parental
+controls) added to the parents' stream (note: the kid disconnecting
+from the internet to avoid receiving the revocation is a possible
+problem but I am pretty sure that issue is present in all existing
+systems also).
 * Roadmap
 ** DONE Get socially connected
 *** CANCELED Get a bitcoin vps
@@ -2169,7 +2237,8 @@ and Alice's app can see it's his reserve time and release the bike.
 Done via phoneblur
 *** DONE Register twitter
 - State "DONE"       from              [2022-05-15 Sun 09:04]
-*** INPROGRESS Buy domain telepathyk.org (if avail)
+*** CANCELED Buy domain telepathyk.org (if avail)
+- State "CANCELED"   from "INPROGRESS" [2025-02-24 Mon 21:34]
 - State "INPROGRESS" from "DONE"       [2024-04-02 Tue 09:16] \\
   changing the project name
 - State "DONE"       from "INPROGRESS" [2019-04-24 Wed 10:50]
@@ -2333,7 +2402,8 @@ based on bittorrent? similar to zeronet.io.
 ** TODO i2p(d) integration
 *** Create destinations based on identity
 ** TODO Bot creation functionality
-** TODO mobile UI
+** INPROGRESS mobile UI
+- State "INPROGRESS" from "TODO"       [2025-02-24 Mon 21:35]
 ** TODO Simple authenticated messenger
 Create a kcats api server that accepts nothing but authenticated
 messages, and prints them to the console along with who sent them.
