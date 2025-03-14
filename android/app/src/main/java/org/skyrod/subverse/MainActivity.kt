@@ -1,7 +1,6 @@
 package org.skyrod.subverse
 
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -10,13 +9,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -42,13 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -217,35 +208,3 @@ fun MainScreen(onEvaluate: (String) -> String) {
 }
 
 
-class HistoryStorage(private val context: Context) {
-    companion object {
-        private val Context.dataStore by preferencesDataStore(name = "history")
-    }
-
-    private val historyKey = stringPreferencesKey("history_list")
-    suspend fun saveHistory(history: List<String>) {
-        try {
-            val value = history.joinToString(",")
-            Log.d("HistoryStorage", "Saving history: $value")
-            context.dataStore.edit { preferences ->
-                preferences[historyKey] = value
-            }
-        } catch (e: Exception) {
-            Log.e("HistoryStorage", "Error saving history", e)
-        }
-    }
-
-    suspend fun loadHistory(): List<String> {
-        return try {
-            context.dataStore.data.map { preferences ->
-                val value = preferences[historyKey]
-                Log.d("HistoryStorage", "Loaded history: $value")
-                value?.split(",")?.filter { it.isNotEmpty() } ?: emptyList()
-            }.first()
-        } catch (e: Exception) {
-            Log.e("HistoryStorage", "Error loading history", e)
-            emptyList()
-        }
-    }
-
-}
